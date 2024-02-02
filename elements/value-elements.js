@@ -72,7 +72,8 @@ class EnumInput extends Input {
      */
     constructor(enumList, def=undefined) {
         super(def)
-        this.enumList = enumList;
+		enumList.sort()
+        this.enumList = enumList
         let dataListIndex = EnumInput.enums.findIndex(x => x == enumList)
         if (dataListIndex == -1) {
             const dataList = document.createElement("datalist")
