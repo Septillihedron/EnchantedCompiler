@@ -33,11 +33,11 @@ class Input {
      */
     setValue(val) {
         if (val == null) return
-        if (typeof val === "string") {
-            incorrectTypeSetError(val)
-            return
-        }
-        this.input.value = /** @type {string}*/ (val)
+        // if (typeof val !== "string") {
+            // incorrectTypeSetError(val)
+            // return
+        // }
+        this.input.value = (val).toString()
     }
 
     focus() {
