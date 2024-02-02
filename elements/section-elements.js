@@ -51,7 +51,8 @@ class Section {
      * @param {unknown} val
      */
     setValue(val) {
-        if (val == null || typeof val !== "object") {
+        if (val == null) return
+        if (typeof val !== "object") {
             incorrectTypeSetError(val)
             return
         }
@@ -155,7 +156,7 @@ class DocItemSection extends Section {
         this.addChild(this.typeEntry)
         const modes = docItem.supportedModes
         if (modes != undefined) {
-            const defaultMode = this.getDefaultMode(docItem)
+            const defaultMode = this.getDefaultMode(modes, docItem.requireMode)
             this.addChild(entry("mode", new EnumInput(modes, defaultMode)))
         }
         if (docItem.properties !== undefined) {
@@ -170,13 +171,12 @@ class DocItemSection extends Section {
 
     /**
      * @private
-     * @param {import("../docs.js").DocItem} docItem
-     * @returns {"ALL" | "SELF"}
-    */
-    getDefaultMode(docItem) {
-        if (docItem.requireMode === undefined) return "SELF"
-        if (docItem.requireMode) return "SELF"
-        return "ALL"
+     * @param {import("../docs.js").Mode[]} modes
+     * @param {boolean} requireMode
+     */
+    getDefaultMode(modes, requireMode) {
+        if (requireMode && modes.length >= 2) return modes[1]
+        else return "ALL"
     }
 
 }
@@ -212,14 +212,18 @@ function compileProperty(property) {
             if ("properties" in property) {
                 const entries = []
                 for (const [name, prop] of Object.entries(property.properties)) {
-                    entries.push(entry(name, compileProperty(prop)))
+                    const value = compileProperty(prop)
+                    value.setValue(prop.default)
+                    entries.push(entry(name, value))
                 }
                 return new Section(entries)
             }
             if ("propertiesMap" in property) {
+                const propertiesMap = property.propertiesMap
                 return new PropertiesMap([], () => {
-                    const key = compileProperty(property.propertiesMap.key)
-                    const value = compileProperty(property.propertiesMap.value)
+                    const key = compileProperty(propertiesMap.key)
+                    const value = compileProperty(propertiesMap.value)
+                    value.setValue(propertiesMap.value.default)
                     return entry(key, value)
                 })
             }
@@ -285,6 +289,7 @@ class Entry {
      * @param {unknown} val
      */
     setValue(val) {
+        if (val == null) return
         if (!Array.isArray(val)) {
             incorrectTypeSetError(val)
             return

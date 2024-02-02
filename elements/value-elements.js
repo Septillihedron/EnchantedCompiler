@@ -32,7 +32,8 @@ class Input {
      * @param {unknown} val
      */
     setValue(val) {
-        if (val == null || typeof val === "string") {
+        if (val == null) return
+        if (typeof val === "string") {
             incorrectTypeSetError(val)
             return
         }
@@ -129,6 +130,7 @@ class RangeInput {
      * @param {unknown} val
      */
     setValue(val) {
+        if (val == undefined) return
         if (Array.isArray(val)) {
             incorrectTypeSetError(val)
             return

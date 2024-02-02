@@ -116,6 +116,7 @@ type ValueWithDefaultOrArrayContaining<T extends PropertyTypes, D> = (
 		default?: D | null
 	} | {
 		type: ArrayContaining<T>
+		default?: unknown
 	}
 )
 
