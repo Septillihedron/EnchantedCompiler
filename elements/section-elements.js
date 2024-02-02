@@ -244,7 +244,8 @@ function compileProperty(property) {
  */
 function compileTypeString(typeName) {
     if (typeName in docs.types) {
-        const type = docs.types[typeName]
+        let type = docs.types[typeName]
+		if (typeName === "EntityData") delete type.properties.passenger
         if (type.internal) {
             return compileProperty({ type: typeName })
         }
