@@ -1,12 +1,12 @@
 
 
 /**
- * @implements {YamlElement}
+ * @implements {YamlElement<string>}
  */
 class Input {
 
     /**
-     * @param {string | undefined} def
+     * @param {string | undefined | null} def
      */
     constructor(def) {
         this.input = document.createElement("input")
@@ -22,6 +22,21 @@ class Input {
 
     toYaml() {
         return this.input.value
+    }
+
+    getValue() {
+        return this.input.value
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (val == null || typeof val === "string") {
+            incorrectTypeSetError(val)
+            return
+        }
+        this.input.value = /** @type {string}*/ (val)
     }
 
     focus() {
@@ -52,10 +67,11 @@ class EnumInput extends Input {
 
     /**
      * @param {string[]} enumList 
-     * @param {string | undefined} def 
+     * @param {string | undefined | null} def 
      */
     constructor(enumList, def=undefined) {
         super(def)
+        this.enumList = enumList;
         let dataListIndex = EnumInput.enums.findIndex(x => x == enumList)
         if (dataListIndex == -1) {
             const dataList = document.createElement("datalist")
@@ -79,7 +95,7 @@ class EnumInput extends Input {
 }
 
 /**
- * @implements {YamlElement}
+ * @implements {YamlElement<{ min: number, max: number }>}
  */
 class RangeInput {
 
@@ -102,13 +118,31 @@ class RangeInput {
         return this.min.toYaml() + " - " + this.max.toYaml()
     }
 
+    getValue() {
+        return {
+            min: this.min.getValue(), 
+            max: this.max.getValue()
+        }
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (Array.isArray(val)) {
+            incorrectTypeSetError(val)
+            return
+        }
+        
+    }
+
     focus() {
         return this.min.focus()
     }
 }
 
 /**
- * @implements {YamlElement}
+ * @implements {YamlElement<string>}
  */
 class ConstText {
     /**
@@ -124,6 +158,17 @@ class ConstText {
      */
     toHTML(parent) {
         parent.appendChild(this.textElement)
+    }
+
+    getValue() {
+        return this.text
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        incorrectTypeSetError(val)
     }
 
     toYaml() {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 /** @type {import("./docs").Schema} */
 const docs = {
     "triggers": {
@@ -2989,8 +2988,13 @@ const docs = {
                     "required": false,
                     "type": "object",
                     "default": {},
-                    "patternProperties": {
-                        ".*": {
+                    "propertiesMap": {
+                        "key": {
+                            "description": "keys",
+                            "type": "string",
+                            "pattern": "^.$",
+                        },
+                        "value": {
                             "description": "The material that the key is representing",
                             "required": true,
                             "type": "material"
@@ -3189,8 +3193,13 @@ const docs = {
                     "description": "The map from recipe key to material/skill item",
                     "required": true,
                     "type": "object",
-                    "patternProperties": {
-                        "^.$": {
+                    "propertiesMap": {
+                        "key": {
+                            "description": "The Recipe key",
+                            "type": "string",
+                            "pattern": "^.$"
+                        },
+                        "value": {
                             "description": "The material or skill item",
                             "type": [
                                 "material",
@@ -7850,6 +7859,5 @@ const docs = {
         "rewards": [],
         "distributions": [],
         "types": [],
-        "categories": []
     }
 }

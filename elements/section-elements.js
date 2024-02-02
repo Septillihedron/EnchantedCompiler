@@ -1,6 +1,7 @@
 
 /**
- * @typedef {import("./yaml-element.d.ts").YamlElement} YamlElement
+ * @template T
+ * @typedef {import("./yaml-element.d.ts").YamlElement<T>} YamlElement<T>
  */
 
 /**
@@ -15,7 +16,7 @@ function indent(s) {
 }
 
 /**
- * @implements {YamlElement}
+ * @implements {YamlElement<object>}
  */
 class Section {
     /**
@@ -40,6 +41,25 @@ class Section {
         return this.values
             .map(entry => "\r\n" + indent(entry.toYaml()))
             .join("")
+    }
+
+    getValue() {
+        return Object.fromEntries(this.values.map(entry => entry.getValue()))
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (val == null || typeof val !== "object") {
+            incorrectTypeSetError(val)
+            return
+        }
+        Object.entries(val)
+            .forEach(([key, val]) => {
+                this.values.find(entry => entry.key.getValue() === key)
+                    ?.value.setValue(val)
+            })
     }
 
     focus() {
@@ -81,14 +101,14 @@ function section(values) {
 class PropertiesMap extends Section {
     /**
      * @param {Entry[]} values
-     * @param {(e: MouseEvent) => Entry} addfn 
+     * @param {() => Entry} addfn 
      */
     constructor(values, addfn) {
         super(values)
         this.addButton = document.createElement("button")
         this.addButton.innerText = "+"
-        this.addButton.onclick = (e) => {
-            const element = addfn(e)
+        this.addButton.onclick = () => {
+            const element = addfn()
             this.addChild(element)
         }
     }
@@ -106,6 +126,7 @@ class DocItemSection extends Section {
 
     /**
      * @param {keyof import("../docs.js").Schema} category 
+     * @param {Entry[]} [extraEntries=[]] 
      */
     constructor(category, extraEntries=[]) {
         super([])
@@ -144,6 +165,7 @@ class DocItemSection extends Section {
                 })
         }
         this.extraEntries.forEach(entry => this.addChild(entry))
+        this.focus()
     }
 
     /**
@@ -160,38 +182,81 @@ class DocItemSection extends Section {
 }
 
 const booleanEnum = ["true", "false"]
+
 /**
- * @param {import("../docs.js").Property} property
+ * @param {import("../docs.js").NakedProperty} property 
+ * @returns {YamlElement<unknown>}
  */
 function compileProperty(property) {
-    /** @type {import("../docs.js").PropertyTypes[]} */
-    const basicTypes = [ "string", "number", "integer", "boolean" ]
     if (typeof property.type != "string") {
         return constText("# not done yet")
     }
     switch(property.type) {
         case "string":
+            if (property.enum) {
+                return new EnumInput(property.enum, property.default ?? "")
+            }
             return input(property.default ?? "text")
-        case "number":
-            return input(property.default ?? "0")
+        case "number": // fallthrough
         case "integer":
-            return input(property.default ?? "0")
+            return input(property.default?.toString() ?? "0")
         case "boolean":
-            return new EnumInput(booleanEnum, property.default)
+            return new EnumInput(booleanEnum, property.default?.toString() ?? "")
         case "range":
             return new RangeInput()
-        default:
+        case "array":
             return constText("# not done yet")
+        case "record":
+            return new PropertiesMap([], () => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
+        case "object":
+            if ("properties" in property) {
+                const entries = []
+                for (const [name, prop] of Object.entries(property.properties)) {
+                    entries.push(entry(name, compileProperty(prop)))
+                }
+                return new Section(entries)
+            }
+            if ("propertiesMap" in property) {
+                return new PropertiesMap([], () => {
+                    const key = compileProperty(property.propertiesMap.key)
+                    const value = compileProperty(property.propertiesMap.value)
+                    return entry(key, value)
+                })
+            }
+            return constText("# not done yet")
+        case "condition":
+            return new DocItemSection("conditions", [
+                entry("else", compileTypeString("EffectList"))
+            ])
+        case "effect": 
+            return new DocItemSection("effects")
+        default:
+            return compileTypeString(property.type)
     }
 }
 
 /**
- * @implements {YamlElement}
+ * @param {import("../docs.js").NormalPropertyTypes} typeName
+ */
+function compileTypeString(typeName) {
+    if (typeName in docs.types) {
+        const type = docs.types[typeName]
+        if (type.internal) {
+            return compileProperty({ type: typeName })
+        }
+        return compileProperty(type)
+    }
+    console.log("Not done: " + typeName)
+    return constText("# not done yet")
+}
+
+/**
+ * @implements {YamlElement<[unknown, unknown]>}
  */
 class Entry {
     /**
-     * @param {YamlElement} key
-     * @param {YamlElement} value 
+     * @param {YamlElement<unknown>} key
+     * @param {YamlElement<unknown>} value 
      */
     constructor(key, value) {
         this.key = key
@@ -212,6 +277,22 @@ class Entry {
         return this.key.toYaml() + ": " + this.value.toYaml()
     }
 
+    getValue() {
+        return /** @type {[unknown, unknown]} */ ([this.key.getValue(), this.value.getValue()])
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (!Array.isArray(val)) {
+            incorrectTypeSetError(val)
+            return
+        }
+        this.key.setValue(val[0])
+        this.value.setValue(val[1])
+    }
+
     focus() {
         if (this.key.focus()) return true
         if (this.value.focus()) return true
@@ -219,8 +300,8 @@ class Entry {
     }
 }
 /**
- * @param {YamlElement | string} key
- * @param {YamlElement} value
+ * @param {YamlElement<unknown> | string} key
+ * @param {YamlElement<unknown>} value
  */
 function entry(key, value) {
     if (typeof key === "string") key = constText(key)
