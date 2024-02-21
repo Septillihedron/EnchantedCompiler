@@ -122,8 +122,8 @@ class RangeInput {
 
     getValue() {
         return {
-            min: this.min.getValue(), 
-            max: this.max.getValue()
+            min: Number.parseFloat(this.min.getValue()), 
+            max: Number.parseFloat(this.max.getValue())
         }
     }
 

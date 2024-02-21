@@ -20,14 +20,33 @@ function indent(s) {
  */
 class Section {
     /**
-     * @param {Entry[]} values
+     * @param {Entry[] | (() => Entry[])} values
      */
     constructor(values) {
         /** @type {Entry[]} */
         this.values = []
         this.container = document.createElement("div")
         this.container.classList.add("section")
-        values.forEach(this.addChild.bind(this))
+        if (Array.isArray(values)) {
+            values.forEach(this.addChild.bind(this))
+            return
+        }
+
+        this.generator = values
+        /* create button */ {
+            const button = document.createElement("button")
+			button.innerText = "+"
+            button.onclick = () => {
+                this.container.replaceChildren()
+                if (!this.generator) {
+                    console.trace("generator is undefined")
+                    return
+                }
+                this.generator().forEach(this.addChild.bind(this))
+            }
+            this.container.appendChild(button)
+        }
+        
     }
 
     /**
@@ -210,13 +229,15 @@ function compileProperty(property) {
             return new PropertiesMap([], () => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
         case "object":
             if ("properties" in property) {
-                const entries = []
-                for (const [name, prop] of Object.entries(property.properties)) {
-                    const value = compileProperty(prop)
-                    value.setValue(prop.default)
-                    entries.push(entry(name, value))
-                }
-                return new Section(entries)
+                return new Section(() => {
+                    const entries = []
+                    for (const [name, prop] of Object.entries(property.properties)) {
+                        const value = compileProperty(prop)
+                        value.setValue(prop.default)
+                        entries.push(entry(name, value))
+                    }
+                    return entries
+                })
             }
             if ("propertiesMap" in property) {
                 const propertiesMap = property.propertiesMap
@@ -245,7 +266,6 @@ function compileProperty(property) {
 function compileTypeString(typeName) {
     if (typeName in docs.types) {
         let type = docs.types[typeName]
-		if (typeName === "EntityData") delete type.properties.passenger
         if (type.internal) {
             return compileProperty({ type: typeName })
         }
