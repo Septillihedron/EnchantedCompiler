@@ -200,6 +200,65 @@ class DocItemSection extends Section {
 
 }
 
+/**
+ * @implements {YamlElement<[unknown, unknown]>}
+ */
+class Entry {
+    /**
+     * @param {YamlElement<unknown>} key
+     * @param {YamlElement<unknown>} value 
+     */
+    constructor(key, value) {
+        this.key = key
+        this.value = value
+        this.colon = constText(": ")
+    }
+
+    /**
+     * @param {HTMLElement} parent
+     */
+    toHTML(parent) {
+        this.key.toHTML(parent)
+        this.colon.toHTML(parent)
+        this.value.toHTML(parent)
+    }
+
+    toYaml() {
+        return this.key.toYaml() + ": " + this.value.toYaml()
+    }
+
+    getValue() {
+        return /** @type {[unknown, unknown]} */ ([this.key.getValue(), this.value.getValue()])
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (val == null) return
+        if (!Array.isArray(val)) {
+            incorrectTypeSetError(val)
+            return
+        }
+        this.key.setValue(val[0])
+        this.value.setValue(val[1])
+    }
+
+    focus() {
+        if (this.key.focus()) return true
+        if (this.value.focus()) return true
+        return false
+    }
+}
+/**
+ * @param {YamlElement<unknown> | string} key
+ * @param {YamlElement<unknown>} value
+ */
+function entry(key, value) {
+    if (typeof key === "string") key = constText(key)
+    return new Entry(key, value)
+}
+
 const booleanEnum = ["true", "false"]
 
 /**
@@ -273,63 +332,4 @@ function compileTypeString(typeName) {
     }
     console.log("Not done: " + typeName)
     return constText("# not done yet")
-}
-
-/**
- * @implements {YamlElement<[unknown, unknown]>}
- */
-class Entry {
-    /**
-     * @param {YamlElement<unknown>} key
-     * @param {YamlElement<unknown>} value 
-     */
-    constructor(key, value) {
-        this.key = key
-        this.value = value
-        this.colon = constText(": ")
-    }
-
-    /**
-     * @param {HTMLElement} parent
-     */
-    toHTML(parent) {
-        this.key.toHTML(parent)
-        this.colon.toHTML(parent)
-        this.value.toHTML(parent)
-    }
-
-    toYaml() {
-        return this.key.toYaml() + ": " + this.value.toYaml()
-    }
-
-    getValue() {
-        return /** @type {[unknown, unknown]} */ ([this.key.getValue(), this.value.getValue()])
-    }
-
-    /**
-     * @param {unknown} val
-     */
-    setValue(val) {
-        if (val == null) return
-        if (!Array.isArray(val)) {
-            incorrectTypeSetError(val)
-            return
-        }
-        this.key.setValue(val[0])
-        this.value.setValue(val[1])
-    }
-
-    focus() {
-        if (this.key.focus()) return true
-        if (this.value.focus()) return true
-        return false
-    }
-}
-/**
- * @param {YamlElement<unknown> | string} key
- * @param {YamlElement<unknown>} value
- */
-function entry(key, value) {
-    if (typeof key === "string") key = constText(key)
-    return new Entry(key, value)
 }
