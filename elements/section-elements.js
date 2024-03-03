@@ -77,10 +77,18 @@ class Section {
         }
         Object.entries(val)
             .forEach(([key, val]) => {
-                this.values.find(entry => entry.key.getValue() === key)
-                    ?.value.setValue(val)
+                let entry = this.findEntryByKey(key)
+                if (!entry && this.button) {
+					this.button.click()
+					entry = this.findEntryByKey(key)
+				}
+                entry?.value.setValue(val)
             })
     }
+	
+	findEntryByKey(key) {
+		return this.values.find(entry => entry.key.getValue() === key)
+	}
 
     focus() {
         for (let i=0; i<this.values.length; i++) {
@@ -167,6 +175,9 @@ class ArraySection {
             incorrectTypeSetError(val)
             return
         }
+        for (let i=this.values.length; i<val.length; i++) {
+            this.addButton.click()
+        }
         val.forEach((val, index) => {
             this.values[index].setValue(val)
         })
@@ -185,7 +196,6 @@ class ArraySection {
      * @param {YamlElement<unknown>} element
      */
     addChild(element) {
-        const lastElement = this.values[this.values.length-1]
         this.values.push(element)
         const li = document.createElement("li")
         this.container.appendChild(li)
@@ -201,17 +211,35 @@ class ArraySection {
 
 class PropertiesMap extends Section {
     /**
-     * @param {Entry[]} values
-     * @param {() => Entry} addfn 
+     * @param {(name: string | number) => Entry} addfn 
      */
-    constructor(values, addfn) {
-        super(values)
+    constructor(addfn) {
+        super([])
+        this.addfn = addfn
         this.addButton = document.createElement("button")
         this.addButton.innerText = "+"
         this.addButton.onclick = () => {
-            const element = addfn()
+            const element = addfn(this.values.length)
             this.addChild(element)
         }
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (!val) return
+        if (typeof val !== "object") return
+
+        Object.entries(val)
+            .forEach(([key, val]) => {
+                let entry = this.values.find(entry => entry.key.getValue() === key)
+                if (!entry) {
+                    entry = this.addfn(key)
+                    this.addChild(entry)
+                }
+                entry?.setValue([key, val])
+            })
     }
 
     /**
@@ -232,18 +260,32 @@ class DocItemSection extends Section {
     constructor(category, extraEntries=[]) {
         super([])
         this.extraEntries = extraEntries
-        const typeKey = (category === "skills")? "skill" : "type";
+        this.category = category
+        this.typeKey = (category === "skills")? "skill" : "type";
         const typeInput = new EnumInput(docs.categories[category])
-        this.typeEntry = entry(typeKey, typeInput)
+        this.typeEntry = entry(this.typeKey, typeInput)
         this.addChild(this.typeEntry)
 
-        typeInput.addChangedListener(newValue => {
-            /** @type {import("../docs.js").DocItem | undefined} */
-            const newDocItem = docs[category][newValue]
-            if (newDocItem === undefined) return
+        typeInput.addChangedListener(this.updateProperties.bind(this))
+    }
 
-            this.compileDocItem(newDocItem)
-        })
+    updateProperties(newValue) {
+        /** @type {import("../docs.js").DocItem | undefined} */
+        const newDocItem = docs[this.category][newValue]
+        if (newDocItem === undefined) return
+
+        this.compileDocItem(newDocItem)
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (val && typeof val === "object") {
+            const type = val[this.typeKey]
+            if (type) this.updateProperties(type)
+        }
+        super.setValue(val)
     }
 
 
@@ -372,7 +414,7 @@ function compileProperty(property) {
                 return compileProperty(/** @type {any} */ ({ type: property.items }))
             })
         case "record":
-            return new PropertiesMap([], () => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
+            return new PropertiesMap(() => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
         case "object":
             if ("properties" in property) {
                 return new Section(() => {
@@ -387,7 +429,7 @@ function compileProperty(property) {
             }
             if ("propertiesMap" in property) {
                 const propertiesMap = property.propertiesMap
-                return new PropertiesMap([], () => {
+                return new PropertiesMap(() => {
                     const key = compileProperty(propertiesMap.key)
                     const value = compileProperty(propertiesMap.value)
                     value.setValue(propertiesMap.value.default)

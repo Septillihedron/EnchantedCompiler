@@ -37,7 +37,7 @@ class Input {
             // incorrectTypeSetError(val)
             // return
         // }
-        this.input.value = (val).toString()
+        this.input.value = val.toString()
     }
 
     focus() {
