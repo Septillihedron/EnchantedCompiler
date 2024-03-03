@@ -188,3 +188,10 @@ class ConstText {
 function constText(text) {
     return new ConstText(text)
 }
+
+/**
+ * @deprecated
+ */
+function incomplete() {
+    return constText("# not done yet")
+}

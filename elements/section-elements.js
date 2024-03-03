@@ -118,6 +118,87 @@ function section(values) {
     return new Section(values)
 }
 
+/**
+ * @implements {YamlElement<unknown[]>}
+ */
+class ArraySection {
+    /**
+     * @param {(() => YamlElement<unknown>)} addfn
+     */
+    constructor(addfn) {
+        /** @type {YamlElement<unknown>[]} */
+        this.values = []
+        this.container = document.createElement("ul")
+        this.container.classList.add("array")
+
+        this.addButton = document.createElement("button")
+        this.addButton.innerText = "+"
+        this.addButton.onclick = () => {
+            const element = addfn()
+            this.addChild(element)
+        }
+        
+    }
+
+    /**
+     * @param {HTMLElement} parent
+     */
+    toHTML(parent) {
+        parent.appendChild(this.addButton)
+        parent.appendChild(this.container)
+    }
+
+    toYaml() {
+        return this.values
+            .map(item => "\r\n- " + indent(item.toYaml()).trimStart())
+            .join("")
+    }
+
+    getValue() {
+        return this.values.map(item => item.getValue())
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (val == null) return
+        if (!Array.isArray(val)) {
+            incorrectTypeSetError(val)
+            return
+        }
+        val.forEach((val, index) => {
+            this.values[index].setValue(val)
+        })
+    }
+
+    focus() {
+        for (let i=0; i<this.values.length; i++) {
+            if (this.values[i].focus()) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * @param {YamlElement<unknown>} element
+     */
+    addChild(element) {
+        const lastElement = this.values[this.values.length-1]
+        this.values.push(element)
+        const li = document.createElement("li")
+        this.container.appendChild(li)
+        element.toHTML(li)
+        element.focus()
+    }
+
+    clearChildren() {
+        this.values = []
+        this.container.replaceChildren()
+    }
+}
+
 class PropertiesMap extends Section {
     /**
      * @param {Entry[]} values
@@ -283,7 +364,13 @@ function compileProperty(property) {
         case "range":
             return new RangeInput()
         case "array":
-            return constText("# not done yet")
+            return new ArraySection(() => {
+                if (typeof property.items === "object") return compileProperty(property.items)
+                if (docs.categories.types.includes(property.items)) {
+                    return compileTypeString(/** @type {import("../docs.js").NormalPropertyTypes} */ (property.items))
+                }
+                return compileProperty(/** @type {any} */ ({ type: property.items }))
+            })
         case "record":
             return new PropertiesMap([], () => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
         case "object":
