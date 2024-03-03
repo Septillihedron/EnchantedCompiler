@@ -17,13 +17,19 @@ const createDefaultDamageModifier = () => entry("damagemodifier", new DocItemSec
 
 const createDefaultReward = () => entry("reward", new DocItemSection("rewards"))
 
+/** @type {import("./docs").Property} */
+const p = {
+    type: "string",
+    required: true,
+    description: "The coloured name that will appear ingame. \n\nDefaults to Boss name",
+}
 const root = entry(input("exampleboss"), section([
     entry("colouredName", input("<red>Exampleboss")),
     entry("description", input("A description fit for an example")),
     createDefaultDamageModifier(),
-    entry("entity", constText("# not done yet")),
+    entry("entity", compileTypeString("EntityData")),
     createDefaultReward(),
-    entry("bossbar", constText("# not done yet")),
+    entry("bossbar", compileTypeString("BossBarData")),
     entry("skills", new PropertiesMap([], createDefaultSkill))
 ]))
 
