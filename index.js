@@ -26,10 +26,11 @@ const p = {
 const root = entry(input("exampleboss"), section([
     entry("colouredName", input("<red>Exampleboss")),
     entry("description", input("A description fit for an example")),
-    createDefaultDamageModifier(),
+    entry("autospawn", compileTypeString("SpawnData")),
     entry("entity", compileTypeString("EntityData")),
-    createDefaultReward(),
     entry("bossbar", compileTypeString("BossBarData")),
+    createDefaultDamageModifier(),
+    createDefaultReward(),
     entry("skills", new PropertiesMap([], createDefaultSkill))
 ]))
 
