@@ -34,9 +34,9 @@ class Section {
 
         this.generator = values
         /* create button */ {
-            const button = document.createElement("button")
-			button.innerText = "+"
-            button.onclick = () => {
+            this.button = document.createElement("button")
+			this.button.innerText = "+"
+            this.button.onclick = () => {
                 this.container.replaceChildren()
                 if (!this.generator) {
                     console.trace("generator is undefined")
@@ -44,7 +44,6 @@ class Section {
                 }
                 this.generator().forEach(this.addChild.bind(this))
             }
-            this.container.appendChild(button)
         }
         
     }
@@ -53,6 +52,7 @@ class Section {
      * @param {HTMLElement} parent
      */
     toHTML(parent) {
+        if (this.button) parent.appendChild(this.button)
         parent.appendChild(this.container)
     }
 
@@ -97,7 +97,7 @@ class Section {
     addChild(element) {
         const lastElement = this.values[this.values.length-1]
         if (lastElement != undefined) {
-            if (!(lastElement.value instanceof Section)) {
+            if (!(lastElement.value instanceof Section || lastElement.value instanceof ArraySection)) {
                 this.container.appendChild(document.createElement("br"))
             }
         }
