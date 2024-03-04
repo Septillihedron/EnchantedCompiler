@@ -81,9 +81,11 @@ function save() {
 }
 
 function load() {
-    const save = JSON.parse(localStorage.getItem("autosave"))
+    const save = localStorage.getItem("autosave")
+    if (!save) return
+    const json = JSON.parse(save)
     root = makeRoot()
-    root.setValue(save)
+    root.setValue(json)
     render()
 }
 
