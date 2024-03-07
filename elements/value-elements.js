@@ -140,7 +140,7 @@ function intInput(def) {
     return elem
 }
 
-const floatRegex = /^[\+\-]?((\d+(\.\d+)?)(e[\+\-][0-9]+))|(.inf)?$/
+const floatRegex = /^([\+\-]?((\d+(\.\d+)?)|(\.inf)))$/
 /**
  * @param {number | string} def
  */
