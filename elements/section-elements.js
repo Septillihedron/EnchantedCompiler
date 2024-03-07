@@ -398,9 +398,10 @@ function compileProperty(property) {
                 return new EnumInput(property.enum, property.default ?? "")
             }
             return input(property.default ?? "text")
-        case "number": // fallthrough
+        case "number": 
+            return numInput(property.default ?? 0)
         case "integer":
-            return input(property.default?.toString() ?? "0")
+            return intInput(property.default ?? 0)
         case "boolean":
             return new EnumInput(booleanEnum, property.default?.toString() ?? "")
         case "range":
