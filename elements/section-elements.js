@@ -33,18 +33,37 @@ class Section {
         }
 
         this.generator = values
-        /* create button */ {
-            this.button = document.createElement("button")
-			this.button.innerText = "+"
-            this.button.onclick = () => {
-                this.container.replaceChildren()
-                if (!this.generator) {
-                    console.trace("generator is undefined")
-                    return
-                }
-                this.generator().forEach(this.addChild.bind(this))
+        this.makeGenerateButton()
+        
+    }
+
+    makeGenerateButton() {
+        this.button = document.createElement("button")
+        this.button.innerText = "+"
+
+        const generateEntries = () => {
+            if (!this.generator || !this.button) {
+                console.trace("generator is undefined")
+                return
             }
+            this.container.replaceChildren()
+            this.generator().forEach(this.addChild.bind(this))
+            this.button.innerText = "x"
         }
+        const removeEntries = () => {
+            this.container.replaceChildren()
+            if (this.button) this.button.innerText = "+"
+        }
+
+        const buttonFunctions = [
+            generateEntries.bind(this), 
+            removeEntries.bind(this),
+        ]
+        let currentFunctionIndex = 0
+        this.button.addEventListener("click", () => {
+            buttonFunctions[currentFunctionIndex]()
+            currentFunctionIndex = 1-currentFunctionIndex
+        })
         
     }
 
