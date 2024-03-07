@@ -8,7 +8,7 @@ const booleanEnum = ["true", "false"]
  */
 function compileProperty(property) {
     if (typeof property.type != "string") {
-        return constText("# not done yet")
+        return new MultiType(property)
     }
     switch(property.type) {
         case "string":

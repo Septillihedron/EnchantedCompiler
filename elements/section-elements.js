@@ -381,3 +381,90 @@ function entry(key, value) {
     if (typeof key === "string") key = constText(key)
     return new Entry(key, value)
 }
+
+/**
+ * @typedef {import("../docs.js").PropertyTypes} PropertyTypes
+ */
+/**
+ * @typedef {import("../docs.js").NakedProperty} NakedProperty
+ */
+
+/**
+ * @implements {YamlElement<[string, unknown]>}
+ */
+class MultiType {
+
+    /**
+     * @type {{name: PropertyTypes, type: YamlElement<unknown>}[]}
+     */
+    possibleTypes
+    /**
+     * @type {{name: PropertyTypes, type: YamlElement<unknown>}}
+     */
+    selectedType
+
+    constructor(multiType) {
+        const {type: types, ...typeData} = multiType
+        this.possibleTypes = types
+            .map(type => {
+                const compiled = compileProperty({...typeData, type})
+                return {name: type, type: compiled}
+            })
+        this.container = document.createElement("div")
+        this.setType(this.possibleTypes[0].name)
+
+        this.changeTypeButton = document.createElement("button")
+        this.changeTypeButton.innerText = "*"
+        this.changeTypeButton.addEventListener("click", (e) => {
+            // temporary
+            const currIndex = this.possibleTypes.findIndex(x => x === this.selectedType)
+            const nextIndex = (currIndex + 1) % this.possibleTypes.length
+            this.setType(this.possibleTypes[nextIndex].name)
+        })
+
+    }
+
+    setType(typeName) {
+        const type = this.possibleTypes.find(type => type.name === typeName)
+        if (!type) {
+            console.trace("Invalid type:", typeName)
+            return
+        }
+        this.selectedType = type
+        this.container.replaceChildren()
+        this.selectedType.type.toHTML(this.container)
+    }
+
+    /**
+     * @param {HTMLElement} parent
+     */
+    toHTML(parent) {
+        parent.appendChild(this.changeTypeButton)
+        parent.appendChild(this.container)
+    }
+
+    toYaml() {
+        return this.selectedType.type.toYaml()
+    }
+
+    getValue() {
+        return /** @type {[PropertyTypes, unknown]} */ ([this.selectedType.name, this.selectedType.type.getValue()])
+    }
+
+    /**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        if (val == null) return
+        if (!Array.isArray(val)) {
+            incorrectTypeSetError(val)
+            return
+        }
+        this.setType(val[0])
+        this.selectedType.type.setValue(val[1])
+    }
+
+    focus() {
+        return this.selectedType.type.focus()
+    }
+}
