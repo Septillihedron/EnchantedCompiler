@@ -1,1107 +1,1107 @@
 /** @type {import("./docs").Schema} */
 const docs = {
-    "triggers": {
-        "DAMAGEDENTITY": {
-            "description": "Triggers when the user damage an entity. \nThe target entity will be set as the damaged entity",
-            "available": true,
-            "requireMode": true
+    triggers: {
+        DAMAGEDENTITY: {
+            description: "Triggers when the user damage an entity. \nThe target entity will be set as the damaged entity",
+            available: true,
+            requireMode: true
         },
-        "DAMAGEDBYENTITY": {
-            "description": "Triggers when an entity damages the user. \nThe target entity will be set as the damaging entity",
-            "available": true,
-            "requireMode": true
+        DAMAGEDBYENTITY: {
+            description: "Triggers when an entity damages the user. \nThe target entity will be set as the damaging entity",
+            available: true,
+            requireMode: true
         },
-        "DAMAGEDBYPROJECTILE": {
-            "description": "Triggers when an entity damages the user. \nIf the damaging entity is a projectile, the target entity will be set as the source of the projectile. \nOtherwise, The target entity will be set as the damaging entity",
-            "properties": {
-                "onlyProjectiles": {
-                    "description": "If true, will only trigger if the damaging entity is a projectile. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+        DAMAGEDBYPROJECTILE: {
+            description: "Triggers when an entity damages the user. \nIf the damaging entity is a projectile, the target entity will be set as the source of the projectile. \nOtherwise, The target entity will be set as the damaging entity",
+            properties: {
+                onlyProjectiles: {
+                    description: "If true, will only trigger if the damaging entity is a projectile. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "DAMAGEDENTITYWITHPROJECTILE": {
-            "description": "Triggers when the user damages an entity directly or with a projectile. \nThe target entity will be set as the damaged entity",
-            "properties": {
-                "onlyProjectiles": {
-                    "description": "If true, will only trigger if the damage is from a projectile. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+        DAMAGEDENTITYWITHPROJECTILE: {
+            description: "Triggers when the user damages an entity directly or with a projectile. \nThe target entity will be set as the damaged entity",
+            properties: {
+                onlyProjectiles: {
+                    description: "If true, will only trigger if the damage is from a projectile. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "LAUNCHPROJECTILE": {
-            "description": "Triggers when the user launched a projectile. \nThe target entity will be set as the launched projectile",
-            "available": true,
-            "requireMode": true
+        LAUNCHPROJECTILE: {
+            description: "Triggers when the user launched a projectile. \nThe target entity will be set as the launched projectile",
+            available: true,
+            requireMode: true
         },
-        "PROJECTILEHIT": {
-            "description": "Triggers when a projectile shot by the user landed and/or hits an entity. \nThe target entity will be set as the projectile",
-            "available": true,
-            "requireMode": true
+        PROJECTILEHIT: {
+            description: "Triggers when a projectile shot by the user landed and/or hits an entity. \nThe target entity will be set as the projectile",
+            available: true,
+            requireMode: true
         },
-        "DAMAGED": {
-            "description": "Triggers when the user gets damaged",
-            "properties": {
-                "causes": {
-                    "description": "The causes of damage. Defaults to all damage causes",
-                    "required": false,
-                    "type": "array",
-                    "items": "damageCause",
-                    "default": []
+        DAMAGED: {
+            description: "Triggers when the user gets damaged",
+            properties: {
+                causes: {
+                    description: "The causes of damage. Defaults to all damage causes",
+                    required: false,
+                    type: "array",
+                    items: "damageCause",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SNEAK": {
-            "description": "Triggers when the user sneaks",
-            "available": true,
-            "requireMode": true
+        SNEAK: {
+            description: "Triggers when the user sneaks",
+            available: true,
+            requireMode: true
         },
-        "TOGGLEGLIDE": {
-            "description": "Triggers when the user glides or unglides",
-            "available": true,
-            "requireMode": true
+        TOGGLEGLIDE: {
+            description: "Triggers when the user glides or unglides",
+            available: true,
+            requireMode: true
         },
-        "PLAYERJUMP": {
-            "description": "Triggers when the user jumps",
-            "available": true,
-            "requireMode": true
+        PLAYERJUMP: {
+            description: "Triggers when the user jumps",
+            available: true,
+            requireMode: true
         },
-        "LOOP": {
-            "description": "Triggers periodically every couple of ticks",
-            "properties": {
-                "period": {
-                    "description": "The delay period in seconds (1 = 20 ticks). \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+        LOOP: {
+            description: "Triggers periodically every couple of ticks",
+            properties: {
+                period: {
+                    description: "The delay period in seconds (1 = 20 ticks). \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "COMBAT": {
-            "description": "Triggers when the user damages an entity or gets damaged by an entity. \nThe target entity will be set as the damaged entity or the damaging entity respectively",
-            "available": true,
-            "requireMode": true
+        COMBAT: {
+            description: "Triggers when the user damages an entity or gets damaged by an entity. \nThe target entity will be set as the damaged entity or the damaging entity respectively",
+            available: true,
+            requireMode: true
         },
-        "DEATH": {
-            "description": "Triggers when the user is killed. \nThe target entity will be set as the killer if it exist",
-            "available": true,
-            "requireMode": true
+        DEATH: {
+            description: "Triggers when the user is killed. \nThe target entity will be set as the killer if it exist",
+            available: true,
+            requireMode: true
         },
-        "SPAWN": {
-            "description": "Triggers when the user spawns",
-            "available": true,
-            "requireMode": true
+        SPAWN: {
+            description: "Triggers when the user spawns",
+            available: true,
+            requireMode: true
         },
-        "TARGET": {
-            "description": "Triggers when the user targets an entity. \nThe target entity will be set as the target",
-            "available": true,
-            "requireMode": true
+        TARGET: {
+            description: "Triggers when the user targets an entity. \nThe target entity will be set as the target",
+            available: true,
+            requireMode: true
         },
-        "TARGETED": {
-            "description": "Triggers when the user is targeted by an entity. \nThe target entity will be set as the entity that targeted the user",
-            "available": true,
-            "requireMode": true
+        TARGETED: {
+            description: "Triggers when the user is targeted by an entity. \nThe target entity will be set as the entity that targeted the user",
+            available: true,
+            requireMode: true
         },
-        "VEHICLE": {
-            "description": "Deprecated, use ENTERVEHICLE instead. \nTriggers when the user enters a vehicle. \nThe target entity will be set as the vehicle",
-            "available": true,
-            "requireMode": true
+        VEHICLE: {
+            description: "Deprecated, use ENTERVEHICLE instead. \nTriggers when the user enters a vehicle. \nThe target entity will be set as the vehicle",
+            available: true,
+            requireMode: true
         },
-        "ENTERVEHICLE": {
-            "description": "Triggers when the user enters a vehicle. \nThe target entity will be set as the vehicle",
-            "available": true,
-            "requireMode": true
+        ENTERVEHICLE: {
+            description: "Triggers when the user enters a vehicle. \nThe target entity will be set as the vehicle",
+            available: true,
+            requireMode: true
         },
-        "BECOMEVEHICLE": {
-            "description": "Triggers when an entity enters the user, thus using the user as a vehicle. \nThe target entity will be set as the entering entity",
-            "available": true,
-            "requireMode": true
+        BECOMEVEHICLE: {
+            description: "Triggers when an entity enters the user, thus using the user as a vehicle. \nThe target entity will be set as the entering entity",
+            available: true,
+            requireMode: true
         },
-        "EXITVEHICLE": {
-            "description": "Triggers when the user exits a vehicle. \nThe target entity will be set as the vehicle",
-            "available": true,
-            "requireMode": true
+        EXITVEHICLE: {
+            description: "Triggers when the user exits a vehicle. \nThe target entity will be set as the vehicle",
+            available: true,
+            requireMode: true
         },
-        "PLAYERJOIN": {
-            "description": "Triggers when the user joins the server",
-            "available": true,
-            "requireMode": true
+        PLAYERJOIN: {
+            description: "Triggers when the user joins the server",
+            available: true,
+            requireMode: true
         },
-        "PLAYERQUIT": {
-            "description": "Triggers when the user exits the server",
-            "available": true,
-            "requireMode": true
+        PLAYERQUIT: {
+            description: "Triggers when the user exits the server",
+            available: true,
+            requireMode: true
         },
-        "PROJECTILECOMBAT": {
-            "description": "Acts like the DAMAGEDBYPROJECTILE and DAMAGEDENTITYWITHPROJECTILE triggers combined",
-            "properties": {
-                "onlyProjectiles": {
-                    "description": "If true, will only trigger if the damage is from a projectile. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+        PROJECTILECOMBAT: {
+            description: "Acts like the DAMAGEDBYPROJECTILE and DAMAGEDENTITYWITHPROJECTILE triggers combined",
+            properties: {
+                onlyProjectiles: {
+                    description: "If true, will only trigger if the damage is from a projectile. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "TAME": {
-            "description": "Triggers when the user tames an entity. \nThe target entity will be set as the tamed entity",
-            "available": true,
-            "requireMode": true
+        TAME: {
+            description: "Triggers when the user tames an entity. \nThe target entity will be set as the tamed entity",
+            available: true,
+            requireMode: true
         },
-        "INTERACT": {
-            "description": "Triggers when the user interacts with a block or air",
-            "properties": {
-                "actions": {
-                    "description": "The interactions that will trigger this trigger. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "action",
-                    "default": []
+        INTERACT: {
+            description: "Triggers when the user interacts with a block or air",
+            properties: {
+                actions: {
+                    description: "The interactions that will trigger this trigger. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "action",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "KILL": {
-            "description": "Triggers when the user kills an entity. \nThe target entity will be set as the killed entity",
-            "available": true,
-            "requireMode": true
+        KILL: {
+            description: "Triggers when the user kills an entity. \nThe target entity will be set as the killed entity",
+            available: true,
+            requireMode: true
         },
-        "POTIONEFFECT": {
-            "description": "Triggers when a potion effect is applied to the user",
-            "properties": {
-                "effects": {
-                    "description": "The potion effects that will trigger this trigger. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "potion",
-                    "default": []
+        POTIONEFFECT: {
+            description: "Triggers when a potion effect is applied to the user",
+            properties: {
+                effects: {
+                    description: "The potion effects that will trigger this trigger. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "potion",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "INTERACTENTITY": {
-            "description": "Triggers when the user right clicks an entity. \nThe target entity will be set as the interacted entity",
-            "available": true,
-            "requireMode": true
+        INTERACTENTITY: {
+            description: "Triggers when the user right clicks an entity. \nThe target entity will be set as the interacted entity",
+            available: true,
+            requireMode: true
         },
-        "RIPTIDE": {
-            "description": "Triggers when the user activates the riptide enchantment",
-            "available": true,
-            "requireMode": true
+        RIPTIDE: {
+            description: "Triggers when the user activates the riptide enchantment",
+            available: true,
+            requireMode: true
         },
-        "CHANGEMAINHAND": {
-            "description": "Triggers when the user changes where the main hand slot is (i.e. scrolls or hits a number). \nThe item will be set as the item in the new slot",
-            "available": true,
-            "requireMode": true
+        CHANGEMAINHAND: {
+            description: "Triggers when the user changes where the main hand slot is (i.e. scrolls or hits a number). \nThe item will be set as the item in the new slot",
+            available: true,
+            requireMode: true
         },
-        "EQUIPARMOR": {
-            "description": "Triggers when the user equips an armour. \nThe item will be set as the equiped item",
-            "available": true,
-            "requireMode": true
+        EQUIPARMOR: {
+            description: "Triggers when the user equips an armour. \nThe item will be set as the equiped item",
+            available: true,
+            requireMode: true
         },
-        "SPRINT": {
-            "description": "Triggers when the user starts or stops sprinting",
-            "available": true,
-            "requireMode": true
+        SPRINT: {
+            description: "Triggers when the user starts or stops sprinting",
+            available: true,
+            requireMode: true
         },
-        "BLOCKBREAK": {
-            "description": "Triggers when the user breaks a block. \nThe location will be set as the location of the broken block",
-            "available": true,
-            "requireMode": true
+        BLOCKBREAK: {
+            description: "Triggers when the user breaks a block. \nThe location will be set as the location of the broken block",
+            available: true,
+            requireMode: true
         },
-        "TOTEM": {
-            "description": "Triggers when the user activates a totem. \nThe target entity will be set as the killer of the user",
-            "available": true,
-            "requireMode": true
+        TOTEM: {
+            description: "Triggers when the user activates a totem. \nThe target entity will be set as the killer of the user",
+            available: true,
+            requireMode: true
         },
-        "CONSUME": {
-            "description": "Triggers when the user consumed an item",
-            "available": true,
-            "requireMode": true
+        CONSUME: {
+            description: "Triggers when the user consumed an item",
+            available: true,
+            requireMode: true
         },
-        "MOVE": {
-            "description": "Triggers when the user moves. \nThe location will be set as the location the user moves to",
-            "available": true,
-            "requireMode": true
+        MOVE: {
+            description: "Triggers when the user moves. \nThe location will be set as the location the user moves to",
+            available: true,
+            requireMode: true
         },
-        "SWAPHANDS": {
-            "description": "Triggers when the user swaps hands",
-            "available": true,
-            "requireMode": true
+        SWAPHANDS: {
+            description: "Triggers when the user swaps hands",
+            available: true,
+            requireMode: true
         }
     },
-    "conditions": {
-        "HEALTH": {
-            "description": "Checks if the hp percentage of the user or target entity is in the range",
-            "supportedModes": [
+    conditions: {
+        HEALTH: {
+            description: "Checks if the hp percentage of the user or target entity is in the range",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "healthPercentange": {
-                    "description": "The health percentage range to check againts. \nDefaults to \"0 - 100\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "0 - 100"
+            properties: {
+                healthPercentange: {
+                    description: "The health percentage range to check againts. \nDefaults to \"0 - 100\"",
+                    required: false,
+                    type: "range",
+                    default: "0 - 100"
                 },
-                "minimumHealthPercentage": {
-                    "description": "Deprecated, use `healthPercentange` instead. The minimum hp percentage. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "min": 0,
-                    "max": 100,
-                    "default": 0
+                minimumHealthPercentage: {
+                    description: "Deprecated, use `healthPercentange` instead. The minimum hp percentage. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    min: 0,
+                    max: 100,
+                    default: 0
                 },
-                "maximumHealthPercentage": {
-                    "description": "Deprecated, use `healthPercentange` instead. The maximum hp percentage. \nDefaults to 100",
-                    "required": false,
-                    "type": "number",
-                    "min": 0,
-                    "max": 100,
-                    "default": 100
+                maximumHealthPercentage: {
+                    description: "Deprecated, use `healthPercentange` instead. The maximum hp percentage. \nDefaults to 100",
+                    required: false,
+                    type: "number",
+                    min: 0,
+                    max: 100,
+                    default: 100
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "CHANCE": {
-            "description": "A chance for this condition to be true",
-            "supportedModes": [
+        CHANCE: {
+            description: "A chance for this condition to be true",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "properties": {
-                "chance": {
-                    "description": "The chance that is used. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "min": 0,
-                    "max": 1,
-                    "default": 1
+            properties: {
+                chance: {
+                    description: "The chance that is used. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    min: 0,
+                    max: 1,
+                    default: 1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "COOLDOWN": {
-            "description": "Checks if the time since the get last effect triggered is after the cooldown",
-            "supportedModes": [
+        COOLDOWN: {
+            description: "Checks if the time since the get last effect triggered is after the cooldown",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown time that is used in seconds. \nDefaults to 10",
-                    "required": false,
-                    "type": "number",
-                    "default": 10
+            properties: {
+                cooldown: {
+                    description: "The cooldown time that is used in seconds. \nDefaults to 10",
+                    required: false,
+                    type: "number",
+                    default: 10
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ENTITY": {
-            "description": "Checks the target entity against this whitelist/blacklist",
-            "supportedModes": [
+        ENTITY: {
+            description: "Checks the target entity against this whitelist/blacklist",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "whitelist": {
-                    "description": "If true, the entities property will whitelist. If false, the entities property will blacklist. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                whitelist: {
+                    description: "If true, the entities property will whitelist. If false, the entities property will blacklist. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "entities": {
-                    "description": "The list of entities to be whitelisted/blacklisted. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "entity",
-                    "default": []
+                entities: {
+                    description: "The list of entities to be whitelisted/blacklisted. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "entity",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SIZE": {
-            "description": "Checks if the size of the user or target entity is in the range (for slimes, magma cubes, and phantoms)",
-            "supportedModes": [
+        SIZE: {
+            description: "Checks if the size of the user or target entity is in the range (for slimes, magma cubes, and phantoms)",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "minimumSize": {
-                    "description": "The minimum size. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+            properties: {
+                minimumSize: {
+                    description: "The minimum size. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "maximumSize": {
-                    "description": "The maximum size. \nDefaults to 4",
-                    "required": false,
-                    "type": "integer",
-                    "default": 4
+                maximumSize: {
+                    description: "The maximum size. \nDefaults to 4",
+                    required: false,
+                    type: "integer",
+                    default: 4
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "NOT": {
-            "description": "Inverts the inside condition",
-            "supportedModes": [
+        NOT: {
+            description: "Inverts the inside condition",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION",
                 "ITEM"
             ],
-            "properties": {
-                "condition": {
-                    "description": "The condition to invert",
-                    "required": true,
-                    "type": "condition"
+            properties: {
+                condition: {
+                    description: "The condition to invert",
+                    required: true,
+                    type: "condition"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SNEAK": {
-            "description": "Checks if the player or entity is shifting",
-            "supportedModes": [
+        SNEAK: {
+            description: "Checks if the player or entity is shifting",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "sneak": {
-                    "description": "If true, checks if the entity is shifting. If false, it checks the opposite. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                sneak: {
+                    description: "If true, checks if the entity is shifting. If false, it checks the opposite. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "TIME": {
-            "description": "Checks the relative ingame time (time of day) of the world that the player is in against the range. Measured in milli-hours or hours*1000",
-            "supportedModes": [
+        TIME: {
+            description: "Checks the relative ingame time (time of day) of the world that the player is in against the range. Measured in milli-hours or hours*1000",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "properties": {
-                "minimumTime": {
-                    "description": "Deprecated. The minimum time. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+            properties: {
+                minimumTime: {
+                    description: "Deprecated. The minimum time. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "maximumTime": {
-                    "description": "Deprecated. The maximum time. \nDefaults to 24000",
-                    "required": false,
-                    "type": "integer",
-                    "default": 24000
+                maximumTime: {
+                    description: "Deprecated. The maximum time. \nDefaults to 24000",
+                    required: false,
+                    type: "integer",
+                    default: 24000
                 },
-                "time": {
-                    "description": "A range for time. \nDefaults to \"0 - 24000\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "0 - 24000"
+                time: {
+                    description: "A range for time. \nDefaults to \"0 - 24000\"",
+                    required: false,
+                    type: "range",
+                    default: "0 - 24000"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ONGROUND": {
-            "description": "Checks if the user or target entity is on the ground",
-            "supportedModes": [
+        ONGROUND: {
+            description: "Checks if the user or target entity is on the ground",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "grounded": {
-                    "description": "If true, checks if the entity is on the ground. If false, it checks the opposite. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                grounded: {
+                    description: "If true, checks if the entity is on the ground. If false, it checks the opposite. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "GLIDING": {
-            "description": "Checks if the user gliding",
-            "supportedModes": [
+        GLIDING: {
+            description: "Checks if the user gliding",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "properties": {
-                "shouldGlide": {
-                    "description": "Deprecated, use `glide` instead. If true, checks if the entity is gliding. If false, it checks the opposite. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                shouldGlide: {
+                    description: "Deprecated, use `glide` instead. If true, checks if the entity is gliding. If false, it checks the opposite. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "glide": {
-                    "description": "If true, checks if the entity is gliding. If false, it checks the opposite. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                glide: {
+                    description: "If true, checks if the entity is gliding. If false, it checks the opposite. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BIOME": {
-            "description": "Checks if the biome that the user, target entity, or location is in is one of the listed biomes",
-            "supportedModes": [
+        BIOME: {
+            description: "Checks if the biome that the user, target entity, or location is in is one of the listed biomes",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ],
-            "properties": {
-                "biomes": {
-                    "description": "The list of biomes. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "biome",
-                    "default": []
+            properties: {
+                biomes: {
+                    description: "The list of biomes. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "biome",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "COMPARISON": {
-            "description": "Compares a variable",
-            "available": false,
-            "properties": {
-                "comparison": {
-                    "description": "The comparison to use. \nDefaults to \"EQUALS\"",
-                    "required": false,
-                    "type": "comparison",
-                    "default": "EQUALS"
+        COMPARISON: {
+            description: "Compares a variable",
+            available: false,
+            properties: {
+                comparison: {
+                    description: "The comparison to use. \nDefaults to \"EQUALS\"",
+                    required: false,
+                    type: "comparison",
+                    default: "EQUALS"
                 },
-                "value": {
-                    "description": "The value to compare against. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+                value: {
+                    description: "The value to compare against. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 }
             },
-            "requireMode": true
+            requireMode: true
         },
-        "METADATA": {
-            "description": "Compares a user defined variable",
-            "available": true,
-            "properties": {
-                "comparison": {
-                    "description": "The comparison to use. \nDefaults to \"EQUALS\"",
-                    "required": false,
-                    "type": "comparison",
-                    "default": "EQUALS"
+        METADATA: {
+            description: "Compares a user defined variable",
+            available: true,
+            properties: {
+                comparison: {
+                    description: "The comparison to use. \nDefaults to \"EQUALS\"",
+                    required: false,
+                    type: "comparison",
+                    default: "EQUALS"
                 },
-                "value": {
-                    "description": "The value to compare against. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+                value: {
+                    description: "The value to compare against. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 },
-                "variable": {
-                    "description": "The variable to compare",
-                    "required": true,
-                    "type": "string"
+                variable: {
+                    description: "The variable to compare",
+                    required: true,
+                    type: "string"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "NPC": {
-            "description": "Checks if the user or target entity is an npc",
-            "supportedModes": [
+        NPC: {
+            description: "Checks if the user or target entity is an npc",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "isNPC": {
-                    "description": "If true, checks if the entity is an npc. If false, it checks the opposite. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+            properties: {
+                isNPC: {
+                    description: "If true, checks if the entity is an npc. If false, it checks the opposite. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "WEATHER": {
-            "description": "Checks if the world that the user is in has a storm",
-            "supportedModes": [
+        WEATHER: {
+            description: "Checks if the world that the user is in has a storm",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "INBLOCK": {
-            "description": "Checks if the user or target entity is in one of the listed blocks",
-            "supportedModes": [
+        INBLOCK: {
+            description: "Checks if the user or target entity is in one of the listed blocks",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "blocks": {
-                    "description": "The list of blocks. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": []
+            properties: {
+                blocks: {
+                    description: "The list of blocks. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "WORLD": {
-            "description": "Checks if the world that the user, target entity, or location is in is one of the listed worlds",
-            "supportedModes": [
+        WORLD: {
+            description: "Checks if the world that the user, target entity, or location is in is one of the listed worlds",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ],
-            "properties": {
-                "worlds": {
-                    "description": "The list of worlds. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "world",
-                    "default": []
+            properties: {
+                worlds: {
+                    description: "The list of worlds. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "world",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "TAMED": {
-            "description": "Checks if the target entity is tamed",
-            "supportedModes": [
+        TAMED: {
+            description: "Checks if the target entity is tamed",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "checkOwner": {
-                    "description": "If true, also checks if the user is the owner. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                checkOwner: {
+                    description: "If true, also checks if the user is the owner. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "FLYING": {
-            "description": "Checks if the user or target entity is flying",
-            "supportedModes": [
+        FLYING: {
+            description: "Checks if the user or target entity is flying",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "FLY": {
-            "description": "Checks if the user or target entity is flying. Alias for FLYING",
-            "supportedModes": [
+        FLY: {
+            description: "Checks if the user or target entity is flying. Alias for FLYING",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "HEIGHT": {
-            "description": "Checks if the user or target entity y coordinate is in the range",
-            "supportedModes": [
+        HEIGHT: {
+            description: "Checks if the user or target entity y coordinate is in the range",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "height": {
-                    "description": "The range in blocks. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+            properties: {
+                height: {
+                    description: "The range in blocks. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BLOCK": {
-            "description": "Checks if the location has one of the listed blocks",
-            "supportedModes": [
+        BLOCK: {
+            description: "Checks if the location has one of the listed blocks",
+            supportedModes: [
                 "ALL",
                 "LOCATION"
             ],
-            "properties": {
-                "materials": {
-                    "description": "The list of blocks. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": []
+            properties: {
+                materials: {
+                    description: "The list of blocks. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ITEM": {
-            "description": "Checks the item or the item in the declared slot against the declared item",
-            "supportedModes": [
+        ITEM: {
+            description: "Checks the item or the item in the declared slot against the declared item",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "ITEM"
             ],
-            "properties": {
-                "slot": {
-                    "description": "The slot to check. \nDefaults to \"HAND\"",
-                    "required": false,
-                    "type": [
+            properties: {
+                slot: {
+                    description: "The slot to check. \nDefaults to \"HAND\"",
+                    required: false,
+                    type: [
                         "equipmentSlot",
                         "integer"
                     ],
-                    "default": "HAND"
+                    default: "HAND"
                 },
-                "item": {
-                    "description": "The item to check against",
-                    "required": true,
-                    "type": "ItemComparisonData"
+                item: {
+                    description: "The item to check against",
+                    required: true,
+                    type: "ItemComparisonData"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "OR": {
-            "description": "ORs all the conditions inside",
-            "supportedModes": [
+        OR: {
+            description: "ORs all the conditions inside",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION",
                 "ITEM"
             ],
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The conditions to OR. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The conditions to OR. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 }
             },
-            "available": true
+            available: true
         },
-        "VISIBILITY": {
-            "description": "Checks if the user has a direct line of sight to the target entity",
-            "supportedModes": [
+        VISIBILITY: {
+            description: "Checks if the user has a direct line of sight to the target entity",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "maxDistance": {
-                    "description": "The maximum distance to the target entity. \nDefaults to 16",
-                    "required": false,
-                    "type": "number",
-                    "default": 16
+            properties: {
+                maxDistance: {
+                    description: "The maximum distance to the target entity. \nDefaults to 16",
+                    required: false,
+                    type: "number",
+                    default: 16
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "TEMPERATURE": {
-            "description": "Checks if the location or the location of the user or target entity is in the range",
-            "supportedModes": [
+        TEMPERATURE: {
+            description: "Checks if the location or the location of the user or target entity is in the range",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ],
-            "properties": {
-                "temperature": {
-                    "description": "The range of tempreture from -1 to 1. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+            properties: {
+                temperature: {
+                    description: "The range of tempreture from -1 to 1. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "DISTANCE": {
-            "description": "Checks if the distance squared between the user and target entity is in the range",
-            "supportedModes": [
+        DISTANCE: {
+            description: "Checks if the distance squared between the user and target entity is in the range",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "distance": {
-                    "description": "The squared distance range in blocks. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+            properties: {
+                distance: {
+                    description: "The squared distance range in blocks. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SHIELDED": {
-            "description": "Checks if the user is blocking",
-            "supportedModes": [
+        SHIELDED: {
+            description: "Checks if the user is blocking",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "WRAPPER": {
-            "description": "Checks if all inside conditions are true",
-            "requireMode": false,
-            "available": false,
-            "properties": {
-                "conditions": {
-                    "description": "The conditions to check. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        WRAPPER: {
+            description: "Checks if all inside conditions are true",
+            requireMode: false,
+            available: false,
+            properties: {
+                conditions: {
+                    description: "The conditions to check. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 }
             }
         },
-        "ITEMWRAPPER": {
-            "description": "Checks if all inside conditions are true. \nThe item will be set as the item in the specified slot of the user or target entity",
-            "requireMode": false,
-            "available": true,
-            "properties": {
-                "conditions": {
-                    "description": "The conditions to check. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        ITEMWRAPPER: {
+            description: "Checks if all inside conditions are true. \nThe item will be set as the item in the specified slot of the user or target entity",
+            requireMode: false,
+            available: true,
+            properties: {
+                conditions: {
+                    description: "The conditions to check. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "slot": {
-                    "description": "The slot for the item. \nDefaults to \"HAND\"",
-                    "required": false,
-                    "type": [
+                slot: {
+                    description: "The slot for the item. \nDefaults to \"HAND\"",
+                    required: false,
+                    type: [
                         "equipmentSlot",
                         "integer"
                     ],
-                    "default": "HAND"
+                    default: "HAND"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ]
         },
-        "SWIMMING": {
-            "description": "Checks if the user or target entity is swimming",
-            "supportedModes": [
+        SWIMMING: {
+            description: "Checks if the user or target entity is swimming",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SPEED": {
-            "description": "Checks whether the speed of the user or target entity is in the range",
-            "supportedModes": [
+        SPEED: {
+            description: "Checks whether the speed of the user or target entity is in the range",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "speed": {
-                    "description": "The speed range to check againts",
-                    "required": true,
-                    "type": "range"
+            properties: {
+                speed: {
+                    description: "The speed range to check againts",
+                    required: true,
+                    type: "range"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SHOOTER": {
-            "description": "Checks whether the shooter of the `OTHER` entity is the `SELF` entity",
-            "supportedModes": [
+        SHOOTER: {
+            description: "Checks whether the shooter of the `OTHER` entity is the `SELF` entity",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "HERO": {
-            "description": "Checks the user or target entity against the list of heroes\n\nOnly available if you have the Superheroes plugin",
-            "supportedModes": [
-                "ALL",
-                "SELF",
-                "OTHER"
-            ],
-            "exclusiveTo": "Superheroes",
-            "properties": {
-                "heroes": {
-                    "description": "The list of heroes. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "string",
-                    "default": []
-                }
-            },
-            "available": true,
-            "requireMode": true
-        },
-        "BOSS": {
-            "description": "Checks if the user or target entity one of the listed bosses\n\nOnly available if you have the EnchantedBosses plugin",
-            "supportedModes": [
+        HERO: {
+            description: "Checks the user or target entity against the list of heroes\n\nOnly available if you have the Superheroes plugin",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "exclusiveTo": "EnchantedBosses",
-            "properties": {
-                "entities": {
-                    "description": "The list of bosses. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "string",
-                    "default": []
+            exclusiveTo: "Superheroes",
+            properties: {
+                heroes: {
+                    description: "The list of heroes. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "string",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SKILLITEM": {
-            "description": "Checks if the user has the skill item in one of the skill item slots\n\nOnly available if you have the EnchantedCombat plugin",
-            "supportedModes": [
+        BOSS: {
+            description: "Checks if the user or target entity one of the listed bosses\n\nOnly available if you have the EnchantedBosses plugin",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "exclusiveTo": "EnchantedCombat",
-            "properties": {
-                "skillItem": {
-                    "description": "The skill item to check for",
-                    "required": true,
-                    "type": "string"
+            exclusiveTo: "EnchantedBosses",
+            properties: {
+                entities: {
+                    description: "The list of bosses. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "string",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ITEMLEVEL": {
-            "description": "Checks if the user has the item level in the range\n\nOnly available if you have the EnchantedCombat plugin",
-            "supportedModes": [
+        SKILLITEM: {
+            description: "Checks if the user has the skill item in one of the skill item slots\n\nOnly available if you have the EnchantedCombat plugin",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "exclusiveTo": "EnchantedCombat",
-            "properties": {
-                "itemLevel": {
-                    "description": "The range of item levels. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+            exclusiveTo: "EnchantedCombat",
+            properties: {
+                skillItem: {
+                    description: "The skill item to check for",
+                    required: true,
+                    type: "string"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
+        },
+        ITEMLEVEL: {
+            description: "Checks if the user has the item level in the range\n\nOnly available if you have the EnchantedCombat plugin",
+            supportedModes: [
+                "ALL",
+                "SELF",
+                "OTHER"
+            ],
+            exclusiveTo: "EnchantedCombat",
+            properties: {
+                itemLevel: {
+                    description: "The range of item levels. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
+                }
+            },
+            available: true,
+            requireMode: true
         }
     },
-    "effects": {
-        "DAMAGE": {
-            "description": "Damages the user or the target entity",
-            "supportedModes": [
+    effects: {
+        DAMAGE: {
+            description: "Damages the user or the target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "damage": {
-                    "description": "The amount damage that will be dealt. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+            properties: {
+                damage: {
+                    description: "The amount damage that will be dealt. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 },
-                "cause": {
-                    "description": "The type of damage that will be dealt. \nDefaults to \"CUSTOM\"",
-                    "required": false,
-                    "type": "damageCause",
-                    "default": "CUSTOM"
+                cause: {
+                    description: "The type of damage that will be dealt. \nDefaults to \"CUSTOM\"",
+                    required: false,
+                    type: "damageCause",
+                    default: "CUSTOM"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "WRAPPER": {
-            "description": "Acts like a trigger",
-            "available": false,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        WRAPPER: {
+            description: "Acts like a trigger",
+            available: false,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 }
             }
         },
-        "AOE": {
-            "description": "Acts like a trigger. \nTriggers for every entity in the range. \nThe target entity will be set to the entity this trigger triggers for",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        AOE: {
+            description: "Acts like a trigger. \nTriggers for every entity in the range. \nThe target entity will be set to the entity this trigger triggers for",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "radius": {
-                    "description": "Half the side length of the box. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+                radius: {
+                    description: "Half the side length of the box. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF"
             ]
         },
-        "VELOCITY": {
-            "description": "Modifies the velocity of the user or target entity. Same as FLING",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        VELOCITY: {
+            description: "Modifies the velocity of the user or target entity. Same as FLING",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "velocity": {
-                    "description": "The number on the right side of the operation. The same as `value`. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                velocity: {
+                    description: "The number on the right side of the operation. The same as `value`. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "component": {
-                    "description": "The component(s) to modify, `ALL` means all components (ex. `XZ` would only modify the X and Z velocities and leave Y unmodified)",
-                    "required": true,
-                    "type": "string",
-                    "pattern": "^(([XYZ]{0,3})|(ALL))$"
+                component: {
+                    description: "The component(s) to modify, `ALL` means all components (ex. `XZ` would only modify the X and Z velocities and leave Y unmodified)",
+                    required: true,
+                    type: "string",
+                    pattern: "^(([XYZ]{0,3})|(ALL))$"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "CANCEL": {
-            "description": "Cancels the event that triggered this effect",
-            "supportedModes": [
+        CANCEL: {
+            description: "Cancels the event that triggered this effect",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "GLIDING": {
-            "description": "Sets the gliding mode of the user or target entity (works even if an Elytra is not equipped)",
-            "supportedModes": [
+        GLIDING: {
+            description: "Sets the gliding mode of the user or target entity (works even if an Elytra is not equipped)",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "glide": {
-                    "description": "If true, makes the user or target entity glide. If false, makes the user or target entity stop gliding. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                glide: {
+                    description: "If true, makes the user or target entity glide. If false, makes the user or target entity stop gliding. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "WAIT": {
-            "description": "Acts like a trigger. \nWaits a duration of time before it triggers",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        WAIT: {
+            description: "Acts like a trigger. \nWaits a duration of time before it triggers",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "delay": {
-                    "description": "The delay time in seconds (1 is 20 ticks). \nDefaults to 1",
-                    "required": true,
-                    "type": "number",
-                    "default": 1
+                delay: {
+                    description: "The delay time in seconds (1 is 20 ticks). \nDefaults to 1",
+                    required: true,
+                    type: "number",
+                    default: 1
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
@@ -1109,881 +1109,881 @@ const docs = {
                 "ITEM"
             ]
         },
-        "POTION": {
-            "description": "Applies the potion effect to the user or target entity",
-            "supportedModes": [
+        POTION: {
+            description: "Applies the potion effect to the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "potion": {
-                    "description": "The potion effect. \nDefaults to {\"type\":\"REGENERATION\",\"potency\":1,\"duration\":10}",
-                    "required": false,
-                    "type": "PotionEffectData",
-                    "default": {
-                        "type": "REGENERATION",
-                        "potency": 1,
-                        "duration": 10
+            properties: {
+                potion: {
+                    description: "The potion effect. \nDefaults to {\"type\":\"REGENERATION\",\"potency\":1,\"duration\":10}",
+                    required: false,
+                    type: "PotionEffectData",
+                    default: {
+                        type: "REGENERATION",
+                        potency: 1,
+                        duration: 10
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "WEB": {
-            "description": "Change the block at target entity for a duration of time, then change it back. Same as BLOCKENTITY",
-            "supportedModes": [
+        WEB: {
+            description: "Change the block at target entity for a duration of time, then change it back. Same as BLOCKENTITY",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "duration": {
-                    "description": "The duration of time that the block will be there in seconds (1 is 20 ticks). If less than 0, the block will not change back. \nDefaults to -1",
-                    "required": false,
-                    "type": "number",
-                    "default": -1
+            properties: {
+                duration: {
+                    description: "The duration of time that the block will be there in seconds (1 is 20 ticks). If less than 0, the block will not change back. \nDefaults to -1",
+                    required: false,
+                    type: "number",
+                    default: -1
                 },
-                "block": {
-                    "description": "The block to change to. \nDefaults to \"COBWEB\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "COBWEB"
+                block: {
+                    description: "The block to change to. \nDefaults to \"COBWEB\"",
+                    required: false,
+                    type: "material",
+                    default: "COBWEB"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BLOCKENTITY": {
-            "description": "Change the block at target entity for a duration of time, then change it back. Same as WEB",
-            "supportedModes": [
+        BLOCKENTITY: {
+            description: "Change the block at target entity for a duration of time, then change it back. Same as WEB",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "duration": {
-                    "description": "The duration of time that the block will be there in seconds (1 is 20 ticks). If less than 0, the block will not change back. \nDefaults to -1",
-                    "required": false,
-                    "type": "number",
-                    "default": -1
+            properties: {
+                duration: {
+                    description: "The duration of time that the block will be there in seconds (1 is 20 ticks). If less than 0, the block will not change back. \nDefaults to -1",
+                    required: false,
+                    type: "number",
+                    default: -1
                 },
-                "block": {
-                    "description": "The block to change to. \nDefaults to \"COBWEB\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "COBWEB"
+                block: {
+                    description: "The block to change to. \nDefaults to \"COBWEB\"",
+                    required: false,
+                    type: "material",
+                    default: "COBWEB"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ARROW": {
-            "description": "Shoot an arrow to the location of the target entity",
-            "supportedModes": [
+        ARROW: {
+            description: "Shoot an arrow to the location of the target entity",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "velocity": {
-                    "description": "Used to determine the time that it takes to hit by (pythagoras distance)/velocity. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+            properties: {
+                velocity: {
+                    description: "Used to determine the time that it takes to hit by (pythagoras distance)/velocity. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "entity": {
-                    "description": "The entity launch. \nDefaults to \"arrow\"",
-                    "required": false,
-                    "type": "entity",
-                    "default": "arrow"
+                entity: {
+                    description: "The entity launch. \nDefaults to \"arrow\"",
+                    required: false,
+                    type: "entity",
+                    default: "arrow"
                 },
-                "damage": {
-                    "description": "If projectile entity is an arrow, the damage that the arrow will do. \nDefaults to 4",
-                    "if": {
-                        "entity": {
-                            "const": "arrow"
+                damage: {
+                    description: "If projectile entity is an arrow, the damage that the arrow will do. \nDefaults to 4",
+                    if: {
+                        entity: {
+                            const: "arrow"
                         }
                     },
-                    "required": false,
-                    "type": "integer",
-                    "default": 4
+                    required: false,
+                    type: "integer",
+                    default: 4
                 },
-                "fireTicks": {
-                    "description": "The amount of ticks the projectile will be on fire. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+                fireTicks: {
+                    description: "The amount of ticks the projectile will be on fire. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "MODIFY": {
-            "description": "Modifies a variable, either user defined or not",
-            "available": false,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        MODIFY: {
+            description: "Modifies a variable, either user defined or not",
+            available: false,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "requireMode": true
+            requireMode: true
         },
-        "ATTRIBUTE": {
-            "description": "Modifies an attribute owned by the user or target entity",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        ATTRIBUTE: {
+            description: "Modifies an attribute owned by the user or target entity",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "attribute": {
-                    "description": "The attribute to modify. The name of the attribute should exclude the \"GENERIC_\" in the begining",
-                    "required": true,
-                    "type": "attribute"
+                attribute: {
+                    description: "The attribute to modify. The name of the attribute should exclude the \"GENERIC_\" in the begining",
+                    required: true,
+                    type: "attribute"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "BREAKBLOCK": {
-            "description": "Not implemented yet",
-            "available": false,
-            "requireMode": true
+        BREAKBLOCK: {
+            description: "Not implemented yet",
+            available: false,
+            requireMode: true
         },
-        "LAUNCH": {
-            "description": "Launches an entity. \nMode `OTHER`: Launched in the direction of the target entity. \nMode `SELF`: Launched in the direction the user is facing",
-            "supportedModes": [
+        LAUNCH: {
+            description: "Launches an entity. \nMode `OTHER`: Launched in the direction of the target entity. \nMode `SELF`: Launched in the direction the user is facing",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "entity": {
-                    "description": "The entity to launch. \nDefaults to \"FIREBALL\"",
-                    "required": false,
-                    "type": "entity",
-                    "default": "FIREBALL"
+            properties: {
+                entity: {
+                    description: "The entity to launch. \nDefaults to \"FIREBALL\"",
+                    required: false,
+                    type: "entity",
+                    default: "FIREBALL"
                 },
-                "velocity": {
-                    "description": "The speed to launch at. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                velocity: {
+                    description: "The speed to launch at. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "MESSAGE": {
-            "description": "Sends a chat message to the user or target player",
-            "supportedModes": [
+        MESSAGE: {
+            description: "Sends a chat message to the user or target player",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "message": {
-                    "description": "The message to send. The first occurence of \"player\" will be replaced by the player name",
-                    "required": true,
-                    "type": "string"
+            properties: {
+                message: {
+                    description: "The message to send. The first occurence of \"player\" will be replaced by the player name",
+                    required: true,
+                    type: "string"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "PICKUP": {
-            "description": "Pick up the target entity and places it on the user's head",
-            "supportedModes": [
+        PICKUP: {
+            description: "Pick up the target entity and places it on the user's head",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "REPULSE": {
-            "description": "Repulse the target entity",
-            "supportedModes": [
+        REPULSE: {
+            description: "Repulse the target entity",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "velocity": {
-                    "description": "The speed to repulse the target entity. Positive value means away from the user. Negative value means into the user. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+            properties: {
+                velocity: {
+                    description: "The speed to repulse the target entity. Positive value means away from the user. Negative value means into the user. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "add": {
-                    "description": "Whether to add velocity or set it. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                add: {
+                    description: "Whether to add velocity or set it. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "RESIZE": {
-            "description": "Resizes the user or target entity (for slimes, magma cubes, and phantoms)",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        RESIZE: {
+            description: "Resizes the user or target entity (for slimes, magma cubes, and phantoms)",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "retainHealth": {
-                    "description": "For slimes and magma cubes. If true, make the entity retain the previous health, if more than the new max health, it sets it to the new max health. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                retainHealth: {
+                    description: "For slimes and magma cubes. If true, make the entity retain the previous health, if more than the new max health, it sets it to the new max health. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "SMITE": {
-            "description": "Smites the user or target entity. Same as LIGHTNING",
-            "supportedModes": [
+        SMITE: {
+            description: "Smites the user or target entity. Same as LIGHTNING",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "fake": {
-                    "description": "If true, it only makes the effect of lightning, not summoning an actual lightning. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+            properties: {
+                fake: {
+                    description: "If true, it only makes the effect of lightning, not summoning an actual lightning. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "LIGHTNING": {
-            "description": "Smites the user or target entity. Same as SMITE",
-            "supportedModes": [
+        LIGHTNING: {
+            description: "Smites the user or target entity. Same as SMITE",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "fake": {
-                    "description": "If true, it only makes the effect of lightning, not summoning an actual lightning. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+            properties: {
+                fake: {
+                    description: "If true, it only makes the effect of lightning, not summoning an actual lightning. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "FLING": {
-            "description": "Modifies the velocity of the user or target entity. Same as VELOCITY",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        FLING: {
+            description: "Modifies the velocity of the user or target entity. Same as VELOCITY",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "velocity": {
-                    "description": "The number on the right side of the operation. The same as `value`. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                velocity: {
+                    description: "The number on the right side of the operation. The same as `value`. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "component": {
-                    "description": "The component(s) to modify, `ALL` means all components (ex. `XZ` would only modify the X and Z velocities and leave Y unmodified)",
-                    "required": true,
-                    "type": "string",
-                    "pattern": "^(([XYZ]{0,3})|(ALL))$"
+                component: {
+                    description: "The component(s) to modify, `ALL` means all components (ex. `XZ` would only modify the X and Z velocities and leave Y unmodified)",
+                    required: true,
+                    type: "string",
+                    pattern: "^(([XYZ]{0,3})|(ALL))$"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "METADATA": {
-            "description": "Modifies a user defined variable",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        METADATA: {
+            description: "Modifies a user defined variable",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "variable": {
-                    "description": "The name of the variable",
-                    "required": true,
-                    "type": "string"
+                variable: {
+                    description: "The name of the variable",
+                    required: true,
+                    type: "string"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "GIVEITEM": {
-            "description": "Gives the user or target entity an item",
-            "supportedModes": [
+        GIVEITEM: {
+            description: "Gives the user or target entity an item",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "dropIfFull": {
-                    "description": "If true, drops the items that did not fit into the inventory. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                dropIfFull: {
+                    description: "If true, drops the items that did not fit into the inventory. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "item": {
-                    "description": "The item to give",
-                    "required": true,
-                    "type": "ItemStackData"
+                item: {
+                    description: "The item to give",
+                    required: true,
+                    type: "ItemStackData"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SCRAMBLEINVENTORY": {
-            "description": "Scrambles the inventory of the user or target entity",
-            "supportedModes": [
+        SCRAMBLEINVENTORY: {
+            description: "Scrambles the inventory of the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "RANDOMTELEPORT": {
-            "description": "Teleports the user or target entity a random distance",
-            "supportedModes": [
+        RANDOMTELEPORT: {
+            description: "Teleports the user or target entity a random distance",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "minDistance": {
-                    "description": "The minimum distance. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+            properties: {
+                minDistance: {
+                    description: "The minimum distance. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 },
-                "maxDistance": {
-                    "description": "The maximum distance. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+                maxDistance: {
+                    description: "The maximum distance. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "PROJECTILE": {
-            "description": "Shoots an entity from the user. \nMode `SELF`: Shoots in the direction that the user is looking. \nMode `OTHER`: Shoots at the target entity. \nMode `LOCATION`: Shoots at the location",
-            "supportedModes": [
-                "ALL",
-                "SELF",
-                "OTHER",
-                "LOCATION"
-            ],
-            "properties": {
-                "entity": {
-                    "description": "The entity to shoot",
-                    "required": true,
-                    "type": "EntityData"
-                },
-                "velocity": {
-                    "description": "The shooting velocity. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
-                }
-            },
-            "available": true,
-            "requireMode": true
-        },
-        "SOUND": {
-            "description": "Plays a sound at the location or at the location of the user or target entity",
-            "supportedModes": [
+        PROJECTILE: {
+            description: "Shoots an entity from the user. \nMode `SELF`: Shoots in the direction that the user is looking. \nMode `OTHER`: Shoots at the target entity. \nMode `LOCATION`: Shoots at the location",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ],
-            "properties": {
-                "sound": {
-                    "description": "The sound data",
-                    "required": true,
-                    "type": "SoundData"
+            properties: {
+                entity: {
+                    description: "The entity to shoot",
+                    required: true,
+                    type: "EntityData"
+                },
+                velocity: {
+                    description: "The shooting velocity. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "COMMAND": {
-            "description": "Excecutes a list of commands",
-            "supportedModes": [
+        SOUND: {
+            description: "Plays a sound at the location or at the location of the user or target entity",
+            supportedModes: [
+                "ALL",
+                "SELF",
+                "OTHER",
+                "LOCATION"
+            ],
+            properties: {
+                sound: {
+                    description: "The sound data",
+                    required: true,
+                    type: "SoundData"
+                }
+            },
+            available: true,
+            requireMode: true
+        },
+        COMMAND: {
+            description: "Excecutes a list of commands",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "executor": {
-                    "description": "The executor that will execute the command. \nDefaults to \"CONSOLE\"",
-                    "required": false,
-                    "type": "string",
-                    "enum": [
+            properties: {
+                executor: {
+                    description: "The executor that will execute the command. \nDefaults to \"CONSOLE\"",
+                    required: false,
+                    type: "string",
+                    enum: [
                         "CONSOLE",
                         "PLAYER"
                     ],
-                    "default": "CONSOLE"
+                    default: "CONSOLE"
                 },
-                "commands": {
-                    "description": "The list of commands to execute. \"%self_name%\" will be interpreted as the user if the user is a player. Otherwise, \"%target_name%\" will be interpreted as the target entity if the target entity is a player. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "string",
-                    "default": []
+                commands: {
+                    description: "The list of commands to execute. \"%self_name%\" will be interpreted as the user if the user is a player. Otherwise, \"%target_name%\" will be interpreted as the target entity if the target entity is a player. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "string",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "LUNGE": {
-            "description": "Applies an acceleration to the user or the target entity based on the direction the user is looking",
-            "supportedModes": [
+        LUNGE: {
+            description: "Applies an acceleration to the user or the target entity based on the direction the user is looking",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "horizontalVelocity": {
-                    "description": "The scale to scale the horizontal components of the velocity vector. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+            properties: {
+                horizontalVelocity: {
+                    description: "The scale to scale the horizontal components of the velocity vector. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 },
-                "verticalVelocity": {
-                    "description": "The scale to scale the vertical components of the velocity vector. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+                verticalVelocity: {
+                    description: "The scale to scale the vertical components of the velocity vector. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 },
-                "overwrite": {
-                    "description": "If true, sets the velocity vector. If false, adds to the velocity vector. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                overwrite: {
+                    description: "If true, sets the velocity vector. If false, adds to the velocity vector. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "NEAREST": {
-            "description": "Acts like a trigger. \nTriggers for the nearest entity in the radius. \nThe target entity will be set as the nearest entity",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        NEAREST: {
+            description: "Acts like a trigger. \nTriggers for the nearest entity in the radius. \nThe target entity will be set as the nearest entity",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "radius": {
-                    "description": "Half the side length of the box. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+                radius: {
+                    description: "Half the side length of the box. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ]
         },
-        "SHOOTER": {
-            "description": "Acts like a trigger. \nTriggers for the target entity. \nThe new target entity will be set as the source of the projectile if the old target entity is a projectile, otherwise the target entity will remain the same",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        SHOOTER: {
+            description: "Acts like a trigger. \nTriggers for the target entity. \nThe new target entity will be set as the source of the projectile if the old target entity is a projectile, otherwise the target entity will remain the same",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "onlyProjectiles": {
-                    "description": "If true, only triggers if the original target entity is a projectile. If false, keep the target entity the same. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                onlyProjectiles: {
+                    description: "If true, only triggers if the original target entity is a projectile. If false, keep the target entity the same. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ]
         },
-        "KNOCKBACK": {
-            "description": "Applies a velocity to the target entity in the direction that the user is looking as the direction",
-            "supportedModes": [
+        KNOCKBACK: {
+            description: "Applies a velocity to the target entity in the direction that the user is looking as the direction",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "properties": {
-                "multiplier": {
-                    "description": "The velocity to apply. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+            properties: {
+                multiplier: {
+                    description: "The velocity to apply. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "overwriteCurrentVelocity": {
-                    "description": "If true, sets the velocity of the target entity. If false, adds to the original velocity of the target entity. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                overwriteCurrentVelocity: {
+                    description: "If true, sets the velocity of the target entity. If false, adds to the original velocity of the target entity. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "IGNITE": {
-            "description": "Sets the user or target entity on fire. Same as FIRE",
-            "supportedModes": [
+        IGNITE: {
+            description: "Sets the user or target entity on fire. Same as FIRE",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "fireTicks": {
-                    "description": "The amount of time the fire will last (in ticks). \nDefaults to 40",
-                    "required": false,
-                    "type": "integer",
-                    "default": 40
+            properties: {
+                fireTicks: {
+                    description: "The amount of time the fire will last (in ticks). \nDefaults to 40",
+                    required: false,
+                    type: "integer",
+                    default: 40
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "FIRE": {
-            "description": "Sets the user or target entity on fire. Same as IGNITE",
-            "supportedModes": [
+        FIRE: {
+            description: "Sets the user or target entity on fire. Same as IGNITE",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "fireTicks": {
-                    "description": "The amount of time the fire will last (in ticks). \nDefaults to 40",
-                    "required": false,
-                    "type": "integer",
-                    "default": 40
+            properties: {
+                fireTicks: {
+                    description: "The amount of time the fire will last (in ticks). \nDefaults to 40",
+                    required: false,
+                    type: "integer",
+                    default: 40
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "TARGET": {
-            "description": "If the user is a mob, sets the target of the user to the target entity",
-            "supportedModes": [
+        TARGET: {
+            description: "If the user is a mob, sets the target of the user to the target entity",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SWAP": {
-            "description": "Swaps the position of the user and target entity",
-            "supportedModes": [
+        SWAP: {
+            description: "Swaps the position of the user and target entity",
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "LOCATIONCUBE": {
-            "description": "Acts like a trigger. \nTriggers for every location in the cube around the user or target entity. \nThe location will be set as the location the trigger triggers for",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        LOCATIONCUBE: {
+            description: "Acts like a trigger. \nTriggers for every location in the cube around the user or target entity. \nThe location will be set as the location the trigger triggers for",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "verticalRadius": {
-                    "description": "Half of the vertical side length of the cube. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+                verticalRadius: {
+                    description: "Half of the vertical side length of the cube. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "horizontalRadius": {
-                    "description": "Half of the horizontal side length of the cube. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+                horizontalRadius: {
+                    description: "Half of the horizontal side length of the cube. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "offset": {
-                    "description": "The offset from the original location. \nDefaults to {\"x\":0,\"y\":0,\"z\":0}",
-                    "required": false,
-                    "type": "VectorData",
-                    "default": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
+                offset: {
+                    description: "The offset from the original location. \nDefaults to {\"x\":0,\"y\":0,\"z\":0}",
+                    required: false,
+                    type: "VectorData",
+                    default: {
+                        x: 0,
+                        y: 0,
+                        z: 0
                     }
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ]
         },
-        "PLACEBLOCK": {
-            "description": "Replaces a block at the location for an amount of time. Retains the original block data",
-            "supportedModes": [
+        PLACEBLOCK: {
+            description: "Replaces a block at the location for an amount of time. Retains the original block data",
+            supportedModes: [
                 "ALL",
                 "LOCATION"
             ],
-            "properties": {
-                "material": {
-                    "description": "The block to replace to, will override the \"block\" property if it exist. \nDefaults to null",
-                    "required": false,
-                    "type": "material",
-                    "default": null
+            properties: {
+                material: {
+                    description: "The block to replace to, will override the \"block\" property if it exist. \nDefaults to null",
+                    required: false,
+                    type: "material",
+                    default: null
                 },
-                "block": {
-                    "description": "The data for the block to replace to, requires the \"material\" property to not exist or be null. \nDefaults to {}",
-                    "required": false,
-                    "type": "BlockDataData",
-                    "default": {}
+                block: {
+                    description: "The data for the block to replace to, requires the \"material\" property to not exist or be null. \nDefaults to {}",
+                    required: false,
+                    type: "BlockDataData",
+                    default: {}
                 },
-                "updatePhysics": {
-                    "description": "If false, does not update neighboring blocks. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                updatePhysics: {
+                    description: "If false, does not update neighboring blocks. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "revertsAfter": {
-                    "description": "Time before the block reverts to the original block in seconds (1 is 20 ticks). If less than or equal to 0, does not revert the original block. \nDefaults to -1",
-                    "required": false,
-                    "type": "number",
-                    "default": -1
+                revertsAfter: {
+                    description: "Time before the block reverts to the original block in seconds (1 is 20 ticks). If less than or equal to 0, does not revert the original block. \nDefaults to -1",
+                    required: false,
+                    type: "number",
+                    default: -1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SPAWNENTITY": {
-            "description": "Spawns an entity at the location or the location of the user or target entity",
-            "supportedModes": [
+        SPAWNENTITY: {
+            description: "Spawns an entity at the location or the location of the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ],
-            "properties": {
-                "entity": {
-                    "description": "The entity to spawn",
-                    "required": true,
-                    "type": "EntityData"
+            properties: {
+                entity: {
+                    description: "The entity to spawn",
+                    required: true,
+                    type: "EntityData"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "REMOVEPOTION": {
-            "description": "Removes potion effects from the user or target entity",
-            "supportedModes": [
+        REMOVEPOTION: {
+            description: "Removes potion effects from the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "types": {
-                    "description": "The list of potion types. If empty, removes all potion effect. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "potion",
-                    "default": []
+            properties: {
+                types: {
+                    description: "The list of potion types. If empty, removes all potion effect. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "potion",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "TELEPORT": {
-            "description": "Teleports the user to the location or the location of the target entity",
-            "supportedModes": [
+        TELEPORT: {
+            description: "Teleports the user to the location or the location of the target entity",
+            supportedModes: [
                 "ALL",
                 "OTHER",
                 "LOCATION"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "RAYTRACE": {
-            "description": "Acts like a trigger. \nSends out a raytrace that collides with entities or blocks in the direction that the user or target entity is looking. \nThe target entity will be set as the collided entity. \nThe location will be set as the location of the collided block",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        RAYTRACE: {
+            description: "Acts like a trigger. \nSends out a raytrace that collides with entities or blocks in the direction that the user or target entity is looking. \nThe target entity will be set as the collided entity. \nThe location will be set as the location of the collided block",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "maxDistance": {
-                    "description": "The maximum distance the raytrace can collide. \nDefaults to 10",
-                    "required": false,
-                    "type": "integer",
-                    "default": 10
+                maxDistance: {
+                    description: "The maximum distance the raytrace can collide. \nDefaults to 10",
+                    required: false,
+                    type: "integer",
+                    default: 10
                 },
-                "alwaysHit": {
-                    "description": "If true, if the raytrace does not hit anything, the location will be set as the maxDistance in the direction the user is looking. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                alwaysHit: {
+                    description: "If true, if the raytrace does not hit anything, the location will be set as the maxDistance in the direction the user is looking. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "ignorePassanles": {
-                    "description": "Whether to ignore passable blocks (ex. tall grass, signs, fluids). \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                ignorePassanles: {
+                    description: "Whether to ignore passable blocks (ex. tall grass, signs, fluids). \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "raySize": {
-                    "description": "The collision size of the ray. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                raySize: {
+                    description: "The collision size of the ray. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "collisionMode": {
-                    "description": "The collision behavior when a fluid gets hit by the raytrace. \nDefaults to \"NEVER\"",
-                    "required": false,
-                    "type": "collisionMode",
-                    "default": "NEVER"
+                collisionMode: {
+                    description: "The collision behavior when a fluid gets hit by the raytrace. \nDefaults to \"NEVER\"",
+                    required: false,
+                    type: "collisionMode",
+                    default: "NEVER"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ]
         },
-        "TIMER": {
-            "description": "Acts like a trigger. \nTriggers for a number of times with a period and initial delay. \nTarget items will be forwarded",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        TIMER: {
+            description: "Acts like a trigger. \nTriggers for a number of times with a period and initial delay. \nTarget items will be forwarded",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "delay": {
-                    "description": "The initial delay in seconds (1 is 20 ticks). \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                delay: {
+                    description: "The initial delay in seconds (1 is 20 ticks). \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "period": {
-                    "description": "The delay between triggers in seconds (1 is 20 ticks). \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                period: {
+                    description: "The delay between triggers in seconds (1 is 20 ticks). \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "numberOfRepeats": {
-                    "description": "The number of times this trigger will trigger. \nDefaults to 1",
-                    "required": false,
-                    "type": "integer",
-                    "default": 1
+                numberOfRepeats: {
+                    description: "The number of times this trigger will trigger. \nDefaults to 1",
+                    required: false,
+                    type: "integer",
+                    default: 1
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
@@ -1991,144 +1991,144 @@ const docs = {
                 "ITEM"
             ]
         },
-        "REMOVEENTITY": {
-            "description": "Removes the user or target entity",
-            "supportedModes": [
+        REMOVEENTITY: {
+            description: "Removes the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ITEMSTACK": {
-            "description": "Acts like a trigger. \nTriggers for the item in the slot. \nThe item will be set to the item in the slot",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        ITEMSTACK: {
+            description: "Acts like a trigger. \nTriggers for the item in the slot. \nThe item will be set to the item in the slot",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "slot": {
-                    "description": "The slot of the item. \nDefaults to \"HAND\"",
-                    "required": false,
-                    "type": [
+                slot: {
+                    description: "The slot of the item. \nDefaults to \"HAND\"",
+                    required: false,
+                    type: [
                         "equipmentSlot",
                         "integer"
                     ],
-                    "default": "HAND"
+                    default: "HAND"
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ]
         },
-        "ITEMAMOUNT": {
-            "description": "Modifies the item amount",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        ITEMAMOUNT: {
+            description: "Modifies the item amount",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "ITEM"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "SWITCHEROO": {
-            "description": "Acts like a trigger. \nThe target entity will be set as the original user.\n the user will be set as the original target entity",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        SWITCHEROO: {
+            description: "Acts like a trigger. \nThe target entity will be set as the original user.\n the user will be set as the original target entity",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "OTHER"
             ]
         },
-        "LOCATIONOFFSET": {
-            "description": "Acts like a trigger. \nTriggers the location of the user or target entity after being offseted. \nThe location will be set as the location the trigger triggers for",
-            "available": true,
-            "requireMode": false,
-            "properties": {
-                "conditions": {
-                    "description": "The list of conditions. \nDefaults to {}",
-                    "required": false,
-                    "type": "ConditionList",
-                    "default": {}
+        LOCATIONOFFSET: {
+            description: "Acts like a trigger. \nTriggers the location of the user or target entity after being offseted. \nThe location will be set as the location the trigger triggers for",
+            available: true,
+            requireMode: false,
+            properties: {
+                conditions: {
+                    description: "The list of conditions. \nDefaults to {}",
+                    required: false,
+                    type: "ConditionList",
+                    default: {}
                 },
-                "effects": {
-                    "description": "The list of effects. \nDefaults to {}",
-                    "required": false,
-                    "type": "EffectList",
-                    "default": {}
+                effects: {
+                    description: "The list of effects. \nDefaults to {}",
+                    required: false,
+                    type: "EffectList",
+                    default: {}
                 },
-                "offset": {
-                    "description": "The offset from the original location. \nDefaults to {\"x\":0,\"y\":0,\"z\":0}",
-                    "required": false,
-                    "type": "VectorData",
-                    "default": {
-                        "x": 0,
-                        "y": 0,
-                        "z": 0
+                offset: {
+                    description: "The offset from the original location. \nDefaults to {\"x\":0,\"y\":0,\"z\":0}",
+                    required: false,
+                    type: "VectorData",
+                    default: {
+                        x: 0,
+                        y: 0,
+                        z: 0
                     }
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ]
         },
-        "BONEMEAL": {
-            "description": "Applies bonemeal to the location or location of the user or target entity",
-            "supportedModes": [
+        BONEMEAL: {
+            description: "Applies bonemeal to the location or location of the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER",
                 "LOCATION"
             ],
-            "properties": {
-                "faces": {
-                    "description": "The list of faces to apply bonemeal from. \nDefaults to [\"UP\",\"DOWN\",\"NORTH\",\"SOUTH\",\"EAST\",\"WEST\"]",
-                    "required": false,
-                    "type": "array",
-                    "items": "blockFace",
-                    "default": [
+            properties: {
+                faces: {
+                    description: "The list of faces to apply bonemeal from. \nDefaults to [\"UP\",\"DOWN\",\"NORTH\",\"SOUTH\",\"EAST\",\"WEST\"]",
+                    required: false,
+                    type: "array",
+                    items: "blockFace",
+                    default: [
                         "UP",
                         "DOWN",
                         "NORTH",
@@ -2138,626 +2138,626 @@ const docs = {
                     ]
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "HUNGER": {
-            "description": "Modifies the hunger value of the user or target entity",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        HUNGER: {
+            description: "Modifies the hunger value of the user or target entity",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "LOSETARGET": {
-            "description": "Make the user lose interest in the current target",
-            "supportedModes": [
+        LOSETARGET: {
+            description: "Make the user lose interest in the current target",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "VEINMINER": {
-            "description": "Breaks surrounding blocks around a location recursively",
-            "supportedModes": [
+        VEINMINER: {
+            description: "Breaks surrounding blocks around a location recursively",
+            supportedModes: [
                 "ALL",
                 "LOCATION"
             ],
-            "properties": {
-                "types": {
-                    "description": "The list of types that can be broken",
-                    "required": true,
-                    "type": "array",
-                    "items": "material"
+            properties: {
+                types: {
+                    description: "The list of types that can be broken",
+                    required: true,
+                    type: "array",
+                    items: "material"
                 },
-                "delay": {
-                    "description": "The delay between each break is seconds (1 is 20 ticks). \nDefaults to 0.5",
-                    "required": false,
-                    "type": "number",
-                    "default": 0.5
+                delay: {
+                    description: "The delay between each break is seconds (1 is 20 ticks). \nDefaults to 0.5",
+                    required: false,
+                    type: "number",
+                    default: 0.5
                 },
-                "allowMultiTypeVein": {
-                    "description": "If true, the vein will break all types in the list instead of only breaking the same type of block as the one in original location. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                allowMultiTypeVein: {
+                    description: "If true, the vein will break all types in the list instead of only breaking the same type of block as the one in original location. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "limit": {
-                    "description": "The max recursion depth ie. the radius from the start. \nDefaults to 10",
-                    "required": false,
-                    "type": "integer",
-                    "default": 10
+                limit: {
+                    description: "The max recursion depth ie. the radius from the start. \nDefaults to 10",
+                    required: false,
+                    type: "integer",
+                    default: 10
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ACTIONBAR": {
-            "description": "Sends an action bar to the user or target entity",
-            "supportedModes": [
+        ACTIONBAR: {
+            description: "Sends an action bar to the user or target entity",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "message": {
-                    "description": "The message to send, instances of the text \"<player>\" will be changed to the name of the player that this is sent",
-                    "required": true,
-                    "type": "string"
+            properties: {
+                message: {
+                    description: "The message to send, instances of the text \"<player>\" will be changed to the name of the player that this is sent",
+                    required: true,
+                    type: "string"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "FREEZE": {
-            "description": "Modifies the user or target entity freezing ticks (ie. powdered snow effect)",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        FREEZE: {
+            description: "Modifies the user or target entity freezing ticks (ie. powdered snow effect)",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "HEALTH": {
-            "description": "Modifies the health of the user or target entity. Also rounds down to the nearest hitpoint/half a heart",
-            "available": true,
-            "properties": {
-                "operation": {
-                    "description": "The operation to do",
-                    "required": true,
-                    "type": "operation"
+        HEALTH: {
+            description: "Modifies the health of the user or target entity. Also rounds down to the nearest hitpoint/half a heart",
+            available: true,
+            properties: {
+                operation: {
+                    description: "The operation to do",
+                    required: true,
+                    type: "operation"
                 },
-                "value": {
-                    "description": "The number on the right side of the operation. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                value: {
+                    description: "The number on the right side of the operation. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "supportedModes": [
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "requireMode": true
+            requireMode: true
         },
-        "FLY": {
-            "description": "Sets the ability for the creative flight. Alias for FLYING \n\nModes: \nSELF: For the user;\nOTHER: For the target entity.",
-            "supportedModes": [
+        FLY: {
+            description: "Sets the ability for the creative flight. Alias for FLYING \n\nModes: \nSELF: For the user;\nOTHER: For the target entity.",
+            supportedModes: [
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "fly": {
-                    "description": "Whether to set it to enable or disable creative flight. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                fly: {
+                    description: "Whether to set it to enable or disable creative flight. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "FLYING": {
-            "description": "Sets the ability for the creative flight. Alias for FLY \n\nModes: \nSELF: For the user;\nOTHER: For the target entity.",
-            "supportedModes": [
+        FLYING: {
+            description: "Sets the ability for the creative flight. Alias for FLY \n\nModes: \nSELF: For the user;\nOTHER: For the target entity.",
+            supportedModes: [
                 "SELF",
                 "OTHER"
             ],
-            "properties": {
-                "fly": {
-                    "description": "Whether to set it to enable or disable creative flight. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+            properties: {
+                fly: {
+                    description: "Whether to set it to enable or disable creative flight. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "MINION": {
-            "description": "Spawns bosses on the location of the user or target entity\n\nOnly available if you have the EnchantedBosses plugin",
-            "supportedModes": [
+        MINION: {
+            description: "Spawns bosses on the location of the user or target entity\n\nOnly available if you have the EnchantedBosses plugin",
+            supportedModes: [
                 "ALL",
                 "SELF",
                 "OTHER"
             ],
-            "exclusiveTo": "EnchantedBosses",
-            "properties": {
-                "amount": {
-                    "description": "The amount of minions to spawn. \nDefaults to 1",
-                    "required": false,
-                    "type": "integer",
-                    "default": 1
+            exclusiveTo: "EnchantedBosses",
+            properties: {
+                amount: {
+                    description: "The amount of minions to spawn. \nDefaults to 1",
+                    required: false,
+                    type: "integer",
+                    default: 1
                 },
-                "spawn": {
-                    "description": "The name of the boss to spawn",
-                    "required": true,
-                    "type": "string"
+                spawn: {
+                    description: "The name of the boss to spawn",
+                    required: true,
+                    type: "string"
                 },
-                "spawnOnTarget": {
-                    "description": "Whether or not to spawn on the target entity when using mode \"OTHER\". \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                spawnOnTarget: {
+                    description: "Whether or not to spawn on the target entity when using mode \"OTHER\". \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "RIDER": {
-            "description": "Spawns a boss that rides the user\n\nOnly available if you have the EnchantedBosses plugin",
-            "supportedModes": [
+        RIDER: {
+            description: "Spawns a boss that rides the user\n\nOnly available if you have the EnchantedBosses plugin",
+            supportedModes: [
                 "ALL",
                 "SELF"
             ],
-            "exclusiveTo": "EnchantedBosses",
-            "properties": {
-                "rider": {
-                    "description": "The name of the boss to spawn",
-                    "required": true,
-                    "type": "string"
+            exclusiveTo: "EnchantedBosses",
+            properties: {
+                rider: {
+                    description: "The name of the boss to spawn",
+                    required: true,
+                    type: "string"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         }
     },
-    "skills": {
-        "POTIONEFFECT": {
-            "description": "Applies the potion effect to the user",
-            "properties": {
-                "potency": {
-                    "description": "The potency or amplifier of the potion. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+    skills: {
+        POTIONEFFECT: {
+            description: "Applies the potion effect to the user",
+            properties: {
+                potency: {
+                    description: "The potency or amplifier of the potion. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "type": {
-                    "description": "The type of the potion. \nDefaults to {}",
-                    "required": false,
-                    "type": "potion",
-                    "default": {}
+                type: {
+                    description: "The type of the potion. \nDefaults to {}",
+                    required: false,
+                    type: "potion",
+                    default: {}
                 },
-                "duration": {
-                    "description": "The duration of the potion in seconds (1 is 20 ticks). 0 is for infinite duration (Integer maximum ticks). \nDefaults to 4",
-                    "required": false,
-                    "type": "number",
-                    "default": 4
+                duration: {
+                    description: "The duration of the potion in seconds (1 is 20 ticks). 0 is for infinite duration (Integer maximum ticks). \nDefaults to 4",
+                    required: false,
+                    type: "number",
+                    default: 4
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "OHKO": {
-            "description": "Kills the entity in one hit",
-            "properties": {
-                "entityTypes": {
-                    "description": "The types of entities that can be killed in one hit by the user. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "entity",
-                    "default": []
+        OHKO: {
+            description: "Kills the entity in one hit",
+            properties: {
+                entityTypes: {
+                    description: "The types of entities that can be killed in one hit by the user. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "entity",
+                    default: []
                 },
-                "displayName": {
-                    "description": "The custom name of the entity that can be killed in one hit by the user. \nDefaults to any name",
-                    "required": false,
-                    "type": "string",
-                    "default": ""
+                displayName: {
+                    description: "The custom name of the entity that can be killed in one hit by the user. \nDefaults to any name",
+                    required: false,
+                    type: "string",
+                    default: ""
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "REPULSION": {
-            "description": "Repulses all nearby entities when the user sneaks",
-            "properties": {
-                "multiplier": {
-                    "description": "The multiplier for the repulsion. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+        REPULSION: {
+            description: "Repulses all nearby entities when the user sneaks",
+            properties: {
+                multiplier: {
+                    description: "The multiplier for the repulsion. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "radius": {
-                    "description": "The radius where inside entities are effected. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+                radius: {
+                    description: "The radius where inside entities are effected. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 },
-                "entityBlacklist": {
-                    "description": "The entities to not get effected. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "entity",
-                    "default": []
+                entityBlacklist: {
+                    description: "The entities to not get effected. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "entity",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "CONVERTITEM": {
-            "description": "Converts the input item into the output item when the user picks up an item",
-            "properties": {
-                "inputItem": {
-                    "description": "The input item to convert. \nDefaults to null",
-                    "required": false,
-                    "type": "ItemStackData",
-                    "default": null
+        CONVERTITEM: {
+            description: "Converts the input item into the output item when the user picks up an item",
+            properties: {
+                inputItem: {
+                    description: "The input item to convert. \nDefaults to null",
+                    required: false,
+                    type: "ItemStackData",
+                    default: null
                 },
-                "outputItem": {
-                    "description": "The item to convert to. \nDefaults to null",
-                    "required": false,
-                    "type": "ItemStackData",
-                    "default": null
+                outputItem: {
+                    description: "The item to convert to. \nDefaults to null",
+                    required: false,
+                    type: "ItemStackData",
+                    default: null
                 },
-                "chance": {
-                    "description": "The chance of the conversion. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+                chance: {
+                    description: "The chance of the conversion. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "COOLDOWN": {
-            "description": "The cooldown for the skill",
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown in seconds. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+        COOLDOWN: {
+            description: "The cooldown for the skill",
+            properties: {
+                cooldown: {
+                    description: "The cooldown in seconds. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 },
-                "cooldownMessage": {
-                    "description": "The message to display when the skill is on cooldown. \nDefaults to null",
-                    "required": false,
-                    "type": "string",
-                    "default": null
+                cooldownMessage: {
+                    description: "The message to display when the skill is on cooldown. \nDefaults to null",
+                    required: false,
+                    type: "string",
+                    default: null
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "CONVERTBLOCK": {
-            "description": "Converts a block when the user right clicks a block",
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown in seconds. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+        CONVERTBLOCK: {
+            description: "Converts a block when the user right clicks a block",
+            properties: {
+                cooldown: {
+                    description: "The cooldown in seconds. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 },
-                "cooldownMessage": {
-                    "description": "The message to display when the skill is on cooldown. \nDefaults to null",
-                    "required": false,
-                    "type": "string",
-                    "default": null
+                cooldownMessage: {
+                    description: "The message to display when the skill is on cooldown. \nDefaults to null",
+                    required: false,
+                    type: "string",
+                    default: null
                 },
-                "outputBlock": {
-                    "description": "The block to convert to. \nDefaults to \"GOLD_BLOCK\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "GOLD_BLOCK"
+                outputBlock: {
+                    description: "The block to convert to. \nDefaults to \"GOLD_BLOCK\"",
+                    required: false,
+                    type: "material",
+                    default: "GOLD_BLOCK"
                 },
-                "inputBlocks": {
-                    "description": "The list of blocks to convert from. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": []
+                inputBlocks: {
+                    description: "The list of blocks to convert from. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: []
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "REMOTEDETONATION": {
-            "description": "Creates an explosion at the entity the user is looking at when the user sneaks",
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown in seconds. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+        REMOTEDETONATION: {
+            description: "Creates an explosion at the entity the user is looking at when the user sneaks",
+            properties: {
+                cooldown: {
+                    description: "The cooldown in seconds. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 },
-                "cooldownMessage": {
-                    "description": "The message to display when the skill is on cooldown. \nDefaults to null",
-                    "required": false,
-                    "type": "string",
-                    "default": null
+                cooldownMessage: {
+                    description: "The message to display when the skill is on cooldown. \nDefaults to null",
+                    required: false,
+                    type: "string",
+                    default: null
                 },
-                "explosionStrength": {
-                    "description": "The strength of the explosion. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                explosionStrength: {
+                    description: "The strength of the explosion. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "explodable": {
-                    "description": "The types of entities that can be exploded. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "entity",
-                    "default": []
+                explodable: {
+                    description: "The types of entities that can be exploded. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "entity",
+                    default: []
                 },
-                "spawnsFire": {
-                    "description": "If true, explosion will spawn fire. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                spawnsFire: {
+                    description: "If true, explosion will spawn fire. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "breakBlocks": {
-                    "description": "If true, the explosion will break blocks. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                breakBlocks: {
+                    description: "If true, the explosion will break blocks. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "removeDetonatedEntity": {
-                    "description": "If true, the entity that was detonated will be removed. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                removeDetonatedEntity: {
+                    description: "If true, the entity that was detonated will be removed. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BLOCKDROPS": {
-            "description": "Changes the block drops of a block",
-            "properties": {
-                "convertMap": {
-                    "description": "The map of block to items to drops. \nDefaults to {}",
-                    "required": false,
-                    "type": "object",
-                    "propertiesMap": {
-                        "key": {
-                            "description": "The block drop to change",
-                            "type": "material"
+        BLOCKDROPS: {
+            description: "Changes the block drops of a block",
+            properties: {
+                convertMap: {
+                    description: "The map of block to items to drops. \nDefaults to {}",
+                    required: false,
+                    type: "object",
+                    propertiesMap: {
+                        key: {
+                            description: "The block drop to change",
+                            type: "material"
                         },
-                        "value": {
-                            "description": "The items to drop",
-                            "required": true,
-                            "type": "record",
-                            "recordItem": "ItemStackData"
+                        value: {
+                            description: "The items to drop",
+                            required: true,
+                            type: "record",
+                            recordItem: "ItemStackData"
                         }
                     },
-                    "default": {}
+                    default: {}
                 },
-                "replaceDrops": {
-                    "description": "If true, the original block drops will be replaced with the new drops. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                replaceDrops: {
+                    description: "If true, the original block drops will be replaced with the new drops. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "CREEPER": {
-            "description": "Creates an explosion when the user sneaks on the ground until the explosion",
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown in seconds. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+        CREEPER: {
+            description: "Creates an explosion when the user sneaks on the ground until the explosion",
+            properties: {
+                cooldown: {
+                    description: "The cooldown in seconds. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 },
-                "cooldownMessage": {
-                    "description": "The message to display when the skill is on cooldown. \nDefaults to null",
-                    "required": false,
-                    "type": "string",
-                    "default": null
+                cooldownMessage: {
+                    description: "The message to display when the skill is on cooldown. \nDefaults to null",
+                    required: false,
+                    type: "string",
+                    default: null
                 },
-                "creeper_power": {
-                    "description": "The power of the explosion. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                creeper_power: {
+                    description: "The power of the explosion. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "fuse": {
-                    "description": "The time to wait until the explosion in seconds (1 is 20 ticks). \nDefaults to 2",
-                    "required": false,
-                    "type": "number",
-                    "default": 2
+                fuse: {
+                    description: "The time to wait until the explosion in seconds (1 is 20 ticks). \nDefaults to 2",
+                    required: false,
+                    type: "number",
+                    default: 2
                 },
-                "slowfall_duration": {
-                    "description": "The duration of the slowfall potion in seconds (1 is 20 ticks). \nDefaults to 7",
-                    "required": false,
-                    "type": "number",
-                    "default": 7
+                slowfall_duration: {
+                    description: "The duration of the slowfall potion in seconds (1 is 20 ticks). \nDefaults to 7",
+                    required: false,
+                    type: "number",
+                    default: 7
                 },
-                "upwardsVelocity": {
-                    "description": "The upwards velocity to apply to the user. \nDefaults to 2.5",
-                    "required": false,
-                    "type": "number",
-                    "default": 2.5
+                upwardsVelocity: {
+                    description: "The upwards velocity to apply to the user. \nDefaults to 2.5",
+                    required: false,
+                    type: "number",
+                    default: 2.5
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "GIVEITEM": {
-            "description": "Gives the user an item",
-            "properties": {
-                "canStore": {
-                    "description": "If true, the item can be stored outside of the player inventory. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+        GIVEITEM: {
+            description: "Gives the user an item",
+            properties: {
+                canStore: {
+                    description: "If true, the item can be stored outside of the player inventory. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "canDrop": {
-                    "description": "If true, the item can be dropped. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                canDrop: {
+                    description: "If true, the item can be dropped. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "canLoseOnDeath": {
-                    "description": "If true, the item can be lost on death. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                canLoseOnDeath: {
+                    description: "If true, the item can be lost on death. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "loseItemOnHeroLoss": {
-                    "description": "If true, the item will be lost on if the user changes hero. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                loseItemOnHeroLoss: {
+                    description: "If true, the item will be lost on if the user changes hero. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "item": {
-                    "description": "The item to give",
-                    "required": true,
-                    "type": "ItemStackData"
+                item: {
+                    description: "The item to give",
+                    required: true,
+                    type: "ItemStackData"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "GUN": {
-            "description": "Shoots the gun in the direction that the user is looking at when the user right clicks if the user holds the gun item",
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown in seconds. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+        GUN: {
+            description: "Shoots the gun in the direction that the user is looking at when the user right clicks if the user holds the gun item",
+            properties: {
+                cooldown: {
+                    description: "The cooldown in seconds. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 },
-                "cooldownMessage": {
-                    "description": "The message to display when the skill is on cooldown. \nDefaults to null",
-                    "required": false,
-                    "type": "string",
-                    "default": null
+                cooldownMessage: {
+                    description: "The message to display when the skill is on cooldown. \nDefaults to null",
+                    required: false,
+                    type: "string",
+                    default: null
                 },
-                "maxDistance": {
-                    "description": "The max distance the bullet can travel. \nDefaults to 64",
-                    "required": false,
-                    "type": "number",
-                    "default": 64
+                maxDistance: {
+                    description: "The max distance the bullet can travel. \nDefaults to 64",
+                    required: false,
+                    type: "number",
+                    default: 64
                 },
-                "bulletSize": {
-                    "description": "The size of the bullet. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                bulletSize: {
+                    description: "The size of the bullet. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "damage": {
-                    "description": "The damage that will be dealt by the bullet. \nDefaults to 5",
-                    "required": false,
-                    "type": "number",
-                    "default": 5
+                damage: {
+                    description: "The damage that will be dealt by the bullet. \nDefaults to 5",
+                    required: false,
+                    type: "number",
+                    default: 5
                 },
-                "item": {
-                    "description": "The item that will be used as the gun",
-                    "required": true,
-                    "type": "material"
+                item: {
+                    description: "The item that will be used as the gun",
+                    required: true,
+                    type: "material"
                 },
-                "shootSound": {
-                    "description": "The sound that will be played when the gun shoots",
-                    "required": true,
-                    "type": "SoundData"
+                shootSound: {
+                    description: "The sound that will be played when the gun shoots",
+                    required: true,
+                    type: "SoundData"
                 },
-                "trailParticle": {
-                    "description": "The particle that will be used for the trail",
-                    "required": true,
-                    "type": "ParticleData"
+                trailParticle: {
+                    description: "The particle that will be used for the trail",
+                    required: true,
+                    type: "ParticleData"
                 },
-                "hitParticle": {
-                    "description": "The particle that will be spawned at the hit location",
-                    "required": true,
-                    "type": "ParticleData"
+                hitParticle: {
+                    description: "The particle that will be spawned at the hit location",
+                    required: true,
+                    type: "ParticleData"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SNEAK": {
-            "description": "Prevents the user from sneaking or unsneaking",
-            "properties": {
-                "mustSneak": {
-                    "description": "If true, prevents the user from unsneaking. If false, prevents the user from sneaking. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+        SNEAK: {
+            description: "Prevents the user from sneaking or unsneaking",
+            properties: {
+                mustSneak: {
+                    description: "If true, prevents the user from unsneaking. If false, prevents the user from sneaking. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "needsInvisibility": {
-                    "description": "If true, only prevents the user when the user is invisible. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                needsInvisibility: {
+                    description: "If true, only prevents the user when the user is invisible. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SHIELD": {
-            "description": "Sets the shields cooldown when the user take damage",
-            "properties": {
-                "cooldown": {
-                    "description": "The shield cooldown in seconds (1 is 20 ticks). \nDefaults to 100",
-                    "required": false,
-                    "type": "number",
-                    "default": 100
+        SHIELD: {
+            description: "Sets the shields cooldown when the user take damage",
+            properties: {
+                cooldown: {
+                    description: "The shield cooldown in seconds (1 is 20 ticks). \nDefaults to 100",
+                    required: false,
+                    type: "number",
+                    default: 100
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SPELL": {
-            "description": "",
-            "properties": {
-                "spell": {
-                    "description": "The type of spell to cast",
-                    "required": true,
-                    "type": "string",
-                    "enum": [
+        SPELL: {
+            description: "",
+            properties: {
+                spell: {
+                    description: "The type of spell to cast",
+                    required: true,
+                    type: "string",
+                    enum: [
                         "FIREBALL",
                         "SNOWBALL",
                         "ARROW",
@@ -2772,477 +2772,477 @@ const docs = {
                         "FANGS"
                     ]
                 },
-                "fuel": {
-                    "description": "The fuel that will be used to cast the spell. \nDefaults to \"REDSTONE\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "REDSTONE"
+                fuel: {
+                    description: "The fuel that will be used to cast the spell. \nDefaults to \"REDSTONE\"",
+                    required: false,
+                    type: "material",
+                    default: "REDSTONE"
                 },
-                "cooldown": {
-                    "description": "The cooldown in seconds (1 is 20 ticks). \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                cooldown: {
+                    description: "The cooldown in seconds (1 is 20 ticks). \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "cost": {
-                    "description": "The amount of fuel that will be used to cast the spell. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                cost: {
+                    description: "The amount of fuel that will be used to cast the spell. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "spellName": {
-                    "description": "The name of the spell. Defaults to the type of spell",
-                    "required": false,
-                    "type": "string",
-                    "default": ""
+                spellName: {
+                    description: "The name of the spell. Defaults to the type of spell",
+                    required: false,
+                    type: "string",
+                    default: ""
                 },
-                "cooldownMessage": {
-                    "description": "The message that will be displayed when the spell is on cooldown. \n%spellName% will be replaced with the spell name\n%cooldown% with the cooldown in seconds\n\n%fuel% with the name of the fuel material\n%cost% with the amount of fuel used. \nDefaults to \"%spellName% has %currentcooldown% seconds remaining.\"",
-                    "required": false,
-                    "type": "string",
-                    "default": "%spellName% has %currentcooldown% seconds remaining."
+                cooldownMessage: {
+                    description: "The message that will be displayed when the spell is on cooldown. \n%spellName% will be replaced with the spell name\n%cooldown% with the cooldown in seconds\n\n%fuel% with the name of the fuel material\n%cost% with the amount of fuel used. \nDefaults to \"%spellName% has %currentcooldown% seconds remaining.\"",
+                    required: false,
+                    type: "string",
+                    default: "%spellName% has %currentcooldown% seconds remaining."
                 },
-                "moreFuelMessage": {
-                    "description": ". \nDefaults to \"This spell needs %fuelneeded% more %fuel%\"",
-                    "required": false,
-                    "type": "string",
-                    "default": "This spell needs %fuelneeded% more %fuel%"
+                moreFuelMessage: {
+                    description: ". \nDefaults to \"This spell needs %fuelneeded% more %fuel%\"",
+                    required: false,
+                    type: "string",
+                    default: "This spell needs %fuelneeded% more %fuel%"
                 },
-                "displayNameFormat": {
-                    "description": ". \nDefaults to \"&5%spellName%\"",
-                    "required": false,
-                    "type": "string",
-                    "default": "&5%spellName%"
+                displayNameFormat: {
+                    description: ". \nDefaults to \"&5%spellName%\"",
+                    required: false,
+                    type: "string",
+                    default: "&5%spellName%"
                 },
-                "loreFormat": {
-                    "description": ". \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "string",
-                    "default": []
+                loreFormat: {
+                    description: ". \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "string",
+                    default: []
                 },
-                "transmutationData": {
-                    "description": ". \nDefaults to {}",
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "properties": {
-                        "resultantBlock": {
-                            "description": ". \nDefaults to \"REDSTONE_BLOCK\"",
-                            "required": false,
-                            "type": "material",
-                            "default": "REDSTONE_BLOCK"
+                transmutationData: {
+                    description: ". \nDefaults to {}",
+                    required: false,
+                    type: "object",
+                    default: {},
+                    properties: {
+                        resultantBlock: {
+                            description: ". \nDefaults to \"REDSTONE_BLOCK\"",
+                            required: false,
+                            type: "material",
+                            default: "REDSTONE_BLOCK"
                         },
-                        "transmutableBlocks": {
-                            "description": ". \nDefaults to []",
-                            "required": false,
-                            "type": "array",
-                            "items": "material",
-                            "default": []
+                        transmutableBlocks: {
+                            description: ". \nDefaults to []",
+                            required: false,
+                            type: "array",
+                            items: "material",
+                            default: []
                         }
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "THROWER": {
-            "description": "",
-            "properties": {
-                "cooldown": {
-                    "description": "The cooldown in seconds. \nDefaults to null",
-                    "required": false,
-                    "type": "number",
-                    "default": null
+        THROWER: {
+            description: "",
+            properties: {
+                cooldown: {
+                    description: "The cooldown in seconds. \nDefaults to null",
+                    required: false,
+                    type: "number",
+                    default: null
                 },
-                "cooldownMessage": {
-                    "description": "The message to display when the skill is on cooldown. \nDefaults to null",
-                    "required": false,
-                    "type": "string",
-                    "default": null
+                cooldownMessage: {
+                    description: "The message to display when the skill is on cooldown. \nDefaults to null",
+                    required: false,
+                    type: "string",
+                    default: null
                 },
-                "ammoCost": {
-                    "description": ". \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                ammoCost: {
+                    description: ". \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "item": {
-                    "description": ". \nDefaults to {}",
-                    "required": false,
-                    "type": "ItemStackData",
-                    "default": {}
+                item: {
+                    description: ". \nDefaults to {}",
+                    required: false,
+                    type: "ItemStackData",
+                    default: {}
                 },
-                "projectile": {
-                    "description": ". \nDefaults to \"SNOWBALL\"",
-                    "required": false,
-                    "type": "entity",
-                    "default": "SNOWBALL"
+                projectile: {
+                    description: ". \nDefaults to \"SNOWBALL\"",
+                    required: false,
+                    type: "entity",
+                    default: "SNOWBALL"
                 },
-                "actions": {
-                    "description": ". \nDefaults to [\"RIGHT_CLICK_AIR\",\"RIGHT_CLICK_BLOCK\"]",
-                    "required": false,
-                    "type": "array",
-                    "items": "action",
-                    "default": [
+                actions: {
+                    description: ". \nDefaults to [\"RIGHT_CLICK_AIR\",\"RIGHT_CLICK_BLOCK\"]",
+                    required: false,
+                    type: "array",
+                    items: "action",
+                    default: [
                         "RIGHT_CLICK_AIR",
                         "RIGHT_CLICK_BLOCK"
                     ]
                 },
-                "canPickUp": {
-                    "description": ". \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                canPickUp: {
+                    description: ". \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "velocity": {
-                    "description": ". \nDefaults to 1.4",
-                    "required": false,
-                    "type": "number",
-                    "default": 1.4
+                velocity: {
+                    description: ". \nDefaults to 1.4",
+                    required: false,
+                    type: "number",
+                    default: 1.4
                 },
-                "damage": {
-                    "description": ". \nDefaults to 3",
-                    "required": false,
-                    "type": "number",
-                    "default": 3
+                damage: {
+                    description: ". \nDefaults to 3",
+                    required: false,
+                    type: "number",
+                    default: 3
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BLOCKRAY": {
-            "description": "",
-            "properties": {
-                "blocksToPlace": {
-                    "description": ". \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": []
+        BLOCKRAY: {
+            description: "",
+            properties: {
+                blocksToPlace: {
+                    description: ". \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: []
                 },
-                "blocksToReplace": {
-                    "description": ". \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": []
+                blocksToReplace: {
+                    description: ". \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: []
                 },
-                "blockRayMode": {
-                    "description": "",
-                    "required": true,
-                    "type": "string",
-                    "enum": [
+                blockRayMode: {
+                    description: "",
+                    required: true,
+                    type: "string",
+                    enum: [
                         "ABOVEBLOCK",
                         "CLOSERBLOCK",
                         "THEBLOCK"
                     ]
                 },
-                "maxDistance": {
-                    "description": ". \nDefaults to 20",
-                    "required": false,
-                    "type": "integer",
-                    "default": 20
+                maxDistance: {
+                    description: ". \nDefaults to 20",
+                    required: false,
+                    type: "integer",
+                    default: 20
                 },
-                "shouldRevert": {
-                    "description": ". \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                shouldRevert: {
+                    description: ". \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "revertsAfter": {
-                    "description": "in seconds (1 is 20 ticks). \nDefaults to 15",
-                    "required": false,
-                    "type": "integer",
-                    "default": 15
+                revertsAfter: {
+                    description: "in seconds (1 is 20 ticks). \nDefaults to 15",
+                    required: false,
+                    type: "integer",
+                    default: 15
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "CRAFTING": {
-            "description": "Enables the user to use this recipe",
-            "properties": {
-                "isShaped": {
-                    "description": "If true, this recipe is shaped. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+        CRAFTING: {
+            description: "Enables the user to use this recipe",
+            properties: {
+                isShaped: {
+                    description: "If true, this recipe is shaped. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "result": {
-                    "description": "The result of the recipe. \nDefaults to {\"type\":\"STONE\",\"amount\":1}",
-                    "required": false,
-                    "type": "ItemStackData",
-                    "default": {
-                        "type": "STONE",
-                        "amount": 1
+                result: {
+                    description: "The result of the recipe. \nDefaults to {\"type\":\"STONE\",\"amount\":1}",
+                    required: false,
+                    type: "ItemStackData",
+                    default: {
+                        type: "STONE",
+                        amount: 1
                     }
                 },
-                "recipeKeys": {
-                    "description": "The list of keys to the material that the key is representing. \nDefaults to {}",
-                    "if": {
-                        "isShaped": {
-                            "const": true
+                recipeKeys: {
+                    description: "The list of keys to the material that the key is representing. \nDefaults to {}",
+                    if: {
+                        isShaped: {
+                            const: true
                         }
                     },
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "propertiesMap": {
-                        "key": {
-                            "description": "keys",
-                            "type": "string",
-                            "pattern": "^.$",
+                    required: false,
+                    type: "object",
+                    default: {},
+                    propertiesMap: {
+                        key: {
+                            description: "keys",
+                            type: "string",
+                            pattern: "^.$",
                         },
-                        "value": {
-                            "description": "The material that the key is representing",
-                            "required": true,
-                            "type": "material"
+                        value: {
+                            description: "The material that the key is representing",
+                            required: true,
+                            type: "material"
                         }
                     }
                 },
-                "recipe": {
-                    "description": "The shape of the recipe. \nDefaults to [\"\",\"\",\"\"]",
-                    "if": {
-                        "isShaped": {
-                            "const": true
+                recipe: {
+                    description: "The shape of the recipe. \nDefaults to [\"\",\"\",\"\"]",
+                    if: {
+                        isShaped: {
+                            const: true
                         }
                     },
-                    "required": false,
-                    "type": "array",
-                    "items": {
-                        "description": "A row of recipe keys",
-                        "required": true,
-                        "type": "string",
-                        "maxLength": 3
+                    required: false,
+                    type: "array",
+                    items: {
+                        description: "A row of recipe keys",
+                        required: true,
+                        type: "string",
+                        maxLength: 3
                     },
-                    "maxItems": 3,
-                    "default": [
+                    maxItems: 3,
+                    default: [
                         "",
                         "",
                         ""
                     ]
                 },
-                "ingredients": {
-                    "description": "The map of ingredients to count of that ingredients that's needed for the recipe. \nDefaults to {}",
-                    "if": {
-                        "isShaped": {
-                            "const": false
+                ingredients: {
+                    description: "The map of ingredients to count of that ingredients that's needed for the recipe. \nDefaults to {}",
+                    if: {
+                        isShaped: {
+                            const: false
                         }
                     },
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "propertiesMap": {
-                        "key": {
-                            "description": "The recipe key",
-                            "type": "material"
+                    required: false,
+                    type: "object",
+                    default: {},
+                    propertiesMap: {
+                        key: {
+                            description: "The recipe key",
+                            type: "material"
                         },
-                        "value": {
-                            "description": "The material that the key maps to",
-                            "required": true,
-                            "type": "integer",
-                            "min": 1,
-                            "max": 9
+                        value: {
+                            description: "The material that the key maps to",
+                            required: true,
+                            type: "integer",
+                            min: 1,
+                            max: 9
                         }
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         }
     },
-    "damagemodifiers": {
-        "BLANK": {
-            "description": "No damage modifier",
-            "available": true,
-            "requireMode": true
+    damagemodifiers: {
+        BLANK: {
+            description: "No damage modifier",
+            available: true,
+            requireMode: true
         },
-        "EASED": {
-            "description": "Modifies the damage based on a downwards facing parabola. \nFor visualization: https://www.desmos.com/calculator/pyb798rnyr",
-            "properties": {
-                "expectedMaximumDamage": {
-                    "description": "The width of the parabola. \nThe variable b on desmos. \nDefaults to 30",
-                    "required": false,
-                    "type": "number",
-                    "default": 30
+        EASED: {
+            description: "Modifies the damage based on a downwards facing parabola. \nFor visualization: https://www.desmos.com/calculator/pyb798rnyr",
+            properties: {
+                expectedMaximumDamage: {
+                    description: "The width of the parabola. \nThe variable b on desmos. \nDefaults to 30",
+                    required: false,
+                    type: "number",
+                    default: 30
                 },
-                "damageCap": {
-                    "description": "The maximum of the parabola. \nThe variable k on desmos. \nDefaults to 15",
-                    "required": false,
-                    "type": "number",
-                    "default": 15
+                damageCap: {
+                    description: "The maximum of the parabola. \nThe variable k on desmos. \nDefaults to 15",
+                    required: false,
+                    type: "number",
+                    default: 15
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "EASEDPLAYERADJUSTED": {
-            "description": "Modifies the damage based on a downwards facing parabola divided by (number of players)^(playerScalingModifier). \nFor visualization: https://www.desmos.com/calculator/drpnfjm4ty",
-            "properties": {
-                "expectedMaximumDamage": {
-                    "description": "The width of the parabola. \nThe variable b on desmos. \nDefaults to 30",
-                    "required": false,
-                    "type": "number",
-                    "default": 30
+        EASEDPLAYERADJUSTED: {
+            description: "Modifies the damage based on a downwards facing parabola divided by (number of players)^(playerScalingModifier). \nFor visualization: https://www.desmos.com/calculator/drpnfjm4ty",
+            properties: {
+                expectedMaximumDamage: {
+                    description: "The width of the parabola. \nThe variable b on desmos. \nDefaults to 30",
+                    required: false,
+                    type: "number",
+                    default: 30
                 },
-                "damageCap": {
-                    "description": "The maximum of the parabola. \nThe variable k on desmos. \nDefaults to 15",
-                    "required": false,
-                    "type": "number",
-                    "default": 15
+                damageCap: {
+                    description: "The maximum of the parabola. \nThe variable k on desmos. \nDefaults to 15",
+                    required: false,
+                    type: "number",
+                    default: 15
                 },
-                "playerScalingModifier": {
-                    "description": "The power the number of players is raised by. \nRecommended not to set to above one as then it will punish players for bringing teammates. \nThe variable w on desmos. \nDefaults to 0.5",
-                    "required": false,
-                    "type": "number",
-                    "default": 0.5
+                playerScalingModifier: {
+                    description: "The power the number of players is raised by. \nRecommended not to set to above one as then it will punish players for bringing teammates. \nThe variable w on desmos. \nDefaults to 0.5",
+                    required: false,
+                    type: "number",
+                    default: 0.5
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "PLAYERADJUSTED": {
-            "description": "Modifies the damage based damage/((number of players)^(playerScalingModifier)). \nFor visualization: https://www.desmos.com/calculator/p03hsebinc",
-            "properties": {
-                "playerScalingModifier": {
-                    "description": "The power the number of players is raised by. \nRecommended not to set to above one as then it will punish players for bringing teammates. \nThe variable w on desmos. \nDefaults to 0.5",
-                    "required": false,
-                    "type": "number",
-                    "default": 0.5
+        PLAYERADJUSTED: {
+            description: "Modifies the damage based damage/((number of players)^(playerScalingModifier)). \nFor visualization: https://www.desmos.com/calculator/p03hsebinc",
+            properties: {
+                playerScalingModifier: {
+                    description: "The power the number of players is raised by. \nRecommended not to set to above one as then it will punish players for bringing teammates. \nThe variable w on desmos. \nDefaults to 0.5",
+                    required: false,
+                    type: "number",
+                    default: 0.5
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         }
     },
-    "rewards": {
-        "BASIC": {
-            "description": "Gives experience, items, and executes commands",
-            "properties": {
-                "commands": {
-                    "description": "The list of commands to execute. \nAll instances of \"<player>\" will be replaced by the player name. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "string",
-                    "default": []
+    rewards: {
+        BASIC: {
+            description: "Gives experience, items, and executes commands",
+            properties: {
+                commands: {
+                    description: "The list of commands to execute. \nAll instances of \"<player>\" will be replaced by the player name. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "string",
+                    default: []
                 },
-                "items": {
-                    "description": "The map of items to give to the player. \nDefaults to {}",
-                    "required": false,
-                    "type": "record",
-                    "recordItem": "ItemStackData",
-                    "default": {}
+                items: {
+                    description: "The map of items to give to the player. \nDefaults to {}",
+                    required: false,
+                    type: "record",
+                    recordItem: "ItemStackData",
+                    default: {}
                 },
-                "experience": {
-                    "description": "The amount of experience to give. \nDefaults to 100",
-                    "required": false,
-                    "type": "integer",
-                    "default": 100
+                experience: {
+                    description: "The amount of experience to give. \nDefaults to 100",
+                    required: false,
+                    type: "integer",
+                    default: 100
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         }
     },
-    "distributions": {
-        "LOOT": {
-            "description": "Adds a chance for loot tables to have the skill item",
-            "properties": {
-                "chance": {
-                    "description": "The chance of the skill item being added. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "min": 0,
-                    "max": 1,
-                    "default": 0
+    distributions: {
+        LOOT: {
+            description: "Adds a chance for loot tables to have the skill item",
+            properties: {
+                chance: {
+                    description: "The chance of the skill item being added. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    min: 0,
+                    max: 1,
+                    default: 0
                 },
-                "loottables": {
-                    "description": "The loot tables to add the skill item to",
-                    "required": true,
-                    "type": "array",
-                    "items": "lootTable"
+                loottables: {
+                    description: "The loot tables to add the skill item to",
+                    required: true,
+                    type: "array",
+                    items: "lootTable"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "CRAFTING": {
-            "description": "Adds a recipe for the skill item",
-            "properties": {
-                "recipe": {
-                    "description": "The shape of the recipe. \nDefaults to [\"\",\"\",\"\"]",
-                    "required": true,
-                    "type": "array",
-                    "items": {
-                        "description": "A row of recipe keys",
-                        "required": true,
-                        "type": "string",
-                        "maxLength": 3,
-                        "minLength": 3
+        CRAFTING: {
+            description: "Adds a recipe for the skill item",
+            properties: {
+                recipe: {
+                    description: "The shape of the recipe. \nDefaults to [\"\",\"\",\"\"]",
+                    required: true,
+                    type: "array",
+                    items: {
+                        description: "A row of recipe keys",
+                        required: true,
+                        type: "string",
+                        maxLength: 3,
+                        minLength: 3
                     },
-                    "default": [
+                    default: [
                         "",
                         "",
                         ""
                     ],
-                    "maxItems": 3,
-                    "minItems": 3
+                    maxItems: 3,
+                    minItems: 3
                 },
-                "recipeKeys": {
-                    "description": "The map from recipe key to material/skill item",
-                    "required": true,
-                    "type": "object",
-                    "propertiesMap": {
-                        "key": {
-                            "description": "The Recipe key",
-                            "type": "string",
-                            "pattern": "^.$"
+                recipeKeys: {
+                    description: "The map from recipe key to material/skill item",
+                    required: true,
+                    type: "object",
+                    propertiesMap: {
+                        key: {
+                            description: "The Recipe key",
+                            type: "string",
+                            pattern: "^.$"
                         },
-                        "value": {
-                            "description": "The material or skill item",
-                            "type": [
+                        value: {
+                            description: "The material or skill item",
+                            type: [
                                 "material",
                                 "string"
                             ],
-                            "required": true
+                            required: true
                         }
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         }
     },
-    "types": {
-        "condition": {
-            "description": "A skills library condition",
-            "type": "object",
-            "internal": true,
-            "available": true,
-            "requireMode": true
+    types: {
+        condition: {
+            description: "A skills library condition",
+            type: "object",
+            internal: true,
+            available: true,
+            requireMode: true
         },
-        "effect": {
-            "description": "A skills library effect",
-            "type": "object",
-            "internal": true,
-            "available": true,
-            "requireMode": true
+        effect: {
+            description: "A skills library effect",
+            type: "object",
+            internal: true,
+            available: true,
+            requireMode: true
         },
-        "range": {
-            "description": "A range of value",
-            "type": [
+        range: {
+            description: "A range of value",
+            type: [
                 "string",
                 "number"
             ],
-            "pattern": "^(([0-9]+)|([0-9]*\\.[0-9]+))( *- +(([0-9]+)|([0-9]*\\.[0-9]+)))?$",
-            "available": true,
-            "requireMode": true
+            pattern: "^(([0-9]+)|([0-9]*\\.[0-9]+))( *- +(([0-9]+)|([0-9]*\\.[0-9]+)))?$",
+            available: true,
+            requireMode: true
         },
-        "comparison": {
-            "description": "A number comparison operator",
-            "type": "string",
-            "enum": [
+        comparison: {
+            description: "A number comparison operator",
+            type: "string",
+            enum: [
                 "=",
                 "==",
                 "EQUAL",
@@ -3255,153 +3255,153 @@ const docs = {
                 ">=",
                 "GREATEREQUAL"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "operation": {
-            "description": "A number operator",
-            "type": "string",
-            "enum": [
+        operation: {
+            description: "A number operator",
+            type: "string",
+            enum: [
                 "ADD",
                 "SUBTRACT",
                 "MULTIPLY",
                 "DIVIDE",
                 "SET"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "attributeOperation": {
-            "description": "A number operator for attributes",
-            "type": "string",
-            "enum": [
+        attributeOperation: {
+            description: "A number operator for attributes",
+            type: "string",
+            enum: [
                 "ADD_NUMBER",
                 "ADD_SCALAR",
                 "MULTIPLY_SCALAR_1"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ConditionList": {
-            "description": "A list of conditions",
-            "type": "record",
-            "recordItem": "condition",
-            "available": true,
-            "requireMode": true
+        ConditionList: {
+            description: "A list of conditions",
+            type: "record",
+            recordItem: "condition",
+            available: true,
+            requireMode: true
         },
-        "EffectList": {
-            "description": "A list of effects",
-            "type": "record",
-            "recordItem": "effect",
-            "available": true,
-            "requireMode": true
+        EffectList: {
+            description: "A list of effects",
+            type: "record",
+            recordItem: "effect",
+            available: true,
+            requireMode: true
         },
-        "SpawnData": {
-            "description": "The data for spawning behavior",
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "description": "Whether the spawn behavior is enabled. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+        SpawnData: {
+            description: "The data for spawning behavior",
+            type: "object",
+            properties: {
+                enabled: {
+                    description: "Whether the spawn behavior is enabled. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "weighting": {
-                    "description": "The weighting of the spawn behavior. \nDefaults to 1",
-                    "required": false,
-                    "type": "integer",
-                    "default": 1
+                weighting: {
+                    description: "The weighting of the spawn behavior. \nDefaults to 1",
+                    required: false,
+                    type: "integer",
+                    default: 1
                 },
-                "biomes": {
-                    "description": "The list of biomes that this boss can or cannot spawn in. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "biome",
-                    "default": []
+                biomes: {
+                    description: "The list of biomes that this boss can or cannot spawn in. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "biome",
+                    default: []
                 },
-                "worlds": {
-                    "description": "The list of worlds that this boss can spawn in. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "world",
-                    "default": []
+                worlds: {
+                    description: "The list of worlds that this boss can spawn in. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "world",
+                    default: []
                 },
-                "biomesWhitelist": {
-                    "description": "Whether the biomes list is a whitelist or blacklist. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                biomesWhitelist: {
+                    description: "Whether the biomes list is a whitelist or blacklist. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "spaceNeeded": {
-                    "description": "The space needed to spawn the boss. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+                spaceNeeded: {
+                    description: "The space needed to spawn the boss. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "spawnOnAir": {
-                    "description": "Whether the boss can spawn on air. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                spawnOnAir: {
+                    description: "Whether the boss can spawn on air. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "maxHeight": {
-                    "description": "The maximum height the boss can spawn at. -1 for world height. \nDefaults to -1",
-                    "required": false,
-                    "type": "number",
-                    "default": -1
+                maxHeight: {
+                    description: "The maximum height the boss can spawn at. -1 for world height. \nDefaults to -1",
+                    required: false,
+                    type: "number",
+                    default: -1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BossBarData": {
-            "description": "The styling for a boss bar",
-            "type": "object",
-            "properties": {
-                "enabled": {
-                    "description": "Whether the boss bar is enabled. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+        BossBarData: {
+            description: "The styling for a boss bar",
+            type: "object",
+            properties: {
+                enabled: {
+                    description: "Whether the boss bar is enabled. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "flags": {
-                    "description": "The flags for the boss bar. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "bossBarFlag",
-                    "default": []
+                flags: {
+                    description: "The flags for the boss bar. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "bossBarFlag",
+                    default: []
                 },
-                "color": {
-                    "description": "The color of the boss bar. \nDefaults to \"PURPLE\"",
-                    "required": false,
-                    "type": "bossBarColor",
-                    "default": "PURPLE"
+                color: {
+                    description: "The color of the boss bar. \nDefaults to \"PURPLE\"",
+                    required: false,
+                    type: "bossBarColor",
+                    default: "PURPLE"
                 },
-                "style": {
-                    "description": "The style of the boss bar. \nDefaults to \"PROGRESS\"",
-                    "required": false,
-                    "type": "bossBarStyle",
-                    "default": "PROGRESS"
+                style: {
+                    description: "The style of the boss bar. \nDefaults to \"PROGRESS\"",
+                    required: false,
+                    type: "bossBarStyle",
+                    default: "PROGRESS"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "bossBarFlag": {
-            "description": "The flag of a boss bar",
-            "type": "string",
-            "enum": [
+        bossBarFlag: {
+            description: "The flag of a boss bar",
+            type: "string",
+            enum: [
                 "DARKEN_SCREEN",
                 "PLAY_BOSS_MUSIC",
                 "CREATE_WORLD_FOG"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "bossBarColor": {
-            "description": "The color of a boss bar",
-            "type": "string",
-            "enum": [
+        bossBarColor: {
+            description: "The color of a boss bar",
+            type: "string",
+            enum: [
                 "PINK",
                 "BLUE",
                 "RED",
@@ -3410,147 +3410,147 @@ const docs = {
                 "PURPLE",
                 "WHITE"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "bossBarStyle": {
-            "description": "The style of a boss bar",
-            "type": "string",
-            "enum": [
+        bossBarStyle: {
+            description: "The style of a boss bar",
+            type: "string",
+            enum: [
                 "PROGRESS",
                 "NOTCHED_6",
                 "NOTCHED_10",
                 "NOTCHED_12",
                 "NOTCHED_20"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ItemAttributeData": {
-            "description": "The attribute data for an item",
-            "type": "object",
-            "propertiesMap": {
-                "key": {
-                    "description": "The attribute name",
-                    "type": "attribute"
+        ItemAttributeData: {
+            description: "The attribute data for an item",
+            type: "object",
+            propertiesMap: {
+                key: {
+                    description: "The attribute name",
+                    type: "attribute"
                 },
-                "value": {
-                    "description": "The attribute properties",
-                    "required": false,
-                    "type": "object",
-                    "default": null,
-                    "properties": {
-                        "value": {
-                            "description": "The value of the attribute to change to",
-                            "required": false,
-                            "type": "number",
-                            "default": 0
+                value: {
+                    description: "The attribute properties",
+                    required: false,
+                    type: "object",
+                    default: null,
+                    properties: {
+                        value: {
+                            description: "The value of the attribute to change to",
+                            required: false,
+                            type: "number",
+                            default: 0
                         },
-                        "equipmentslot": {
-                            "description": "The slot that this attribute will be active",
-                            "required": false,
-                            "type": "equipmentSlot",
-                            "default": "HAND"
+                        equipmentslot: {
+                            description: "The slot that this attribute will be active",
+                            required: false,
+                            type: "equipmentSlot",
+                            default: "HAND"
                         },
-                        "operation": {
-                            "description": "The operation to do on the attribute with `value`",
-                            "required": false,
-                            "type": "attributeOperation",
-                            "default": "ADD_NUMBER"
+                        operation: {
+                            description: "The operation to do on the attribute with `value`",
+                            required: false,
+                            type: "attributeOperation",
+                            default: "ADD_NUMBER"
                         }
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "EnchantmentData": {
-            "description": "The enchantment data for an item",
-            "type": "object",
-            "propertiesMap": {
-                "key": {
-                    "description": "The enchantment name",
-                    "type": "enchantment"
+        EnchantmentData: {
+            description: "The enchantment data for an item",
+            type: "object",
+            propertiesMap: {
+                key: {
+                    description: "The enchantment name",
+                    type: "enchantment"
                 },
-                "value": {
-                    "description": "The level of the enchantment",
-                    "required": true,
-                    "type": "integer"
+                value: {
+                    description: "The level of the enchantment",
+                    required: true,
+                    type: "integer"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ItemMetaData": {
-            "description": "The metadata of an item",
-            "type": "object",
-            "properties": {
-                "displayName": {
-                    "description": "The display name of the item. Defaults to the normal item name",
-                    "required": false,
-                    "type": "string",
-                    "default": ""
+        ItemMetaData: {
+            description: "The metadata of an item",
+            type: "object",
+            properties: {
+                displayName: {
+                    description: "The display name of the item. Defaults to the normal item name",
+                    required: false,
+                    type: "string",
+                    default: ""
                 },
-                "lore": {
-                    "description": "The lore of the item. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "string",
-                    "default": []
+                lore: {
+                    description: "The lore of the item. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "string",
+                    default: []
                 },
-                "isUnbreakable": {
-                    "description": "If true, makes the item unbreakable. \nDefaults to false",
-                    "required": false,
-                    "type": "boolean",
-                    "default": false
+                isUnbreakable: {
+                    description: "If true, makes the item unbreakable. \nDefaults to false",
+                    required: false,
+                    type: "boolean",
+                    default: false
                 },
-                "durability": {
-                    "description": "The durability of the item. 0 is normal durability. \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+                durability: {
+                    description: "The durability of the item. 0 is normal durability. \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "customModelData": {
-                    "description": "The custom model data for this item (used for texture packs). \nDefaults to 0",
-                    "required": false,
-                    "type": "integer",
-                    "default": 0
+                customModelData: {
+                    description: "The custom model data for this item (used for texture packs). \nDefaults to 0",
+                    required: false,
+                    type: "integer",
+                    default: 0
                 },
-                "attributes": {
-                    "description": "The attributes. \nDefaults to {}",
-                    "required": false,
-                    "type": "ItemAttributeData",
-                    "default": {}
+                attributes: {
+                    description: "The attributes. \nDefaults to {}",
+                    required: false,
+                    type: "ItemAttributeData",
+                    default: {}
                 },
-                "enchants": {
-                    "description": "The enchantments. \nDefaults to {}",
-                    "required": false,
-                    "type": "EnchantmentData",
-                    "default": {}
+                enchants: {
+                    description: "The enchantments. \nDefaults to {}",
+                    required: false,
+                    type: "EnchantmentData",
+                    default: {}
                 },
-                "trim": {
-                    "description": "For armors. This contains the trim metadata of the item. \nDefaults to {}",
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "properties": {
-                        "pattern": {
-                            "description": "The trim pattern",
-                            "required": true,
-                            "type": "trimPattern"
+                trim: {
+                    description: "For armors. This contains the trim metadata of the item. \nDefaults to {}",
+                    required: false,
+                    type: "object",
+                    default: {},
+                    properties: {
+                        pattern: {
+                            description: "The trim pattern",
+                            required: true,
+                            type: "trimPattern"
                         },
-                        "material": {
-                            "description": "The trim material",
-                            "required": true,
-                            "type": "trimMaterial"
+                        material: {
+                            description: "The trim material",
+                            required: true,
+                            type: "trimMaterial"
                         }
                     }
                 },
-                "color": {
-                    "description": "For leather armors. This contains the color metadata of the item. \nDefaults to {\"red\":200,\"green\":0,\"blue\":255}",
-                    "if": {
-                        "type": {
-                            "const": [
+                color: {
+                    description: "For leather armors. This contains the color metadata of the item. \nDefaults to {\"red\":200,\"green\":0,\"blue\":255}",
+                    if: {
+                        type: {
+                            const: [
                                 "POTION",
                                 "SPLASH_POTION",
                                 "LINGERING_POTION",
@@ -3558,69 +3558,69 @@ const docs = {
                             ]
                         }
                     },
-                    "required": false,
-                    "type": "object",
-                    "default": {
-                        "red": 200,
-                        "green": 0,
-                        "blue": 255
+                    required: false,
+                    type: "object",
+                    default: {
+                        red: 200,
+                        green: 0,
+                        blue: 255
                     },
-                    "properties": {
-                        "red": {
-                            "description": "The red value (0-255)",
-                            "required": true,
-                            "type": "integer",
-                            "min": 0,
-                            "max": 255
+                    properties: {
+                        red: {
+                            description: "The red value (0-255)",
+                            required: true,
+                            type: "integer",
+                            min: 0,
+                            max: 255
                         },
-                        "green": {
-                            "description": "The green value (0-255)",
-                            "required": true,
-                            "type": "integer",
-                            "min": 0,
-                            "max": 255
+                        green: {
+                            description: "The green value (0-255)",
+                            required: true,
+                            type: "integer",
+                            min: 0,
+                            max: 255
                         },
-                        "blue": {
-                            "description": "The blue value (0-255)",
-                            "required": true,
-                            "type": "integer",
-                            "min": 0,
-                            "max": 255
+                        blue: {
+                            description: "The blue value (0-255)",
+                            required: true,
+                            type: "integer",
+                            min: 0,
+                            max: 255
                         }
                     }
                 },
-                "book": {
-                    "description": "For writable/written books. This contains the book metadata of the item. \nDefaults to {}",
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "properties": {
-                        "pages": {
-                            "description": "The contents for each page. \nDefaults to []",
-                            "required": false,
-                            "type": "array",
-                            "items": "string",
-                            "default": []
+                book: {
+                    description: "For writable/written books. This contains the book metadata of the item. \nDefaults to {}",
+                    required: false,
+                    type: "object",
+                    default: {},
+                    properties: {
+                        pages: {
+                            description: "The contents for each page. \nDefaults to []",
+                            required: false,
+                            type: "array",
+                            items: "string",
+                            default: []
                         },
-                        "author": {
-                            "description": "The author of the book. \nDefaults to \"\"",
-                            "required": false,
-                            "type": "string",
-                            "default": ""
+                        author: {
+                            description: "The author of the book. \nDefaults to \"\"",
+                            required: false,
+                            type: "string",
+                            default: ""
                         },
-                        "title": {
-                            "description": "The title of the book. \nDefaults to \"Sep is cool (and Xem too)\"",
-                            "required": false,
-                            "type": "string",
-                            "default": "Sep is cool (and Xem too)"
+                        title: {
+                            description: "The title of the book. \nDefaults to \"Sep is cool (and Xem too)\"",
+                            required: false,
+                            type: "string",
+                            default: "Sep is cool (and Xem too)"
                         }
                     }
                 },
-                "potion": {
-                    "description": "For potions, splash potions, lingering potions, or tipped arrows. This contains the potion metadata of the item. \nDefaults to {}",
-                    "if": {
-                        "type": {
-                            "const": [
+                potion: {
+                    description: "For potions, splash potions, lingering potions, or tipped arrows. This contains the potion metadata of the item. \nDefaults to {}",
+                    if: {
+                        type: {
+                            const: [
                                 "POTION",
                                 "SPLASH_POTION",
                                 "LINGERING_POTION",
@@ -3628,522 +3628,522 @@ const docs = {
                             ]
                         }
                     },
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "properties": {
-                        "type": {
-                            "description": "The type of potion",
-                            "required": true,
-                            "type": "potion"
+                    required: false,
+                    type: "object",
+                    default: {},
+                    properties: {
+                        type: {
+                            description: "The type of potion",
+                            required: true,
+                            type: "potion"
                         },
-                        "extended": {
-                            "description": "Whether the potion is extended. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        extended: {
+                            description: "Whether the potion is extended. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "upgraded": {
-                            "description": "Whether the potion is upgraded. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        upgraded: {
+                            description: "Whether the potion is upgraded. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         }
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ItemStackData": {
-            "description": "The data of an item",
-            "type": "object",
-            "properties": {
-                "type": {
-                    "description": "The type of item. \nDefaults to \"STONE\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "STONE"
+        ItemStackData: {
+            description: "The data of an item",
+            type: "object",
+            properties: {
+                type: {
+                    description: "The type of item. \nDefaults to \"STONE\"",
+                    required: false,
+                    type: "material",
+                    default: "STONE"
                 },
-                "amount": {
-                    "description": "The amount of item to give. \nDefaults to 1",
-                    "required": false,
-                    "type": "integer",
-                    "default": 1
+                amount: {
+                    description: "The amount of item to give. \nDefaults to 1",
+                    required: false,
+                    type: "integer",
+                    default: 1
                 },
-                "metadata": {
-                    "description": "The metadata of the item. \nDefaults to {}",
-                    "required": false,
-                    "type": "ItemMetaData",
-                    "default": {}
+                metadata: {
+                    description: "The metadata of the item. \nDefaults to {}",
+                    required: false,
+                    type: "ItemMetaData",
+                    default: {}
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "AttributeData": {
-            "description": "The list of attributes and it's value",
-            "type": "object",
-            "propertiesMap": {
-                "key": {
-                    "description": "The attribute name",
-                    "type": "attribute"
+        AttributeData: {
+            description: "The list of attributes and it's value",
+            type: "object",
+            propertiesMap: {
+                key: {
+                    description: "The attribute name",
+                    type: "attribute"
                 },
-                "value": {
-                    "description": "The attribute value",
-                    "required": false,
-                    "type": "number",
-                    "default": -1
+                value: {
+                    description: "The attribute value",
+                    required: false,
+                    type: "number",
+                    default: -1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "EntityData": {
-            "description": "The data of an entity",
-            "type": "object",
-            "properties": {
-                "type": {
-                    "description": "The entity type. \nDefaults to \"ZOMBIE\"",
-                    "required": false,
-                    "type": "entity",
-                    "default": "ZOMBIE"
+        EntityData: {
+            description: "The data of an entity",
+            type: "object",
+            properties: {
+                type: {
+                    description: "The entity type. \nDefaults to \"ZOMBIE\"",
+                    required: false,
+                    type: "entity",
+                    default: "ZOMBIE"
                 },
-                "nametag": {
-                    "description": "The nametag of the spawned entity. Defaults to no nametag",
-                    "required": false,
-                    "type": "string",
-                    "default": ""
+                nametag: {
+                    description: "The nametag of the spawned entity. Defaults to no nametag",
+                    required: false,
+                    type: "string",
+                    default: ""
                 },
-                "shouldDespawn": {
-                    "description": "If true, the entity can despawn. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                shouldDespawn: {
+                    description: "If true, the entity can despawn. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "passenger": {
-                    "description": "The passenger of the entity. \nDefaults to {}",
-                    "required": false,
-                    "type": "EntityData",
-                    "default": {}
+                passenger: {
+                    description: "The passenger of the entity. \nDefaults to {}",
+                    required: false,
+                    type: "EntityData",
+                    default: {}
                 },
-                "attributes": {
-                    "description": "The attributes of the entity. \nDefaults to {}",
-                    "required": false,
-                    "type": "AttributeData",
-                    "default": {}
+                attributes: {
+                    description: "The attributes of the entity. \nDefaults to {}",
+                    required: false,
+                    type: "AttributeData",
+                    default: {}
                 },
-                "extra": {
-                    "description": "The extra data for entities. \nDefaults to {}",
-                    "required": false,
-                    "type": "object",
-                    "default": {},
-                    "properties": {
-                        "canEquip": {
-                            "description": "For living entities. Whether the entity can pick up items. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                extra: {
+                    description: "The extra data for entities. \nDefaults to {}",
+                    required: false,
+                    type: "object",
+                    default: {},
+                    properties: {
+                        canEquip: {
+                            description: "For living entities. Whether the entity can pick up items. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "isZombifiable": {
-                            "description": "For piglins, piglin brutes, and hoglins. Whether the entity can be zombified into their zombie couterparts. \nDefaults to true",
-                            "required": false,
-                            "type": "boolean",
-                            "default": true
+                        isZombifiable: {
+                            description: "For piglins, piglin brutes, and hoglins. Whether the entity can be zombified into their zombie couterparts. \nDefaults to true",
+                            required: false,
+                            type: "boolean",
+                            default: true
                         },
-                        "color": {
-                            "description": "For colorable entities. The color for the entity",
-                            "required": true,
-                            "type": "dyeColor"
+                        color: {
+                            description: "For colorable entities. The color for the entity",
+                            required: true,
+                            type: "dyeColor"
                         },
-                        "armorSection": {
-                            "description": "For horses. The armor for the horse. \nDefaults to {}",
-                            "required": false,
-                            "type": "ItemStackData",
-                            "default": {}
+                        armorSection: {
+                            description: "For horses. The armor for the horse. \nDefaults to {}",
+                            required: false,
+                            type: "ItemStackData",
+                            default: {}
                         },
-                        "hasSaddle": {
-                            "description": "For horses___. Whether the entity has a saddle attached. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        hasSaddle: {
+                            description: "For horses___. Whether the entity has a saddle attached. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "style": {
-                            "description": "For horses. The style/markings that the horse has. \nDefaults to \"NONE\"",
-                            "required": false,
-                            "type": "horseStyle",
-                            "default": "NONE"
+                        style: {
+                            description: "For horses. The style/markings that the horse has. \nDefaults to \"NONE\"",
+                            required: false,
+                            type: "horseStyle",
+                            default: "NONE"
                         },
-                        "tamingDifficulty": {
-                            "description": "For horses___. The difficulty of taming the entity (ie the amount of domesticating (feeding, riding, ect.) necessary in order to tame it). \nDefaults to 1",
-                            "required": false,
-                            "type": "integer",
-                            "default": 1
+                        tamingDifficulty: {
+                            description: "For horses___. The difficulty of taming the entity (ie the amount of domesticating (feeding, riding, ect.) necessary in order to tame it). \nDefaults to 1",
+                            required: false,
+                            type: "integer",
+                            default: 1
                         },
-                        "jumpStrength": {
-                            "description": "For horses___. The strength of jump for the entity. \nDefaults to 0.7",
-                            "required": false,
-                            "type": "number",
-                            "default": 0.7
+                        jumpStrength: {
+                            description: "For horses___. The strength of jump for the entity. \nDefaults to 0.7",
+                            required: false,
+                            type: "number",
+                            default: 0.7
                         },
-                        "hasChest": {
-                            "description": "For chestedHorses___. Whether the entity is carrying a chest. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        hasChest: {
+                            description: "For chestedHorses___. Whether the entity is carrying a chest. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "tamed": {
-                            "description": "For horses. Whether the horse is tamed. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        tamed: {
+                            description: "For horses. Whether the horse is tamed. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "angry": {
-                            "description": "For wolfs. Whether the wolf is angry. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        angry: {
+                            description: "For wolfs. Whether the wolf is angry. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "size": {
-                            "description": "For slimes, magmacubes, and phantoms. The size of the entity. \nDefaults to 0",
-                            "required": false,
-                            "type": "integer",
-                            "default": 0
+                        size: {
+                            description: "For slimes, magmacubes, and phantoms. The size of the entity. \nDefaults to 0",
+                            required: false,
+                            type: "integer",
+                            default: 0
                         },
-                        "potion": {
-                            "description": "For thrown potions. The item data for the thrown potion. \nDefaults to {}",
-                            "required": false,
-                            "type": "ItemStackData",
-                            "default": {}
+                        potion: {
+                            description: "For thrown potions. The item data for the thrown potion. \nDefaults to {}",
+                            required: false,
+                            type: "ItemStackData",
+                            default: {}
                         },
-                        "fuse": {
-                            "description": "For creepers. The time a creeper is allowed to be primed before exploding (in ticks). \nDefaults to 30",
-                            "required": false,
-                            "type": "integer",
-                            "default": 30
+                        fuse: {
+                            description: "For creepers. The time a creeper is allowed to be primed before exploding (in ticks). \nDefaults to 30",
+                            required: false,
+                            type: "integer",
+                            default: 30
                         },
-                        "ignited": {
-                            "description": "For creepers. Whether the creeper is primed/ignited. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        ignited: {
+                            description: "For creepers. Whether the creeper is primed/ignited. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "explosionRadius": {
-                            "description": "For creepers. The explosion radius when exploded. \nDefaults to 3",
-                            "required": false,
-                            "type": "integer",
-                            "default": 3
+                        explosionRadius: {
+                            description: "For creepers. The explosion radius when exploded. \nDefaults to 3",
+                            required: false,
+                            type: "integer",
+                            default: 3
                         },
-                        "powered": {
-                            "description": "For creepers. Whether the creeper is powered/charged/electrecuted. \nDefaults to 3",
-                            "required": false,
-                            "type": "integer",
-                            "default": 3
+                        powered: {
+                            description: "For creepers. Whether the creeper is powered/charged/electrecuted. \nDefaults to 3",
+                            required: false,
+                            type: "integer",
+                            default: 3
                         },
-                        "variant": {
-                            "description": "For axolotls. The variant of the entity. Defaults to a random variant (probably, not sure)",
-                            "required": false,
-                            "type": "axolotlVariant",
-                            "default": ""
+                        variant: {
+                            description: "For axolotls. The variant of the entity. Defaults to a random variant (probably, not sure)",
+                            required: false,
+                            type: "axolotlVariant",
+                            default: ""
                         },
-                        "isBaby": {
-                            "description": "For ageable entities. Whether the entity is a baby. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        isBaby: {
+                            description: "For ageable entities. Whether the entity is a baby. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         },
-                        "type": {
-                            "description": "For dropped item. The type of item. \nDefaults to \"STONE\"",
-                            "required": false,
-                            "type": "material",
-                            "default": "STONE"
+                        type: {
+                            description: "For dropped item. The type of item. \nDefaults to \"STONE\"",
+                            required: false,
+                            type: "material",
+                            default: "STONE"
                         },
-                        "amount": {
-                            "description": "For dropped item. The amount of item to give. \nDefaults to 1",
-                            "required": false,
-                            "type": "integer",
-                            "default": 1
+                        amount: {
+                            description: "For dropped item. The amount of item to give. \nDefaults to 1",
+                            required: false,
+                            type: "integer",
+                            default: 1
                         },
-                        "metadata": {
-                            "description": "For dropped item. The metadata of the item. \nDefaults to {}",
-                            "required": false,
-                            "type": "ItemMetaData",
-                            "default": {}
+                        metadata: {
+                            description: "For dropped item. The metadata of the item. \nDefaults to {}",
+                            required: false,
+                            type: "ItemMetaData",
+                            default: {}
                         },
-                        "charged": {
-                            "description": "For whither skulls. Whether to make the skull blue or not. \nDefaults to false",
-                            "required": false,
-                            "type": "boolean",
-                            "default": false
+                        charged: {
+                            description: "For whither skulls. Whether to make the skull blue or not. \nDefaults to false",
+                            required: false,
+                            type: "boolean",
+                            default: false
                         }
                     }
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "VectorData": {
-            "description": "The data of a vector",
-            "type": "object",
-            "default": {
-                "x": 0,
-                "y": 0,
-                "z": 0
+        VectorData: {
+            description: "The data of a vector",
+            type: "object",
+            default: {
+                x: 0,
+                y: 0,
+                z: 0
             },
-            "properties": {
-                "x": {
-                    "description": "The x component of the vector. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+            properties: {
+                x: {
+                    description: "The x component of the vector. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 },
-                "y": {
-                    "description": "The y component of the vector. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+                y: {
+                    description: "The y component of the vector. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 },
-                "z": {
-                    "description": "The z component of the vector. \nDefaults to 0",
-                    "required": false,
-                    "type": "number",
-                    "default": 0
+                z: {
+                    description: "The z component of the vector. \nDefaults to 0",
+                    required: false,
+                    type: "number",
+                    default: 0
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "SoundData": {
-            "description": "The data of a sound",
-            "type": "object",
-            "properties": {
-                "sound": {
-                    "description": "The sound to make. \nDefaults to \"ENTITY_GENERIC_EXPLODE\"",
-                    "required": false,
-                    "type": "sound",
-                    "default": "ENTITY_GENERIC_EXPLODE"
+        SoundData: {
+            description: "The data of a sound",
+            type: "object",
+            properties: {
+                sound: {
+                    description: "The sound to make. \nDefaults to \"ENTITY_GENERIC_EXPLODE\"",
+                    required: false,
+                    type: "sound",
+                    default: "ENTITY_GENERIC_EXPLODE"
                 },
-                "volume": {
-                    "description": "The volume of the sound. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                volume: {
+                    description: "The volume of the sound. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 },
-                "pitch": {
-                    "description": "The pitch of the sound. \nDefaults to 1",
-                    "required": false,
-                    "type": "number",
-                    "default": 1
+                pitch: {
+                    description: "The pitch of the sound. \nDefaults to 1",
+                    required: false,
+                    type: "number",
+                    default: 1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "PotionEffectData": {
-            "description": "The data of a potion effect",
-            "type": "object",
-            "properties": {
-                "potency": {
-                    "description": "The potency or amplifier of the potion. \nDefaults to 1",
-                    "required": false,
-                    "type": "integer",
-                    "default": 1
+        PotionEffectData: {
+            description: "The data of a potion effect",
+            type: "object",
+            properties: {
+                potency: {
+                    description: "The potency or amplifier of the potion. \nDefaults to 1",
+                    required: false,
+                    type: "integer",
+                    default: 1
                 },
-                "type": {
-                    "description": "The type of the potion",
-                    "required": true,
-                    "type": "potion"
+                type: {
+                    description: "The type of the potion",
+                    required: true,
+                    type: "potion"
                 },
-                "ambient": {
-                    "description": "Whether to make the particles more translucent or not. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                ambient: {
+                    description: "Whether to make the particles more translucent or not. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "hasParticles": {
-                    "description": "Whether to make this potion effect has particles or not. \nDefaults to true",
-                    "required": false,
-                    "type": "boolean",
-                    "default": true
+                hasParticles: {
+                    description: "Whether to make this potion effect has particles or not. \nDefaults to true",
+                    required: false,
+                    type: "boolean",
+                    default: true
                 },
-                "duration": {
-                    "description": "The duration of the potion in seconds (1 is 20 ticks). 0 is for infinite duration (Integer maximum ticks). \nDefaults to 10",
-                    "required": false,
-                    "type": "number",
-                    "default": 10
+                duration: {
+                    description: "The duration of the potion in seconds (1 is 20 ticks). 0 is for infinite duration (Integer maximum ticks). \nDefaults to 10",
+                    required: false,
+                    type: "number",
+                    default: 10
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ParticleData": {
-            "description": "The data of a particle",
-            "type": "object",
-            "properties": {
-                "particle": {
-                    "description": "The particle type. \nDefaults to \"BARRIER\"",
-                    "required": false,
-                    "type": "particle",
-                    "default": "BARRIER"
+        ParticleData: {
+            description: "The data of a particle",
+            type: "object",
+            properties: {
+                particle: {
+                    description: "The particle type. \nDefaults to \"BARRIER\"",
+                    required: false,
+                    type: "particle",
+                    default: "BARRIER"
                 },
-                "numberOfParticles": {
-                    "description": "The number of particle. \nDefaults to 1",
-                    "required": false,
-                    "type": "integer",
-                    "default": 1
+                numberOfParticles: {
+                    description: "The number of particle. \nDefaults to 1",
+                    required: false,
+                    type: "integer",
+                    default: 1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BlockDataData": {
-            "description": "The data of a block data",
-            "type": "object",
-            "properties": {
-                "type": {
-                    "description": "The type of block. \nDefaults to \"STONE\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "STONE"
+        BlockDataData: {
+            description: "The data of a block data",
+            type: "object",
+            properties: {
+                type: {
+                    description: "The type of block. \nDefaults to \"STONE\"",
+                    required: false,
+                    type: "material",
+                    default: "STONE"
                 },
-                "level": {
-                    "description": "The fluid level of the block. \n\nDefaults to not set",
-                    "required": false,
-                    "type": "integer",
-                    "default": -1
+                level: {
+                    description: "The fluid level of the block. \n\nDefaults to not set",
+                    required: false,
+                    type: "integer",
+                    default: -1
                 },
-                "age": {
-                    "description": "The growth stage of the block. \n\nDefaults to not set",
-                    "required": false,
-                    "type": "integer",
-                    "default": -1
+                age: {
+                    description: "The growth stage of the block. \n\nDefaults to not set",
+                    required: false,
+                    type: "integer",
+                    default: -1
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "BlockDataComparison": {
-            "description": "A comparison for block data",
-            "type": "object",
-            "properties": {
-                "types": {
-                    "description": "The types that is compared to. \nDefaults to [\"STONE\"]",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": [
+        BlockDataComparison: {
+            description: "A comparison for block data",
+            type: "object",
+            properties: {
+                types: {
+                    description: "The types that is compared to. \nDefaults to [\"STONE\"]",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: [
                         "STONE"
                     ]
                 },
-                "type": {
-                    "description": "The type that is compared to. Can be used instead of `types`. \nDefaults to \"STONE\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "STONE"
+                type: {
+                    description: "The type that is compared to. Can be used instead of `types`. \nDefaults to \"STONE\"",
+                    required: false,
+                    type: "material",
+                    default: "STONE"
                 },
-                "level": {
-                    "description": "The range of fluid levels. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+                level: {
+                    description: "The range of fluid levels. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 },
-                "age": {
-                    "description": "The range of block age. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+                age: {
+                    description: "The range of block age. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "LoreData": {
-            "type": "array",
-            "items": "string",
-            "available": true,
-            "requireMode": true
+        LoreData: {
+            type: "array",
+            items: "string",
+            available: true,
+            requireMode: true
         },
-        "EnchantComparisonData": {
-            "type": "object",
-            "default": {},
-            "propertiesMap": {
-                "key": {
-                    "description": "The enchantment name",
-                    "type": "enchantment"
+        EnchantComparisonData: {
+            type: "object",
+            default: {},
+            propertiesMap: {
+                key: {
+                    description: "The enchantment name",
+                    type: "enchantment"
                 },
-                "value": {
-                    "description": "The level of the enchantment",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+                value: {
+                    description: "The level of the enchantment",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ItemMetaComparisonData": {
-            "description": "A comparison for metadata",
-            "type": "object",
-            "properties": {
-                "displayName": {
-                    "description": "A regex to match the display name against. \nDefaults to \".+\"",
-                    "required": false,
-                    "type": "string",
-                    "default": ".+"
+        ItemMetaComparisonData: {
+            description: "A comparison for metadata",
+            type: "object",
+            properties: {
+                displayName: {
+                    description: "A regex to match the display name against. \nDefaults to \".+\"",
+                    required: false,
+                    type: "string",
+                    default: ".+"
                 },
-                "lore": {
-                    "description": "A list of regex to match the lore against. \nDefaults to \".+\"",
-                    "required": false,
-                    "type": "LoreData",
-                    "default": ".+"
+                lore: {
+                    description: "A list of regex to match the lore against. \nDefaults to \".+\"",
+                    required: false,
+                    type: "LoreData",
+                    default: ".+"
                 },
-                "enchants": {
-                    "description": "The item to check against. \nDefaults to {}",
-                    "required": false,
-                    "type": "EnchantComparisonData",
-                    "default": {}
+                enchants: {
+                    description: "The item to check against. \nDefaults to {}",
+                    required: false,
+                    type: "EnchantComparisonData",
+                    default: {}
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "ItemComparisonData": {
-            "description": "A comparison for items",
-            "type": "object",
-            "properties": {
-                "types": {
-                    "description": "The list of item types. \nDefaults to []",
-                    "required": false,
-                    "type": "array",
-                    "items": "material",
-                    "default": []
+        ItemComparisonData: {
+            description: "A comparison for items",
+            type: "object",
+            properties: {
+                types: {
+                    description: "The list of item types. \nDefaults to []",
+                    required: false,
+                    type: "array",
+                    items: "material",
+                    default: []
                 },
-                "type": {
-                    "description": "An item type. Can be used instead of `types` for single items. \nDefaults to \"STONE\"",
-                    "required": false,
-                    "type": "material",
-                    "default": "STONE"
+                type: {
+                    description: "An item type. Can be used instead of `types` for single items. \nDefaults to \"STONE\"",
+                    required: false,
+                    type: "material",
+                    default: "STONE"
                 },
-                "amount": {
-                    "description": "The range of item amount. \nDefaults to \"-Infinity - Infinity\"",
-                    "required": false,
-                    "type": "range",
-                    "default": "-Infinity - Infinity"
+                amount: {
+                    description: "The range of item amount. \nDefaults to \"-Infinity - Infinity\"",
+                    required: false,
+                    type: "range",
+                    default: "-Infinity - Infinity"
                 },
-                "metadata": {
-                    "description": "The metadata of the item. \nDefaults to {}",
-                    "required": false,
-                    "type": "ItemMetaComparisonData",
-                    "default": {}
+                metadata: {
+                    description: "The metadata of the item. \nDefaults to {}",
+                    required: false,
+                    type: "ItemMetaComparisonData",
+                    default: {}
                 }
             },
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "entity": {
-            "description": "A type of entity",
-            "type": "string",
-            "enum": [
+        entity: {
+            description: "A type of entity",
+            type: "string",
+            enum: [
                 "DROPPED_ITEM",
                 "EXPERIENCE_ORB",
                 "AREA_EFFECT_CLOUD",
@@ -4270,13 +4270,13 @@ const docs = {
                 "PLAYER",
                 "UNKNOWN"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "blockFace": {
-            "description": "A face of a block",
-            "type": "string",
-            "enum": [
+        blockFace: {
+            description: "A face of a block",
+            type: "string",
+            enum: [
                 "NORTH",
                 "EAST",
                 "SOUTH",
@@ -4297,13 +4297,13 @@ const docs = {
                 "WEST_SOUTH_WEST",
                 "SELF"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "trimPattern": {
-            "description": "",
-            "type": "string",
-            "enum": [
+        trimPattern: {
+            description: "",
+            type: "string",
+            enum: [
                 "RIB",
                 "TIDE",
                 "DUNE",
@@ -4321,13 +4321,13 @@ const docs = {
                 "WILD",
                 "VEX"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "trimMaterial": {
-            "description": "",
-            "type": "string",
-            "enum": [
+        trimMaterial: {
+            description: "",
+            type: "string",
+            enum: [
                 "NETHERITE",
                 "GOLD",
                 "REDSTONE",
@@ -4339,14 +4339,14 @@ const docs = {
                 "AMETHYST",
                 "COPPER"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "enchantment": {
-            "description": "An enchantment",
-            "type": "string",
-            "requireEnum": false,
-            "enum": [
+        enchantment: {
+            description: "An enchantment",
+            type: "string",
+            requireEnum: false,
+            enum: [
                 "fire_protection",
                 "sharpness",
                 "flame",
@@ -4387,13 +4387,13 @@ const docs = {
                 "power",
                 "infinity"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "potion": {
-            "description": "A potion effect",
-            "type": "string",
-            "enum": [
+        potion: {
+            description: "A potion effect",
+            type: "string",
+            enum: [
                 "SPEED",
                 "SLOWNESS",
                 "HASTE",
@@ -4428,13 +4428,13 @@ const docs = {
                 "HERO_OF_THE_VILLAGE",
                 "DARKNESS"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "dyeColor": {
-            "description": "A dye color",
-            "type": "string",
-            "enum": [
+        dyeColor: {
+            description: "A dye color",
+            type: "string",
+            enum: [
                 "WHITE",
                 "ORANGE",
                 "MAGENTA",
@@ -4452,26 +4452,26 @@ const docs = {
                 "RED",
                 "BLACK"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "axolotlVariant": {
-            "description": "A variant of axolotls",
-            "type": "string",
-            "enum": [
+        axolotlVariant: {
+            description: "A variant of axolotls",
+            type: "string",
+            enum: [
                 "BLUE",
                 "CYAN",
                 "GOLD",
                 "LUCY",
                 "WILD"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "horseColor": {
-            "description": "A color of horses",
-            "type": "string",
-            "enum": [
+        horseColor: {
+            description: "A color of horses",
+            type: "string",
+            enum: [
                 "BLACK",
                 "BROWN",
                 "CHESTNUT",
@@ -4480,26 +4480,26 @@ const docs = {
                 "GRAY",
                 "WHITE"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "horseStyle": {
-            "description": "A style/markings of horses",
-            "type": "string",
-            "enum": [
+        horseStyle: {
+            description: "A style/markings of horses",
+            type: "string",
+            enum: [
                 "BLACK_DOTS",
                 "NONE",
                 "WHITE",
                 "WHITE_DOTS",
                 "WHITEFIELD"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "damageCause": {
-            "description": "A damage cause",
-            "type": "string",
-            "enum": [
+        damageCause: {
+            description: "A damage cause",
+            type: "string",
+            enum: [
                 "KILL",
                 "WORLD_BORDER",
                 "CONTACT",
@@ -4533,26 +4533,26 @@ const docs = {
                 "FREEZE",
                 "SONIC_BOOM"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "action": {
-            "description": "An interaction action",
-            "type": "string",
-            "enum": [
+        action: {
+            description: "An interaction action",
+            type: "string",
+            enum: [
                 "LEFT_CLICK_BLOCK",
                 "RIGHT_CLICK_BLOCK",
                 "LEFT_CLICK_AIR",
                 "RIGHT_CLICK_AIR",
                 "PHYSICAL"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "lootTable": {
-            "description": "A loot table type",
-            "type": "string",
-            "enum": [
+        lootTable: {
+            description: "A loot table type",
+            type: "string",
+            enum: [
                 "EMPTY",
                 "ABANDONED_MINESHAFT",
                 "BURIED_TREASURE",
@@ -4715,13 +4715,13 @@ const docs = {
                 "SHEEP_WHITE",
                 "SHEEP_YELLOW"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "biome": {
-            "description": "A biome",
-            "type": "string",
-            "enum": [
+        biome: {
+            description: "A biome",
+            type: "string",
+            enum: [
                 "OCEAN",
                 "PLAINS",
                 "DESERT",
@@ -4788,25 +4788,25 @@ const docs = {
                 "CHERRY_GROVE",
                 "CUSTOM"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "world": {
-            "description": "A dimension",
-            "type": "string",
-            "requireEnum": false,
-            "enum": [
+        world: {
+            description: "A dimension",
+            type: "string",
+            requireEnum: false,
+            enum: [
                 "world",
                 "world_nether",
                 "world_the_end"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "equipmentSlot": {
-            "description": "An equipment slot",
-            "type": "string",
-            "enum": [
+        equipmentSlot: {
+            description: "An equipment slot",
+            type: "string",
+            enum: [
                 "HAND",
                 "OFF_HAND",
                 "FEET",
@@ -4814,13 +4814,13 @@ const docs = {
                 "CHEST",
                 "HEAD"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "attribute": {
-            "description": "An attribute",
-            "type": "string",
-            "enum": [
+        attribute: {
+            description: "An attribute",
+            type: "string",
+            enum: [
                 "MAX_HEALTH",
                 "FOLLOW_RANGE",
                 "KNOCKBACK_RESISTANCE",
@@ -4835,24 +4835,24 @@ const docs = {
                 "HORSE_JUMP_STRENGTH",
                 "ZOMBIE_SPAWN_REINFORCEMENTS"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "collisionMode": {
-            "description": "The fluid collision mode for raytrace",
-            "type": "string",
-            "enum": [
+        collisionMode: {
+            description: "The fluid collision mode for raytrace",
+            type: "string",
+            enum: [
                 "NEVER",
                 "SOURCE_ONLY",
                 "ALWAYS"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "sound": {
-            "description": "A sound",
-            "type": "string",
-            "enum": [
+        sound: {
+            description: "A sound",
+            type: "string",
+            enum: [
                 "AMBIENT_BASALT_DELTAS_ADDITIONS",
                 "AMBIENT_BASALT_DELTAS_LOOP",
                 "AMBIENT_BASALT_DELTAS_MOOD",
@@ -6328,13 +6328,13 @@ const docs = {
                 "WEATHER_RAIN",
                 "WEATHER_RAIN_ABOVE"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "particle": {
-            "description": "A particle",
-            "type": "string",
-            "enum": [
+        particle: {
+            description: "A particle",
+            type: "string",
+            enum: [
                 "EXPLOSION_NORMAL",
                 "EXPLOSION_LARGE",
                 "EXPLOSION_HUGE",
@@ -6437,12 +6437,12 @@ const docs = {
                 "LEGACY_BLOCK_DUST",
                 "LEGACY_FALLING_DUST"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         },
-        "material": {
-            "type": "string",
-            "enum": [
+        material: {
+            type: "string",
+            enum: [
                 "AIR",
                 "STONE",
                 "GRANITE",
@@ -7846,18 +7846,18 @@ const docs = {
                 "POTTED_AZALEA_BUSH",
                 "POTTED_FLOWERING_AZALEA_BUSH"
             ],
-            "available": true,
-            "requireMode": true
+            available: true,
+            requireMode: true
         }
     },
-    "categories": {
-        "triggers": [],
-        "conditions": [],
-        "effects": [],
-        "skills": [],
-        "damagemodifiers": [],
-        "rewards": [],
-        "distributions": [],
-        "types": [],
+    categories: {
+        triggers: [],
+        conditions: [],
+        effects: [],
+        skills: [],
+        damagemodifiers: [],
+        rewards: [],
+        distributions: [],
+        types: [],
     }
 }
