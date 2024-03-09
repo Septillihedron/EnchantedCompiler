@@ -56,6 +56,10 @@ function compileProperty(property) {
                 })
             }
             return constText("# not done yet")
+        case "trigger": 
+            return new DocItemSection("triggers", [
+                entry("conditions", compileTypeString("ConditionList"))
+            ])
         case "condition":
             return new DocItemSection("conditions", [
                 entry("else", compileTypeString("EffectList"))

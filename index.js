@@ -1,16 +1,8 @@
 
 
-const createDefaultCondition = () => entry(input("condition0"), new DocItemSection("conditions"))
-
-const createDefaultEffect = () => entry(input("effect0"), new DocItemSection("effects"))
-
-const createDefaultTrigger = () => entry("trigger", new DocItemSection("triggers", [
-    entry("conditions", new PropertiesMap(createDefaultCondition))
-]))
-
 const createDefaultSkill = () => entry(input("skill0"), new Section([
-    createDefaultTrigger(),
-    entry("effects", new PropertiesMap(createDefaultEffect))
+    entry("trigger", compileTypeString("trigger")),
+    entry("effects", compileTypeString("EffectList"))
 ]))
 
 const createDefaultDamageModifier = () => entry("damagemodifier", new DocItemSection("damagemodifiers"))

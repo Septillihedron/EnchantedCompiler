@@ -2354,6 +2354,23 @@ const docs = {
         }
     },
     skills: {
+        CUSTOM: {
+            description: "Adds a custom skill. Only available in SuperheroesPlusUltra",
+            properties: {
+                trigger: {
+                    description: "The trigger for the effect list to execute",
+                    required: true,
+                    type: "trigger",
+                },
+                effects: {
+                    description: "The list of effects to execute",
+                    required: true,
+                    type: "EffectList"
+                }
+            },
+            available: true, 
+            requireMode: true,
+        },
         POTIONEFFECT: {
             description: "Applies the potion effect to the user",
             properties: {
@@ -3215,6 +3232,13 @@ const docs = {
         }
     },
     types: {
+        trigger: {
+            description: "A skills library trigger",
+            type: "object",
+            internal: true,
+            available: true,
+            requireMode: true
+        },
         condition: {
             description: "A skills library condition",
             type: "object",
