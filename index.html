@@ -17,6 +17,7 @@
 
         .primary-colors input {
             background-color: #338;
+			color: white;
             width: max-content;
             border-radius: 0.2vw;
             border: none;
@@ -34,6 +35,7 @@
 
         .primary-colors button {
             background-color: #338;
+            color: white;
             width: max-content;
             border-radius: 0.2vw;
             border: none;
@@ -61,6 +63,36 @@
 
         .array > li::marker {
             content: "- "
+        }
+		
+		.enum-value-container {
+			display: inline-block;
+		}
+		
+		.autocomplete-menu {
+			display: none;
+			position: absolute;
+			background-color: #338;
+			width: min-content;
+			border: .1rem goldenrod solid;
+			margin: .1rem 0 .1rem 0;
+			padding-left: 0;
+		}
+
+        .autocomplete-menu.active {
+            display: block;
+        }
+		
+		.autocomplete-menu li::marker {
+			content: none;
+		}
+
+        button.autocomplete-choice {
+            width: 100%;
+            justify-content: left;
+        }
+        button.autocomplete-choice:hover {
+            background-color: gold;
         }
     </style>
 </head>

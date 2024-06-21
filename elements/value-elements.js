@@ -160,34 +160,104 @@ function numInput(def) {
 
 class EnumInput extends Input {
 
-    static enums = []
-
     /**
      * @param {string[]} enumList 
      * @param {string | undefined | null} def 
      */
     constructor(enumList, def=undefined) {
         super(def)
-		enumList.sort()
         this.enumList = enumList
-        let dataListIndex = EnumInput.enums.findIndex(x => x == enumList)
-        if (dataListIndex == -1) {
-            const dataList = document.createElement("datalist")
-			dataListIndex = EnumInput.enums.length
-            dataList.id = `dataList-enum${dataListIndex}`
-            for (const value of enumList) {
-                const option = document.createElement("option")
-                option.value = value
-                dataList.appendChild(option)
-            }
-            
-            const dataListContainer = document.getElementById("dataList-enums")
-            dataListContainer?.appendChild(dataList)
+		this.enumList.sort()
+        
+        this.autocompleteMenu = document.createElement("menu")
+        this.autocompleteMenu.classList.add("autocomplete-menu")
+        this.autocompleteMenu.classList.add("active")
 
-            EnumInput.enums.push(enumList)
+        this.input.addEventListener("input", () => {
+            this.createValueListMenu()
+        })
+        
+        this.createValueListMenu()
+    }
+
+    createValueListMenu() {
+        this.autocompleteMenu.replaceChildren()
+        const sorted = this.sortValueList()
+        sorted.forEach(value => {
+            const option = this.createMenuChoice(value)
+            this.autocompleteMenu.appendChild(option)
+        })
+    }
+
+    /**
+     * @param {string} value
+     * @returns {HTMLLIElement}
+     */
+    createMenuChoice(value) {
+        const button = document.createElement("button")
+        button.classList.add("autocomplete-choice")
+        button.innerText = value
+        button.addEventListener("click", () => {
+            this.input.value = value
+            this.createValueListMenu()
+        })
+        const li = document.createElement("li")
+        li.appendChild(button)
+        return li
+    }
+
+    sortValueList() {
+        const input = this.getValue().trim()
+        if (input === "" || this.enumList.includes(input)) {
+            return this.enumList
         }
+        return this.enumList
+            .map(value => ({ value, score: this.calculateScore(input, value) }))
+			.filter(x => x.score !== 0)
+            .sort((a, b) => b.score - a.score)
+            .map(x => x.value)
+    }
 
-        this.input.setAttribute("list", `dataList-enum${dataListIndex}`)
+    /**
+     * @param {string} input
+     * @param {string} value
+     * @returns {number}
+     */
+	calculateScore(input, value) {
+		let index = 0
+		let score = 0
+		for (let i=0; i<value.length; i++) {
+			const isSameChar = value.charAt(i).toLowerCase() === input.charAt(index).toLowerCase()
+			if (isSameChar) {
+				index++
+				score += 1000000 - i
+				if (index > input.length-1) {
+					break
+				}
+			}
+		}
+		return score
+	}
+	
+	/**
+     * @param {unknown} val
+     */
+    setValue(val) {
+        super.setValue(val)
+		this.createValueListMenu()
+    }
+
+    /**
+     * @param {HTMLElement} parent
+     */
+    toHTML(parent) {
+		const container = document.createElement('div')
+		container.classList.add("enum-value-container")
+
+        super.toHTML(container)
+        container.appendChild(this.autocompleteMenu)
+		
+		parent.appendChild(container)
     }
 
 }
