@@ -1,4 +1,6 @@
-
+import { compileTypeString } from "./compiler.js"
+import { DocItemSection, PropertiesMap, Section, entry, section } from "./elements/section-elements.js"
+import { input } from "./elements/value-elements.js"
 
 const createDefaultSkill = () => entry(input("skill0"), new Section([
     entry("trigger", compileTypeString("trigger")),

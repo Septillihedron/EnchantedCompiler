@@ -1,4 +1,5 @@
-
+import { incorrectTypeSetError } from "./incorrect-type-set-error.js"
+import { YamlElement } from "./yaml-element.js"
 
 const errorLevels = Object.freeze({
     none: 0,
@@ -20,7 +21,7 @@ const errorLevels = Object.freeze({
 /**
  * @implements {YamlElement<string>}
  */
-class Input {
+export class Input extends YamlElement {
 
     /**
      * @type {((val: string, errors: SchemaError[]) => void)[]}
@@ -31,6 +32,7 @@ class Input {
      * @param {string | undefined | null} def
      */
     constructor(def) {
+        super()
         this.input = document.createElement("input")
         if (def != undefined) this.input.value = def
         this.validators = []
@@ -118,7 +120,7 @@ class Input {
 /**
  * @param {string | undefined} def
  */
-function input(def) {
+export function input(def) {
     return new Input(def)
 }
 
@@ -126,7 +128,7 @@ const intRegex = /^[\+\-]?(([0-9]+)|(0b[01]+)|(0o[0-7]+)|(0x[0-9a-fA-F]+))$/
 /**
  * @param {number} def
  */
-function intInput(def) {
+export function intInput(def) {
     const elem = input(def.toString())
     elem.addValidator((val, errors) => {
         if (!intRegex.test(val)) {
@@ -144,7 +146,7 @@ const floatRegex = /^([\+\-]?((\d+(\.\d+)?)|(\.inf)))$/
 /**
  * @param {number | string} def
  */
-function numInput(def) {
+export function numInput(def) {
     const elem = input(def.toString())
     elem.addValidator((val, errors) => {
         if (!floatRegex.test(val)) {
@@ -158,7 +160,7 @@ function numInput(def) {
     return elem
 }
 
-class EnumInput extends Input {
+export class EnumInput extends Input {
 
     /**
      * @param {string[]} enumList 
@@ -265,9 +267,10 @@ class EnumInput extends Input {
 /**
  * @implements {YamlElement<{ min: number, max: number }>}
  */
-class RangeInput {
+export class RangeInput extends YamlElement {
 
     constructor() {
+        super()
         this.min = numInput("-.inf")
         this.dash = constText(" - ")
         this.max = numInput(".inf")
@@ -313,11 +316,12 @@ class RangeInput {
 /**
  * @implements {YamlElement<string>}
  */
-class ConstText {
+export class ConstText extends YamlElement {
     /**
      * @param {string} text
      */
     constructor(text) {
+        super()
         this.text = text
         this.textElement = document.createTextNode(text)
     }
@@ -351,13 +355,13 @@ class ConstText {
 /**
  * @param {string} text
  */
-function constText(text) {
+export function constText(text) {
     return new ConstText(text)
 }
 
 /**
  * @deprecated
  */
-function incomplete() {
+export function incomplete() {
     return constText("# not done yet")
 }

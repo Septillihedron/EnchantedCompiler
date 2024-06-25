@@ -1,12 +1,16 @@
+import { ArraySection, DocItemSection, MultiType, PropertiesMap, Section, entry } from "./elements/section-elements.js"
+import { EnumInput, RangeInput, constText, input, intInput, numInput } from "./elements/value-elements.js"
+import { YamlElement } from "./elements/yaml-element.js"
+import { docs } from "./schema.js"
 
 
 const booleanEnum = ["true", "false"]
 
 /**
- * @param {import("./docs.js").NakedProperty} property 
+ * @param {import("./schema").NakedProperty} property 
  * @returns {YamlElement<unknown>}
  */
-function compileProperty(property) {
+export function compileProperty(property) {
     if (typeof property.type != "string") {
         return new MultiType(property)
     }
@@ -28,7 +32,7 @@ function compileProperty(property) {
             return new ArraySection(() => {
                 if (typeof property.items === "object") return compileProperty(property.items)
                 if (docs.categories.types.includes(property.items)) {
-                    return compileTypeString(/** @type {import("./docs.js").NormalPropertyTypes} */ (property.items))
+                    return compileTypeString(/** @type {import("./schema.js").NormalPropertyTypes} */ (property.items))
                 }
                 return compileProperty(/** @type {any} */ ({ type: property.items }))
             })
@@ -72,9 +76,9 @@ function compileProperty(property) {
 }
 
 /**
- * @param {import("./docs.js").NormalPropertyTypes} typeName
+ * @param {import("./schema.js").NormalPropertyTypes} typeName
  */
-function compileTypeString(typeName) {
+export function compileTypeString(typeName) {
     if (typeName in docs.types) {
         let type = docs.types[typeName]
         if (type.internal) {
@@ -85,3 +89,4 @@ function compileTypeString(typeName) {
     console.log("Not done: " + typeName)
     return constText("# not done yet")
 }
+

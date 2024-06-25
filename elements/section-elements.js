@@ -1,8 +1,9 @@
 
-/**
- * @template T
- * @typedef {import("./yaml-element.d.ts").YamlElement<T>} YamlElement<T>
- */
+import { compileProperty } from "../compiler.js"
+import { docs } from "../schema.js"
+import { incorrectTypeSetError } from "./incorrect-type-set-error.js"
+import { EnumInput, constText } from "./value-elements.js"
+import { YamlElement } from "./yaml-element.js"
 
 /**
  * @param {string} s
@@ -18,11 +19,12 @@ function indent(s) {
 /**
  * @implements {YamlElement<object>}
  */
-class Section {
+export class Section extends YamlElement {
     /**
      * @param {Entry[] | (() => Entry[])} values
      */
     constructor(values) {
+        super()
         /** @type {Entry[]} */
         this.values = []
         this.container = document.createElement("div")
@@ -141,18 +143,19 @@ class Section {
 /**
  * @param {Entry[]} values
  */
-function section(values) {
+export function section(values) {
     return new Section(values)
 }
 
 /**
  * @implements {YamlElement<unknown[]>}
  */
-class ArraySection {
+export class ArraySection extends YamlElement {
     /**
      * @param {(() => YamlElement<unknown>)} addfn
      */
     constructor(addfn) {
+        super()
         /** @type {YamlElement<unknown>[]} */
         this.values = []
         this.container = document.createElement("ul")
@@ -228,7 +231,7 @@ class ArraySection {
     }
 }
 
-class PropertiesMap extends Section {
+export class PropertiesMap extends Section {
     /**
      * @param {(name: string | number) => Entry} addfn 
      */
@@ -270,10 +273,10 @@ class PropertiesMap extends Section {
     }
 }
 
-class DocItemSection extends Section {
+export class DocItemSection extends Section {
 
     /**
-     * @param {keyof import("../docs.js").Schema} category 
+     * @param {keyof import("../schema").Schema} category 
      * @param {Entry[]} [extraEntries=[]] 
      */
     constructor(category, extraEntries=[]) {
@@ -289,7 +292,7 @@ class DocItemSection extends Section {
     }
 
     updateProperties(newValue) {
-        /** @type {import("../docs.js").DocItem | undefined} */
+        /** @type {import("../schema").DocItem | undefined} */
         const newDocItem = docs[this.category][newValue]
         if (newDocItem === undefined) return
 
@@ -310,7 +313,7 @@ class DocItemSection extends Section {
 
     /**
      * @private
-     * @param {import("../docs.js").DocItem} docItem
+     * @param {import("../schema").DocItem} docItem
     */
     compileDocItem(docItem) {
         this.clearChildren()
@@ -332,7 +335,7 @@ class DocItemSection extends Section {
 
     /**
      * @private
-     * @param {import("../docs.js").Mode[]} modes
+     * @param {import("../schema").Mode[]} modes
      * @param {boolean} requireMode
      */
     getDefaultMode(modes, requireMode) {
@@ -345,12 +348,13 @@ class DocItemSection extends Section {
 /**
  * @implements {YamlElement<[unknown, unknown]>}
  */
-class Entry {
+export class Entry extends YamlElement {
     /**
      * @param {YamlElement<unknown>} key
      * @param {YamlElement<unknown>} value 
      */
     constructor(key, value) {
+        super()
         this.key = key
         this.value = value
         this.colon = constText(": ")
@@ -396,22 +400,22 @@ class Entry {
  * @param {YamlElement<unknown> | string} key
  * @param {YamlElement<unknown>} value
  */
-function entry(key, value) {
+export function entry(key, value) {
     if (typeof key === "string") key = constText(key)
     return new Entry(key, value)
 }
 
 /**
- * @typedef {import("../docs.js").PropertyTypes} PropertyTypes
+ * @typedef {import("../schema").PropertyTypes} PropertyTypes
  */
 /**
- * @typedef {import("../docs.js").NakedProperty} NakedProperty
+ * @typedef {import("../schema").NakedProperty} NakedProperty
  */
 
 /**
  * @implements {YamlElement<[string, unknown]>}
  */
-class MultiType {
+export class MultiType extends YamlElement {
 
     /**
      * @type {{name: PropertyTypes, type: YamlElement<unknown>}[]}
@@ -423,6 +427,7 @@ class MultiType {
     selectedType
 
     constructor(multiType) {
+        super()
         const {type: types, ...typeData} = multiType
         this.possibleTypes = types
             .map(type => {
