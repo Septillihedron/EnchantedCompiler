@@ -32,7 +32,7 @@ export class Input extends YamlElement {
      * @param {string | undefined | null} def
      */
     constructor(def) {
-        super()
+        super([])
         this.input = document.createElement("input")
         if (def != undefined) this.input.value = def
         this.validators = []
@@ -173,7 +173,6 @@ export class EnumInput extends Input {
         
         this.autocompleteMenu = document.createElement("menu")
         this.autocompleteMenu.classList.add("autocomplete-menu")
-        this.autocompleteMenu.classList.add("active")
 
         this.input.addEventListener("input", () => {
             this.createValueListMenu()
@@ -262,6 +261,15 @@ export class EnumInput extends Input {
 		parent.appendChild(container)
     }
 
+    focus() {
+        super.focus()
+        this.autocompleteMenu.classList.add("active")
+        return true
+    }
+    unfocus() {
+        this.autocompleteMenu.classList.remove("active")
+    }
+
 }
 
 /**
@@ -270,10 +278,11 @@ export class EnumInput extends Input {
 export class RangeInput extends YamlElement {
 
     constructor() {
-        super()
+        super([])
         this.min = numInput("-.inf")
         this.dash = constText(" - ")
         this.max = numInput(".inf")
+        this.children = [this.min, this.max]
     }
 
     /**
@@ -305,11 +314,6 @@ export class RangeInput extends YamlElement {
             incorrectTypeSetError(val)
             return
         }
-        
-    }
-
-    focus() {
-        return this.min.focus()
     }
 }
 
@@ -321,7 +325,7 @@ export class ConstText extends YamlElement {
      * @param {string} text
      */
     constructor(text) {
-        super()
+        super([])
         this.text = text
         this.textElement = document.createTextNode(text)
     }
@@ -346,10 +350,6 @@ export class ConstText extends YamlElement {
 
     toYaml() {
         return this.text
-    }
-
-    focus() {
-        return false
     }
 }
 /**

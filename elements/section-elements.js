@@ -3,7 +3,7 @@ import { compileProperty } from "../compiler.js"
 import { docs } from "../schema.js"
 import { incorrectTypeSetError } from "./incorrect-type-set-error.js"
 import { EnumInput, constText } from "./value-elements.js"
-import { YamlElement } from "./yaml-element.js"
+import { FocusableWrapper, YamlElement } from "./yaml-element.js"
 
 /**
  * @param {string} s
@@ -24,7 +24,7 @@ export class Section extends YamlElement {
      * @param {Entry[] | (() => Entry[])} values
      */
     constructor(values) {
-        super()
+        super([])
         /** @type {Entry[]} */
         this.values = []
         this.container = document.createElement("div")
@@ -33,10 +33,10 @@ export class Section extends YamlElement {
             values.forEach(this.addChild.bind(this))
             return
         }
+        this.unfocus()
 
         this.generator = values
         this.makeGenerateButton()
-        
     }
 
     makeGenerateButton() {
@@ -48,12 +48,14 @@ export class Section extends YamlElement {
                 console.trace("generator is undefined")
                 return
             }
-            this.container.replaceChildren()
+            this.clearChildren()
             this.generator().forEach(this.addChild.bind(this))
+            this.focus()
+            this.focusNext()
             this.button.innerText = "x"
         }
         const removeEntries = () => {
-            this.container.replaceChildren()
+            this.clearChildren()
             if (this.button) this.button.innerText = "+"
         }
 
@@ -66,7 +68,8 @@ export class Section extends YamlElement {
             buttonFunctions[currentFunctionIndex]()
             currentFunctionIndex = 1-currentFunctionIndex
         })
-        
+
+        this.children.unshift(new FocusableWrapper(this.button))
     }
 
     /**
@@ -105,20 +108,12 @@ export class Section extends YamlElement {
 				}
                 entry?.value.setValue(val)
             })
+        this.unfocus()
     }
 	
 	findEntryByKey(key) {
 		return this.values.find(entry => entry.key.getValue() === key)
 	}
-
-    focus() {
-        for (let i=0; i<this.values.length; i++) {
-            if (this.values[i].focus()) {
-                return true
-            }
-        }
-        return false
-    }
 
     /**
      * @param {Entry} element
@@ -131,12 +126,20 @@ export class Section extends YamlElement {
             }
         }
         this.values.push(element)
+        this.children.push(element)
         element.toHTML(this.container)
+        
+        this.children[this.focusIndex]?.unfocus()
         element.focus()
+        this.focusIndex = this.children.length-1
     }
 
     clearChildren() {
         this.values = []
+        this.children = []
+        if (this.button !== undefined) {
+            this.children.unshift(new FocusableWrapper(this.button))
+        }
         this.container.replaceChildren()
     }
 }
@@ -155,7 +158,7 @@ export class ArraySection extends YamlElement {
      * @param {(() => YamlElement<unknown>)} addfn
      */
     constructor(addfn) {
-        super()
+        super([])
         /** @type {YamlElement<unknown>[]} */
         this.values = []
         this.container = document.createElement("ul")
@@ -167,7 +170,8 @@ export class ArraySection extends YamlElement {
             const element = addfn()
             this.addChild(element)
         }
-        
+
+        this.children.unshift(new FocusableWrapper(this.addButton))
     }
 
     /**
@@ -203,15 +207,7 @@ export class ArraySection extends YamlElement {
         val.forEach((val, index) => {
             this.values[index].setValue(val)
         })
-    }
-
-    focus() {
-        for (let i=0; i<this.values.length; i++) {
-            if (this.values[i].focus()) {
-                return true
-            }
-        }
-        return false
+        this.unfocus()
     }
 
     /**
@@ -219,14 +215,19 @@ export class ArraySection extends YamlElement {
      */
     addChild(element) {
         this.values.push(element)
+        this.children.push(element)
         const li = document.createElement("li")
         this.container.appendChild(li)
         element.toHTML(li)
+
+        this.children[this.focusIndex]?.unfocus()
         element.focus()
+        this.focusIndex = this.children.length-1
     }
 
     clearChildren() {
         this.values = []
+        this.children = [new FocusableWrapper(this.addButton)]
         this.container.replaceChildren()
     }
 }
@@ -244,6 +245,7 @@ export class PropertiesMap extends Section {
             const element = addfn(this.values.length)
             this.addChild(element)
         }
+        this.children.unshift(new FocusableWrapper(this.addButton))
     }
 
     /**
@@ -262,6 +264,7 @@ export class PropertiesMap extends Section {
                 }
                 entry?.setValue([key, val])
             })
+        this.unfocus()
     }
 
     /**
@@ -270,6 +273,11 @@ export class PropertiesMap extends Section {
     toHTML(parent) {
         parent.appendChild(this.addButton)
         super.toHTML(parent)
+    }
+
+    clearChildren() {
+        super.clearChildren()
+        this.children.unshift(new FocusableWrapper(this.addButton))
     }
 }
 
@@ -287,6 +295,7 @@ export class DocItemSection extends Section {
         const typeInput = new EnumInput(docs.categories[category])
         this.typeEntry = entry(this.typeKey, typeInput)
         this.addChild(this.typeEntry)
+        this.unfocus()
 
         typeInput.addChangedListener(this.updateProperties.bind(this))
     }
@@ -354,7 +363,7 @@ export class Entry extends YamlElement {
      * @param {YamlElement<unknown>} value 
      */
     constructor(key, value) {
-        super()
+        super([key, value])
         this.key = key
         this.value = value
         this.colon = constText(": ")
@@ -389,12 +398,6 @@ export class Entry extends YamlElement {
         this.key.setValue(val[0])
         this.value.setValue(val[1])
     }
-
-    focus() {
-        if (this.key.focus()) return true
-        if (this.value.focus()) return true
-        return false
-    }
 }
 /**
  * @param {YamlElement<unknown> | string} key
@@ -427,7 +430,7 @@ export class MultiType extends YamlElement {
     selectedType
 
     constructor(multiType) {
-        super()
+        super([])
         const {type: types, ...typeData} = multiType
         this.possibleTypes = types
             .map(type => {
@@ -445,7 +448,7 @@ export class MultiType extends YamlElement {
             const nextIndex = (currIndex + 1) % this.possibleTypes.length
             this.setType(this.possibleTypes[nextIndex].name)
         })
-
+        this.children = [this.changeTypeButton, this.selectedType.type]
     }
 
     setType(typeName) {
@@ -457,6 +460,7 @@ export class MultiType extends YamlElement {
         this.selectedType = type
         this.container.replaceChildren()
         this.selectedType.type.toHTML(this.container)
+        this.children[1] = this.selectedType.type
     }
 
     /**
@@ -486,9 +490,5 @@ export class MultiType extends YamlElement {
         }
         this.setType(val[0])
         this.selectedType.type.setValue(val[1])
-    }
-
-    focus() {
-        return this.selectedType.type.focus()
     }
 }

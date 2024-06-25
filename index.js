@@ -22,7 +22,7 @@ const makeRoot = () => entry(input("exampleboss"), section([
     entry("skills", new PropertiesMap(createDefaultSkill))
 ]))
 
-let root = makeRoot()
+export let root = makeRoot()
 
 /**
  * @type {Record<string, {average: number, times: number[]}>}
