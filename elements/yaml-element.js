@@ -1,17 +1,33 @@
 
 /**
+ * @abstract
  * @template {any} T
  * @type {import("./yaml-element").YamlElement<T>}
  */
 export class YamlElement {
 
-    children
-    focusIndex = -1
+    parent
     /**
-     * @param {import("./yaml-element").Focusable[]} children
+     * @type {import("./yaml-element").YamlElement<?>[]}
      */
-    constructor(children) {
-        this.children = children
+    children = []
+    focusIndex = -1
+
+    constructor() {}
+
+    toHTML(parent) {
+        throw new Error("Not implemented")
+    }
+    toYaml() {
+        throw new Error("Not implemented")
+        return "Not implemented"
+    }
+
+    getValue() {
+        throw new Error("Not implemented")
+    }
+    setValue(value) {
+        throw new Error("Not implemented")
     }
 
     focus() {
@@ -55,6 +71,15 @@ export class YamlElement {
         return false
     }
 
+    setFocus(element) {
+        if (this.focusIndex === -1) {
+            this.parent?.setFocus(this)
+        } else {
+            this.children[this.focusIndex].unfocus()
+        }
+        this.focusIndex = this.children.indexOf(element)
+        return true
+    }
 }
 
 /**
@@ -78,6 +103,9 @@ export class FocusableWrapper {
         return false
     }
     focusPrevious() {
+        return false
+    }
+    setFocus(element) {
         return false
     }
 

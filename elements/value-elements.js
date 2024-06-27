@@ -32,9 +32,13 @@ export class Input extends YamlElement {
      * @param {string | undefined | null} def
      */
     constructor(def) {
-        super([])
+        super()
         this.input = document.createElement("input")
         if (def != undefined) this.input.value = def
+        this.input.addEventListener("focus", () => {
+            this.parent?.setFocus(this)
+			this.focus()
+        })
         this.validators = []
         this.addChangedListener(() => this.validate())
     }
@@ -278,10 +282,13 @@ export class EnumInput extends Input {
 export class RangeInput extends YamlElement {
 
     constructor() {
-        super([])
+        super()
         this.min = numInput("-.inf")
         this.dash = constText(" - ")
         this.max = numInput(".inf")
+		
+		this.min.parent = this
+		this.max.parent = this
         this.children = [this.min, this.max]
     }
 
@@ -325,7 +332,7 @@ export class ConstText extends YamlElement {
      * @param {string} text
      */
     constructor(text) {
-        super([])
+        super()
         this.text = text
         this.textElement = document.createTextNode(text)
     }

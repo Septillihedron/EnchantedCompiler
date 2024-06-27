@@ -24,7 +24,7 @@ export class Section extends YamlElement {
      * @param {Entry[] | (() => Entry[])} values
      */
     constructor(values) {
-        super([])
+        super()
         /** @type {Entry[]} */
         this.values = []
         this.container = document.createElement("div")
@@ -125,6 +125,7 @@ export class Section extends YamlElement {
                 this.container.appendChild(document.createElement("br"))
             }
         }
+        element.parent = this
         this.values.push(element)
         this.children.push(element)
         element.toHTML(this.container)
@@ -158,7 +159,7 @@ export class ArraySection extends YamlElement {
      * @param {(() => YamlElement<unknown>)} addfn
      */
     constructor(addfn) {
-        super([])
+        super()
         /** @type {YamlElement<unknown>[]} */
         this.values = []
         this.container = document.createElement("ul")
@@ -214,6 +215,7 @@ export class ArraySection extends YamlElement {
      * @param {YamlElement<unknown>} element
      */
     addChild(element) {
+        element.parent = this
         this.values.push(element)
         this.children.push(element)
         const li = document.createElement("li")
@@ -363,10 +365,14 @@ export class Entry extends YamlElement {
      * @param {YamlElement<unknown>} value 
      */
     constructor(key, value) {
-        super([key, value])
+        super()
+        this.children = [key, value]
+        key.parent = this
+        value.parent = this
+
         this.key = key
-        this.value = value
         this.colon = constText(": ")
+        this.value = value
     }
 
     /**
@@ -430,13 +436,14 @@ export class MultiType extends YamlElement {
     selectedType
 
     constructor(multiType) {
-        super([])
+        super()
         const {type: types, ...typeData} = multiType
         this.possibleTypes = types
             .map(type => {
                 const compiled = compileProperty({...typeData, type})
                 return {name: type, type: compiled}
             })
+        this.possibleTypes.forEach(child => child.type.parent = this)
         this.container = document.createElement("div")
         this.setType(this.possibleTypes[0].name)
 

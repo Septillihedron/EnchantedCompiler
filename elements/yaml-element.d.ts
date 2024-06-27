@@ -1,10 +1,11 @@
 
 export abstract class YamlElement<T> implements Focusable {
 
+    parent?: YamlElement<?>
     children: Focusable<unknown>[]
     focusIndex: number
 
-    constructor(children: Focusable[])
+    constructor(parent?: YamlElement<?>)
 
     abstract toHTML(parent: HTMLElement): void
     abstract toYaml(): string
@@ -25,6 +26,10 @@ export abstract class YamlElement<T> implements Focusable {
      * @returns {boolean} if the focus is successful
      */
     focusPrevious(): boolean
+    /**
+     * @returns {boolean} if the focus is successful
+     */
+    setFocus(element: YamlElement<?>): boolean
 }
 
 export interface Focusable {
@@ -41,15 +46,21 @@ export interface Focusable {
      * @returns {boolean} if the focus is successful
      */
     abstract focusPrevious(): boolean
+    /**
+     * @returns {boolean} if the focus is successful
+     */
+    abstract setFocus(element: YamlElement<?>): boolean
 }
 
 export class FocusableWrapper implements Focusable {
-    constructor(target: {focus: () => void})
+    constructor(target: { focus: () => void })
 
     /**
      * @returns {boolean} if the focus is successful
      */
     focus(): boolean
+    unfocus(): void
+
     /**
      * @returns {boolean} if the focus is successful
      */
@@ -58,4 +69,8 @@ export class FocusableWrapper implements Focusable {
      * @returns {boolean} if the focus is successful
      */
     focusPrevious(): boolean
+    /**
+     * @returns {boolean} if the focus is successful
+     */
+    setFocus(element: YamlElement<?>): boolean
 }
