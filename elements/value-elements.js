@@ -204,6 +204,8 @@ export class EnumInput extends Input {
         button.innerText = value
         button.addEventListener("click", () => {
             this.input.value = value
+            this.input.dispatchEvent(new InputEvent("input", { data: value }))
+            this.parent?.parent?.focusNext()
             this.createValueListMenu()
         })
         const li = document.createElement("li")
