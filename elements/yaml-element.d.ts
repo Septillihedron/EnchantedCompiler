@@ -16,7 +16,7 @@ export abstract class YamlElement<T> implements Focusable {
     /**
      * @returns {boolean} if the focus is successful
      */
-    focus(): boolean
+    focus(last: boolean): boolean
     unfocus(): void
     /**
      * @returns {boolean} if the focus is successful
@@ -36,7 +36,7 @@ export interface Focusable {
     /**
      * @returns {boolean} if the focus is successful
      */
-    abstract focus(): boolean
+    abstract focus(last: boolean): boolean
     abstract unfocus(): void
     /**
      * @returns {boolean} if the focus is successful

@@ -8,7 +8,7 @@ export class YamlElement {
 
     parent
     /**
-     * @type {import("./yaml-element").YamlElement<?>[]}
+     * @type {import("./yaml-element").Focusable<?>[]}
      */
     children = []
     focusIndex = -1
@@ -30,11 +30,16 @@ export class YamlElement {
         throw new Error("Not implemented")
     }
 
-    focus() {
+    focus(focusLast) {
         if (this.children.length === 0) return false
         this.children[this.focusIndex]?.unfocus()
-        this.focusIndex = -1
-        return this.focusNext()
+        if (focusLast) {
+            this.focusIndex = this.children.length
+            return this.focusPrevious()
+        } else {
+            this.focusIndex = -1
+            return this.focusNext()
+        }
     }
     unfocus() {
         this.children[this.focusIndex]?.unfocus()
@@ -48,7 +53,7 @@ export class YamlElement {
             focusedChild.unfocus()
         }
         for (let i = this.focusIndex + 1; i < this.children.length; i++) {
-            if (this.children[i].focus()) {
+            if (this.children[i].focus(false)) {
                 this.focusIndex = i
                 return true
             }
@@ -62,8 +67,8 @@ export class YamlElement {
             if (focusedChild.focusPrevious()) return true
             focusedChild.unfocus()
         }
-        for (let i = this.focusIndex - 1; i >= 0; i++) {
-            if (this.children[i].focus()) {
+        for (let i = this.focusIndex - 1; i >= 0; i--) {
+            if (this.children[i].focus(true)) {
                 this.focusIndex = i
                 return true
             }
@@ -105,7 +110,7 @@ export class FocusableWrapper {
     focusPrevious() {
         return false
     }
-    setFocus(element) {
+    setFocus(_element) {
         return false
     }
 
