@@ -1,5 +1,5 @@
 import { ArraySection, DocItemSection, MultiType, PropertiesMap, Section, entry } from "./elements/section-elements.js"
-import { EnumInput, RangeInput, constText, input, intInput, numInput } from "./elements/value-elements.js"
+import { BooleanInput, EnumInput, RangeInput, constText, input, intInput, numInput } from "./elements/value-elements.js"
 import { YamlElement } from "./elements/yaml-element.js"
 import { docs } from "./schema.js"
 
@@ -25,7 +25,7 @@ export function compileProperty(property) {
         case "integer":
             return intInput(property.default ?? 0)
         case "boolean":
-            return new EnumInput(booleanEnum, property.default?.toString() ?? "")
+            return new BooleanInput(property.default ?? false)
         case "range":
             return new RangeInput()
         case "array":
