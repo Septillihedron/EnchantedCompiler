@@ -8,7 +8,7 @@ export class YamlElement {
 
     parent
     /**
-     * @type {import("./yaml-element").Focusable<?>[]}
+     * @type {import("./yaml-element").Focusable[]}
      */
     children = []
     focusIndex = -1
@@ -30,7 +30,7 @@ export class YamlElement {
         throw new Error("Not implemented")
     }
 
-    focus(focusLast) {
+    focus(focusLast = false) {
         if (this.children.length === 0) return false
         this.children[this.focusIndex]?.unfocus()
         if (focusLast) {
