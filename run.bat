@@ -1,1 +1,1 @@
-http-server
+live-server
