@@ -1,6 +1,7 @@
 
-export { docs } from "./schema.js"
 export { Schema, DocItem, NakedProperty, Type, Property, Mode, PropertyTypes, NormalPropertyTypes, SpecialPropertyTypes };
+
+export const docs: Schema
 
 type StringRecord<T> = Record<string, T>
 
