@@ -17,7 +17,7 @@ export function compileProperty(property) {
     switch(property.type) {
         case "string":
             if (property.enum) {
-                return new EnumInput(property.enum, property.default ?? "")
+                return EnumInput.create(property.enum, property.default ?? "")
             }
             return input(property.default ?? "text")
         case "number": 

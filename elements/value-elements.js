@@ -213,25 +213,56 @@ export function numInput(def) {
     return elem
 }
 
+/**
+ * @typedef {{name: string, description?: string}} EnumValue
+ */
+
 export class EnumInput extends Input {
 
     /**
-     * @param {string[]} enumList 
+     * @private
+     * @param {EnumValue[]} enumList 
      * @param {string | undefined | null} def 
      */
     constructor(enumList, def=undefined) {
         super(def)
         this.enumList = enumList
-		this.enumList.sort()
+		this.enumList.sort((a, b) => a.name.localeCompare(b.name))
         
         this.autocompleteMenu = document.createElement("menu")
         this.autocompleteMenu.classList.add("autocomplete-menu")
 
+        this.descriptionWindow = document.createElement("div")
+        this.descriptionWindow.classList.add("autocomplete-description")
+
+        this.autocompleteWindow = document.createElement('div')
+        this.autocompleteWindow.classList.add("autocomplete")
+        this.autocompleteWindow.appendChild(this.autocompleteMenu)
+        this.autocompleteWindow.appendChild(this.descriptionWindow)
+
         this.input.addEventListener("input", () => {
             this.createValueListMenu()
         })
-        
-        this.createValueListMenu()
+    }
+
+    /**
+     * @param {string[]} enumNameList 
+     * @param {string | undefined | null} def 
+     */
+    static create(enumNameList, def=undefined) {
+        const enumList = enumNameList.map(name => ({
+            name,
+            description: undefined
+        }))
+        return new EnumInput(enumList, def)
+    }
+
+    /**
+     * @param {EnumValue[]} enumList 
+     * @param {string | undefined | null} def 
+     */
+    static createDescripted(enumList, def=undefined) {
+        return new EnumInput(enumList, def)
     }
 
     createValueListMenu() {
@@ -244,19 +275,31 @@ export class EnumInput extends Input {
     }
 
     /**
-     * @param {string} value
+     * @param {EnumValue} value
      * @returns {HTMLLIElement}
      */
     createMenuChoice(value) {
         const button = document.createElement("button")
         button.classList.add("autocomplete-choice")
-        button.innerText = value
+        button.innerText = value.name
         button.addEventListener("click", () => {
-            this.input.value = value
-            this.input.dispatchEvent(new InputEvent("input", { data: value }))
+            this.input.value = value.name
+            this.input.dispatchEvent(new InputEvent("input", { data: value.name }))
             this.parent?.parent?.focusNext()
             this.createValueListMenu()
         })
+        if (value.description) {
+            const description = value.description
+            button.addEventListener("mouseenter", () => {
+                const title = document.createElement('title')
+                title.innerText = value.name
+                // TODO: add markdown support
+                const descriptionElement = document.createElement('div')
+                descriptionElement.innerText = description
+                console.log(description)
+                this.descriptionWindow.replaceChildren(title, descriptionElement)
+            })
+        }
         const li = document.createElement("li")
         li.appendChild(button)
         return li
@@ -264,11 +307,17 @@ export class EnumInput extends Input {
 
     sortValueList() {
         const input = this.getValue().trim()
-        if (input === "" || this.enumList.includes(input)) {
+        if (input === "" || this.enumList.map(value => value.name).includes(input)) {
             return this.enumList
         }
         return this.enumList
-            .map(value => ({ value, score: this.calculateScore(input, value) }))
+            .map(value => {
+                let score = this.calculateScore(input, value.name)
+                if (value.description) {
+                    score += 0.75*this.calculateScore(input, value.description)
+                }
+                return { value, score: score }
+            })
 			.filter(x => x.score !== 0)
             .sort((a, b) => b.score - a.score)
             .map(x => x.value)
@@ -311,18 +360,21 @@ export class EnumInput extends Input {
 		container.classList.add("enum-value-container")
 
         super.toHTML(container)
-        container.appendChild(this.autocompleteMenu)
+
+        container.appendChild(this.autocompleteWindow)
 		
 		parent.appendChild(container)
     }
 
     focus() {
         super.focus()
-        this.autocompleteMenu.classList.add("active")
+        this.autocompleteWindow.classList.add("active")
+        this.createValueListMenu()
         return true
     }
     unfocus() {
-        this.autocompleteMenu.classList.remove("active")
+        this.autocompleteWindow.classList.remove("active")
+        this.autocompleteMenu.replaceChildren()
     }
 
 }

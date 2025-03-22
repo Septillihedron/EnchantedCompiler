@@ -294,12 +294,23 @@ export class DocItemSection extends Section {
         this.extraEntries = extraEntries
         this.category = category
         this.typeKey = (category === "skills")? "skill" : "type";
-        const typeInput = new EnumInput(docs.categories[category])
+        const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
         this.typeEntry = entry(this.typeKey, typeInput)
         this.addChild(this.typeEntry)
         this.unfocus()
 
         typeInput.addChangedListener(this.updateProperties.bind(this))
+    }
+
+    /**
+     * @returns {{name: string, description: string}[]}
+     */
+    createDescriptedTypes(category) {
+        return Object.entries(category)
+            .map(([name, type]) => ({
+                name, 
+                description: type.description
+            }))
     }
 
     updateProperties(newValue) {
@@ -332,7 +343,7 @@ export class DocItemSection extends Section {
         const modes = docItem.supportedModes
         if (modes != undefined) {
             const defaultMode = this.getDefaultMode(modes, docItem.requireMode)
-            this.addChild(entry("mode", new EnumInput(modes, defaultMode)))
+            this.addChild(entry("mode", EnumInput.create(modes, defaultMode)))
         }
         if (docItem.properties !== undefined) {
             Object.entries(docItem.properties)
