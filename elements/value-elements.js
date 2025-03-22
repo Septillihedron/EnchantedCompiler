@@ -296,7 +296,6 @@ export class EnumInput extends Input {
                 // TODO: add markdown support
                 const descriptionElement = document.createElement('div')
                 descriptionElement.innerText = description
-                console.log(description)
                 this.descriptionWindow.replaceChildren(title, descriptionElement)
             })
         }
