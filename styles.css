@@ -40,7 +40,16 @@
 }
 
 .section {
-    margin-left: 2ch
+    margin-left: 2ch;
+    margin-right: 2ch;
+    width: max-content;
+    padding: .1rem;
+    padding-right: 1rem;
+}
+
+.primary-colors .section:not(.hidden):has(*) {
+    border: .1rem #896814 solid;
+    border-radius: .5rem;
 }
 
 .array {
@@ -55,7 +64,9 @@
 }
 
 .array > li::marker {
-    content: "- "
+    content: "-";
+    width: 2ch;
+    padding: auto;
 }
 
 .enum-value-container {
