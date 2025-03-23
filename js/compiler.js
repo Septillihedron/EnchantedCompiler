@@ -1,6 +1,4 @@
-import { ArraySection, DocItemSection, MultiType, PropertiesMap, Section, entry } from "./elements/section-elements.js"
-import { BooleanInput, EnumInput, RangeInput, constText, input, intInput, numInput } from "./elements/value-elements.js"
-import { YamlElement } from "./elements/yaml-element.js"
+import { ArraySection, BooleanInput, constText, DocItemSection, entry, EnumInput, input, intInput, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 
