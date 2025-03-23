@@ -75,6 +75,7 @@
 
 .autocomplete {
     display: flex;
+    height: 0;
     position: absolute;
     background-color: transparent;
 }
@@ -106,6 +107,7 @@
 .autocomplete-menu {
     background-color: #338;
     width: min-content;
+    height: max-content;
     border: .1rem goldenrod solid;
     border-radius: 0.2rem;
     margin: .1rem 0 .1rem 0;
@@ -121,6 +123,7 @@
 }
 .autocomplete-menu::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.1rem;
 }
 
 .autocomplete-menu li::marker {
