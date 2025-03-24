@@ -8,13 +8,19 @@
     color: white;
 }
 
-.primary-colors input {
+.primary-colors span {
+    display: inline-block;
     background-color: #338;
     color: white;
     width: max-content;
+    min-width: 10ch;
+    max-width: 30ch;
     border-radius: 0.2vw;
     border: none;
     outline: none;
+    padding: 2px;
+    padding-right: 2ch;
+    margin: .1rem;
 }
 
 .primary-colors .error {

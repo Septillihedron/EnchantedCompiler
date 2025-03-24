@@ -21,8 +21,9 @@ export class Input extends YamlElement {
      */
     constructor(def) {
         super()
-        this.input = document.createElement("input")
-        if (def != undefined) this.input.value = def
+        this.input = document.createElement("span")
+        this.input.contentEditable = 'true'
+        if (def != undefined) this.input.innerText = def
         this.input.addEventListener("focus", () => {
             this.parent?.setFocus(this)
             this.focus()
@@ -32,7 +33,7 @@ export class Input extends YamlElement {
     }
 
     validate() {
-        const value = this.input.value
+        const value = this.input.innerText
         const errors = []
         this.validators.forEach(validator => validator(value, errors))
         errors.sort((a, b) => a.level - b.level)
@@ -48,11 +49,11 @@ export class Input extends YamlElement {
     }
 
     toYaml() {
-        return this.input.value
+        return this.input.innerText
     }
 
     getValue() {
-        return this.input.value
+        return this.input.innerText
     }
 
     /**
@@ -64,7 +65,7 @@ export class Input extends YamlElement {
         // incorrectTypeSetError(val)
         // return
         // }
-        this.input.value = val.toString()
+        this.input.innerText = val.toString()
         this.validate()
     }
 
@@ -97,7 +98,7 @@ export class Input extends YamlElement {
      */
     addChangedListener(listener) {
         this.input.addEventListener("input", (e) => {
-            listener(this.input.value)
+            listener(this.input.innerText)
         })
     }
 

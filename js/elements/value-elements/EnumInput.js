@@ -69,7 +69,7 @@ export class EnumInput extends Input {
         button.classList.add("autocomplete-choice")
         button.innerText = value.name
         button.addEventListener("click", () => {
-            this.input.value = value.name
+            this.input.innerText = value.name
             this.input.dispatchEvent(new InputEvent("input", { data: value.name }))
             this.parent?.parent?.focusNext()
             this.createValueListMenu()
