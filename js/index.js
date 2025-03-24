@@ -64,7 +64,7 @@ function render() {
     root.toHTML(main)
 }
 
-function compile() {
+export function compile() {
     return root.toYaml()
 }
 

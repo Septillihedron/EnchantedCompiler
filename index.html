@@ -5,12 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnchantedCompiler</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navbar-styles.css">
 </head>
 <body class="primary-colors">
+    <header>
+        <nav>
+            <ul>
+                <li><button id="settings">Settings</button></li>
+                <li><button id="copy-yaml">Copy yaml</button></li>
+                <li><button id="save-file">Save file</button></li> 
+                <li><button id="load-file">Load file</button></li>
+            </ul>
+        </nav>
+    </header>
     <main id="main" class="section" style="margin-left: 0">
 		
     </main>
 	<script src="js/focus-handler.js" type="module"></script>
+	<script src="js/navbar.js" type="module"></script>
     <script src="js/index.js" type="module"></script>
 </body>
 </html>

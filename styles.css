@@ -1,4 +1,8 @@
 
+body {
+    margin: 0;
+}
+
 #main {
     margin-bottom: 20rem;
 }
@@ -41,9 +45,20 @@
     outline: none;
 }
 
-.primary-colors :focus {
+.primary-colors button:hover {
+    background-color: #66f;
+}
+.primary-colors span:hover[contenteditable="true"] {
+    background-color: #66f;
+}
+
+.primary-colors main :focus {
     background-color: goldenrod;
 }
+.primary-colors main span:focus[contenteditable="true"] {
+    background-color: goldenrod;
+}
+
 
 .section {
     margin-left: 2ch;
