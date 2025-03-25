@@ -29,6 +29,7 @@ export class DocItemSection extends Section {
      */
     createDescriptedTypes(category) {
         return Object.entries(category)
+            .filter(([_, type]) => type.available)
             .map(([name, type]) => ({
                 name,
                 description: type.description
