@@ -4,8 +4,8 @@
  */
 
 export function indent(s) {
-    return s
-        .split("\r\n")
-        .map(l => "  " + l)
-        .join("\r\n")
+	return s
+		.split("\r\n")
+		.map(l => "  " + l)
+		.join("\r\n")
 }

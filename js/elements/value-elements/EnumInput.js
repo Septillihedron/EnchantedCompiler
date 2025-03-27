@@ -5,161 +5,161 @@ import { Input } from "./Input.js"
  */
 export class EnumInput extends Input {
 
-    /**
-     * @private
-     * @param {EnumValue[]} enumList
-     * @param {string | undefined | null} def
-     */
-    constructor(enumList, def = undefined) {
-        super(def)
-        this.enumList = enumList
-        this.enumList.sort((a, b) => a.name.localeCompare(b.name))
+	/**
+	 * @private
+	 * @param {EnumValue[]} enumList
+	 * @param {string | undefined | null} def
+	 */
+	constructor(enumList, def = undefined) {
+		super(def)
+		this.enumList = enumList
+		this.enumList.sort((a, b) => a.name.localeCompare(b.name))
 
-        this.autocompleteMenu = document.createElement("menu")
-        this.autocompleteMenu.classList.add("autocomplete-menu")
+		this.autocompleteMenu = document.createElement("menu")
+		this.autocompleteMenu.classList.add("autocomplete-menu")
 
-        this.descriptionWindow = document.createElement("div")
-        this.descriptionWindow.classList.add("autocomplete-description")
+		this.descriptionWindow = document.createElement("div")
+		this.descriptionWindow.classList.add("autocomplete-description")
 
-        this.autocompleteWindow = document.createElement('div')
-        this.autocompleteWindow.classList.add("autocomplete")
-        this.autocompleteWindow.appendChild(this.autocompleteMenu)
-        this.autocompleteWindow.appendChild(this.descriptionWindow)
+		this.autocompleteWindow = document.createElement('div')
+		this.autocompleteWindow.classList.add("autocomplete")
+		this.autocompleteWindow.appendChild(this.autocompleteMenu)
+		this.autocompleteWindow.appendChild(this.descriptionWindow)
 
-        this.input.addEventListener("input", () => {
-            this.createValueListMenu()
-        })
-    }
+		this.input.addEventListener("input", () => {
+			this.createValueListMenu()
+		})
+	}
 
-    /**
-     * @param {string[]} enumNameList
-     * @param {string | undefined | null} def
-     */
-    static create(enumNameList, def = undefined) {
-        const enumList = enumNameList.map(name => ({
-            name,
-            description: undefined
-        }))
-        return new EnumInput(enumList, def)
-    }
+	/**
+	 * @param {string[]} enumNameList
+	 * @param {string | undefined | null} def
+	 */
+	static create(enumNameList, def = undefined) {
+		const enumList = enumNameList.map(name => ({
+			name,
+			description: undefined
+		}))
+		return new EnumInput(enumList, def)
+	}
 
-    /**
-     * @param {EnumValue[]} enumList
-     * @param {string | undefined | null} def
-     */
-    static createDescripted(enumList, def = undefined) {
-        return new EnumInput(enumList, def)
-    }
+	/**
+	 * @param {EnumValue[]} enumList
+	 * @param {string | undefined | null} def
+	 */
+	static createDescripted(enumList, def = undefined) {
+		return new EnumInput(enumList, def)
+	}
 
-    createValueListMenu() {
-        this.autocompleteMenu.replaceChildren()
-        const sorted = this.sortValueList()
-        sorted.forEach(value => {
-            const option = this.createMenuChoice(value)
-            this.autocompleteMenu.appendChild(option)
-        })
-    }
+	createValueListMenu() {
+		this.autocompleteMenu.replaceChildren()
+		const sorted = this.sortValueList()
+		sorted.forEach(value => {
+			const option = this.createMenuChoice(value)
+			this.autocompleteMenu.appendChild(option)
+		})
+	}
 
-    /**
-     * @param {EnumValue} value
-     * @returns {HTMLLIElement}
-     */
-    createMenuChoice(value) {
-        const button = document.createElement("button")
-        button.classList.add("autocomplete-choice")
-        button.innerText = value.name
-        button.addEventListener("click", () => {
-            this.input.innerText = value.name
-            this.input.dispatchEvent(new InputEvent("input", { data: value.name }))
-            this.parent?.parent?.focusNext()
-            this.createValueListMenu()
-        })
-        if (value.description) {
-            const description = value.description
-            button.addEventListener("mouseenter", () => {
-                const title = document.createElement('title')
-                title.innerText = value.name
-                // TODO: add markdown support
-                const descriptionElement = document.createElement('div')
-                descriptionElement.innerText = description
-                this.descriptionWindow.replaceChildren(title, descriptionElement)
-            })
-        }
-        const li = document.createElement("li")
-        li.appendChild(button)
-        return li
-    }
+	/**
+	 * @param {EnumValue} value
+	 * @returns {HTMLLIElement}
+	 */
+	createMenuChoice(value) {
+		const button = document.createElement("button")
+		button.classList.add("autocomplete-choice")
+		button.innerText = value.name
+		button.addEventListener("click", () => {
+			this.input.innerText = value.name
+			this.input.dispatchEvent(new InputEvent("input", { data: value.name }))
+			this.parent?.parent?.focusNext()
+			this.createValueListMenu()
+		})
+		if (value.description) {
+			const description = value.description
+			button.addEventListener("mouseenter", () => {
+				const title = document.createElement('title')
+				title.innerText = value.name
+				// TODO: add markdown support
+				const descriptionElement = document.createElement('div')
+				descriptionElement.innerText = description
+				this.descriptionWindow.replaceChildren(title, descriptionElement)
+			})
+		}
+		const li = document.createElement("li")
+		li.appendChild(button)
+		return li
+	}
 
-    sortValueList() {
-        const input = this.getValue().trim()
-        if (input === "" || this.enumList.map(value => value.name).includes(input)) {
-            return this.enumList
-        }
-        return this.enumList
-            .map(value => {
-                let score = this.calculateScore(input, value.name)
-                if (value.description) {
-                    score += 0.75 * this.calculateScore(input, value.description)
-                }
-                return { value, score: score }
-            })
-            .filter(x => x.score !== 0)
-            .sort((a, b) => b.score - a.score)
-            .map(x => x.value)
-    }
+	sortValueList() {
+		const input = this.getValue().trim()
+		if (input === "" || this.enumList.map(value => value.name).includes(input)) {
+			return this.enumList
+		}
+		return this.enumList
+			.map(value => {
+				let score = this.calculateScore(input, value.name)
+				if (value.description) {
+					score += 0.75 * this.calculateScore(input, value.description)
+				}
+				return { value, score: score }
+			})
+			.filter(x => x.score !== 0)
+			.sort((a, b) => b.score - a.score)
+			.map(x => x.value)
+	}
 
-    /**
-     * @param {string} input
-     * @param {string} value
-     * @returns {number}
-     */
-    calculateScore(input, value) {
-        let index = 0
-        let score = 0
-        for (let i = 0; i < value.length; i++) {
-            const isSameChar = value.charAt(i).toLowerCase() === input.charAt(index).toLowerCase()
-            if (isSameChar) {
-                index++
-                score += 1000000 - i
-                if (index > input.length - 1) {
-                    break
-                }
-            }
-        }
-        return score
-    }
+	/**
+	 * @param {string} input
+	 * @param {string} value
+	 * @returns {number}
+	 */
+	calculateScore(input, value) {
+		let index = 0
+		let score = 0
+		for (let i = 0; i < value.length; i++) {
+			const isSameChar = value.charAt(i).toLowerCase() === input.charAt(index).toLowerCase()
+			if (isSameChar) {
+				index++
+				score += 1000000 - i
+				if (index > input.length - 1) {
+					break
+				}
+			}
+		}
+		return score
+	}
 
-    /**
-     * @param {unknown} val
-     */
-    setValue(val) {
-        super.setValue(val)
-        this.createValueListMenu()
-    }
+	/**
+	 * @param {unknown} val
+	 */
+	setValue(val) {
+		super.setValue(val)
+		this.createValueListMenu()
+	}
 
-    /**
-     * @param {HTMLElement} parent
-     */
-    toHTML(parent) {
-        const container = document.createElement('div')
-        container.classList.add("enum-value-container")
+	/**
+	 * @param {HTMLElement} parent
+	 */
+	toHTML(parent) {
+		const container = document.createElement('div')
+		container.classList.add("enum-value-container")
 
-        super.toHTML(container)
+		super.toHTML(container)
 
-        container.appendChild(this.autocompleteWindow)
+		container.appendChild(this.autocompleteWindow)
 
-        parent.appendChild(container)
-    }
+		parent.appendChild(container)
+	}
 
-    focus() {
-        super.focus()
-        this.autocompleteWindow.classList.add("active")
-        this.createValueListMenu()
-        return true
-    }
-    unfocus() {
-        this.autocompleteWindow.classList.remove("active")
-        this.autocompleteMenu.replaceChildren()
-    }
+	focus() {
+		super.focus()
+		this.autocompleteWindow.classList.add("active")
+		this.createValueListMenu()
+		return true
+	}
+	unfocus() {
+		this.autocompleteWindow.classList.remove("active")
+		this.autocompleteMenu.replaceChildren()
+	}
 
 }

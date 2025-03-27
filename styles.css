@@ -1,165 +1,165 @@
 
 body {
-    margin: 0;
+	margin: 0;
 }
 
 #main {
-    margin-bottom: 20rem;
+	margin-bottom: 20rem;
 }
 
 .primary-colors {
-    background-color: #112;
-    color: white;
+	background-color: #112;
+	color: white;
 }
 
 .primary-colors span {
-    display: inline-block;
-    background-color: #338;
-    color: white;
-    width: max-content;
-    min-width: 10ch;
-    max-width: 30ch;
-    border-radius: 0.2vw;
-    border: none;
-    outline: none;
-    padding: 2px;
-    padding-right: 2ch;
-    margin: .1rem;
+	display: inline-block;
+	background-color: #338;
+	color: white;
+	width: max-content;
+	min-width: 10ch;
+	max-width: 30ch;
+	border-radius: 0.2vw;
+	border: none;
+	outline: none;
+	padding: 2px;
+	padding-right: 2ch;
+	margin: .1rem;
 }
 
 .primary-colors .error {
-    background-color: red;
-    border: .1rem solid red
+	background-color: red;
+	border: .1rem solid red
 }
 
 .primary-colors .warn {
-    background-color: yellow;
+	background-color: yellow;
 }
 
 .primary-colors button {
-    background-color: #338;
-    color: white;
-    width: max-content;
-    border-radius: 0.2vw;
-    border: none;
-    outline: none;
+	background-color: #338;
+	color: white;
+	width: max-content;
+	border-radius: 0.2vw;
+	border: none;
+	outline: none;
 }
 
 .primary-colors button:hover {
-    background-color: #66f;
+	background-color: #66f;
 }
 .primary-colors span:hover[contenteditable="true"] {
-    background-color: #66f;
+	background-color: #66f;
 }
 
 .primary-colors main :focus {
-    background-color: goldenrod;
+	background-color: goldenrod;
 }
 .primary-colors main span:focus[contenteditable="true"] {
-    background-color: goldenrod;
+	background-color: goldenrod;
 }
 
 
 .section {
-    margin-left: 2ch;
-    margin-right: 2ch;
-    width: max-content;
-    padding: .1rem;
-    padding-right: 1rem;
+	margin-left: 2ch;
+	margin-right: 2ch;
+	width: max-content;
+	padding: .1rem;
+	padding-right: 1rem;
 }
 
 .primary-colors .section:not(.hidden):has(*) {
-    border: .1rem #896814 solid;
-    border-radius: .5rem;
+	border: .1rem #896814 solid;
+	border-radius: .5rem;
 }
 
 .array {
-    margin-left: 0;
-    padding-left: 1ch;
-    margin-top: 0;
-    margin-bottom: 0;
+	margin-left: 0;
+	padding-left: 1ch;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 .array > li {
-    padding-left: 1ch
+	padding-left: 1ch
 }
 
 .array > li::marker {
-    content: "-";
-    width: 2ch;
-    padding: auto;
+	content: "-";
+	width: 2ch;
+	padding: auto;
 }
 
 .enum-value-container {
-    display: inline-block;
+	display: inline-block;
 }
 
 .autocomplete {
-    display: flex;
-    height: 0;
-    position: absolute;
-    background-color: transparent;
+	display: flex;
+	height: 0;
+	position: absolute;
+	background-color: transparent;
 }
 
 .autocomplete:not(.active) {
-    display: none;
+	display: none;
 }
 
 .autocomplete-description {
-    background-color: #338;
-    width: fit-content;
-    max-width: 30ch;
-    height: min-content;
-    border: .1rem goldenrod solid;
-    border-radius: 0.2rem;
-    margin: .1rem 0 .1rem 0;
-    padding: 0.5rem;
+	background-color: #338;
+	width: fit-content;
+	max-width: 30ch;
+	height: min-content;
+	border: .1rem goldenrod solid;
+	border-radius: 0.2rem;
+	margin: .1rem 0 .1rem 0;
+	padding: 0.5rem;
 }
 
 .autocomplete-description:not(:has(*)) {
-    display: none;
+	display: none;
 }
 
 .autocomplete-description title {
-    display: block;
-    margin: 0 0.2rem 0.5rem 0;
+	display: block;
+	margin: 0 0.2rem 0.5rem 0;
 }
 
 .autocomplete-menu {
-    background-color: #338;
-    width: min-content;
-    height: max-content;
-    border: .1rem goldenrod solid;
-    border-radius: 0.2rem;
-    margin: .1rem 0 .1rem 0;
-    padding-left: 0;
+	background-color: #338;
+	width: min-content;
+	height: max-content;
+	border: .1rem goldenrod solid;
+	border-radius: 0.2rem;
+	margin: .1rem 0 .1rem 0;
+	padding-left: 0;
 
-    max-height: 16rem;
-    overflow-y: auto;
+	max-height: 16rem;
+	overflow-y: auto;
 }
 
 .autocomplete-menu::-webkit-scrollbar {
-    width: .75rem;
-    background-color: transparent;
+	width: .75rem;
+	background-color: transparent;
 }
 .autocomplete-menu::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 0.1rem;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 0.1rem;
 }
 
 .autocomplete-menu li::marker {
-    content: none;
+	content: none;
 }
 .autocomplete-menu li {
-    display: block;
+	display: block;
 }
 
 button.autocomplete-choice {
-    display: flex;
-    width: 100%;
-    padding: 0.1rem 1rem 0.1rem 0.2rem;
+	display: flex;
+	width: 100%;
+	padding: 0.1rem 1rem 0.1rem 0.2rem;
 }
 
 button.autocomplete-choice:hover {
-    background-color: gold;
+	background-color: gold;
 }

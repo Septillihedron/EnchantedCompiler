@@ -11,103 +11,103 @@ export const floatRegex = /^([\+\-]?((\d+(\.\d+)?)|(\.inf)))$/
 
 export class Input extends YamlElement {
 
-    /**
-     * @type {((val: string, errors: import("../value-elements.js").SchemaError[]) => void)[]}
-     */
-    validators
+	/**
+	 * @type {((val: string, errors: import("../value-elements.js").SchemaError[]) => void)[]}
+	 */
+	validators
 
-    /**
-     * @param {string | undefined | null} def
-     */
-    constructor(def) {
-        super()
-        this.input = document.createElement("span")
-        this.input.contentEditable = 'true'
-        if (def != undefined) this.input.innerText = def
-        this.input.addEventListener("focus", () => {
-            this.parent?.setFocus(this)
-            this.focus()
-        })
-        this.validators = []
-        this.addChangedListener(() => this.validate())
-    }
+	/**
+	 * @param {string | undefined | null} def
+	 */
+	constructor(def) {
+		super()
+		this.input = document.createElement("span")
+		this.input.contentEditable = 'true'
+		if (def != undefined) this.input.innerText = def
+		this.input.addEventListener("focus", () => {
+			this.parent?.setFocus(this)
+			this.focus()
+		})
+		this.validators = []
+		this.addChangedListener(() => this.validate())
+	}
 
-    validate() {
-        const value = this.input.innerText
-        const errors = []
-        this.validators.forEach(validator => validator(value, errors))
-        errors.sort((a, b) => a.level - b.level)
-        const maxLevel = errors[0]?.level ?? errorLevels.none
-        this.setValidity(maxLevel)
-    }
+	validate() {
+		const value = this.input.innerText
+		const errors = []
+		this.validators.forEach(validator => validator(value, errors))
+		errors.sort((a, b) => a.level - b.level)
+		const maxLevel = errors[0]?.level ?? errorLevels.none
+		this.setValidity(maxLevel)
+	}
 
-    /**
-     * @param {HTMLElement} parent
-     */
-    toHTML(parent) {
-        parent.appendChild(this.input)
-    }
+	/**
+	 * @param {HTMLElement} parent
+	 */
+	toHTML(parent) {
+		parent.appendChild(this.input)
+	}
 
-    toYaml() {
-        return this.input.innerText
-    }
+	toYaml() {
+		return this.input.innerText
+	}
 
-    getValue() {
-        return this.input.innerText
-    }
+	getValue() {
+		return this.input.innerText
+	}
 
-    /**
-     * @param {unknown} val
-     */
-    setValue(val) {
-        if (val == null) return
-        // if (typeof val !== "string") {
-        // incorrectTypeSetError(val)
-        // return
-        // }
-        this.input.innerText = val.toString()
-        this.validate()
-    }
+	/**
+	 * @param {unknown} val
+	 */
+	setValue(val) {
+		if (val == null) return
+		// if (typeof val !== "string") {
+		// incorrectTypeSetError(val)
+		// return
+		// }
+		this.input.innerText = val.toString()
+		this.validate()
+	}
 
-    focus() {
-        this.input.focus()
-        return true
-    }
+	focus() {
+		this.input.focus()
+		return true
+	}
 
-    /**
-     * @param {import("../value-elements.js").ErrorLevel} errorLevel
-     */
-    setValidity(errorLevel) {
-        const classList = this.input.classList
-        classList.remove("warn")
-        classList.remove("error")
+	/**
+	 * @param {import("../value-elements.js").ErrorLevel} errorLevel
+	 */
+	setValidity(errorLevel) {
+		const classList = this.input.classList
+		classList.remove("warn")
+		classList.remove("error")
 
-        if (errorLevel == errorLevels.error) {
-            classList.add("error")
-            return
-        }
-        if (errorLevel == errorLevels.warn) {
-            classList.add("warn")
-            return
-        }
+		if (errorLevel == errorLevels.error) {
+			classList.add("error")
+			return
+		}
+		if (errorLevel == errorLevels.warn) {
+			classList.add("warn")
+			return
+		}
 
-    }
+	}
 
-    /**
-     * @param {(value: string) => void} listener
-     */
-    addChangedListener(listener) {
-        this.input.addEventListener("input", (e) => {
-            listener(this.input.innerText)
-        })
-    }
+	/**
+	 * @param {(value: string) => void} listener
+	 */
+	addChangedListener(listener) {
+		this.input.addEventListener("input", (e) => {
+			listener(this.input.innerText)
+		})
+	}
 
-    /**
-     * @param {(val: string, errors: import("../value-elements.js").SchemaError[]) => void} validator
-     */
-    addValidator(validator) {
-        this.validators.push(validator)
-    }
+	/**
+	 * @param {(val: string, errors: import("../value-elements.js").SchemaError[]) => void} validator
+	 */
+	addValidator(validator) {
+		this.validators.push(validator)
+	}
 
 }
 /**
@@ -115,38 +115,38 @@ export class Input extends YamlElement {
  */
 
 export function input(def) {
-    return new Input(def)
+	return new Input(def)
 }
 /**
  * @param {number} def
  */
 export function intInput(def) {
-    const elem = input(def.toString())
-    elem.addValidator((val, errors) => {
-        if (!intRegex.test(val)) {
-            errors.push({
-                level: errorLevels.error,
-                message: "Invalid integer"
-            })
-        }
-    })
-    elem.validate()
-    return elem
+	const elem = input(def.toString())
+	elem.addValidator((val, errors) => {
+		if (!intRegex.test(val)) {
+			errors.push({
+				level: errorLevels.error,
+				message: "Invalid integer"
+			})
+		}
+	})
+	elem.validate()
+	return elem
 }
 /**
  * @param {number | string} def
  */
 export function numInput(def) {
-    const elem = input(def.toString())
-    elem.addValidator((val, errors) => {
-        if (!floatRegex.test(val)) {
-            errors.push({
-                level: errorLevels.error,
-                message: "Invalid number"
-            })
-        }
-    })
-    elem.validate()
-    return elem
+	const elem = input(def.toString())
+	elem.addValidator((val, errors) => {
+		if (!floatRegex.test(val)) {
+			errors.push({
+				level: errorLevels.error,
+				message: "Invalid number"
+			})
+		}
+	})
+	elem.validate()
+	return elem
 }
 

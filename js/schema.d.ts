@@ -29,7 +29,7 @@ type DocItem = Descriptable & {
 	properties?: StringRecord<Property>
 	available: boolean
 	requireMode: boolean
-    supportedModes?: Mode[]
+	supportedModes?: Mode[]
 	exclusiveTo?: Plugins
 }
 
@@ -95,7 +95,7 @@ type Property = NakedProperty & {
 	if?: unknown
 }
 
-type Type =  NakedProperty & {
+type Type = NakedProperty & {
 	description?: string
 	available: true
 	requireMode: true
