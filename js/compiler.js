@@ -1,8 +1,30 @@
-import { ArraySection, BooleanInput, constText, DocItemSection, entry, EnumInput, input, intInput, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
+import { ArraySection, BooleanInput, constText, DocItemSection, entry, EnumInput, incomplete, input, intInput, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
+const specialTypes = /** @type {const} */ ([
+    "trigger", 
+    "condition", 
+    "effect", 
+    "particleShape", 
+    "skill", 
+    "damagemodifier", 
+    "reward", 
+    "distribution", 
+    "EntityData", 
+])
 
-const booleanEnum = ["true", "false"]
+/**
+ * @typedef {specialTypes[number]} specialType
+ */
+
+/**
+ * @param {string} type
+ * @returns {type is specialType}
+ */
+function isSpecialType(type) {
+    // @ts-ignore
+    return specialTypes.includes(type)
+}
 
 /**
  * @param {import("./schema").NakedProperty} property 
@@ -11,6 +33,9 @@ const booleanEnum = ["true", "false"]
 export function compileProperty(property) {
     if (typeof property.type != "string") {
         return new MultiType(property)
+    }
+    if (isSpecialType(property.type)) {
+        return compileSpecialType(property.type)
     }
     switch(property.type) {
         case "string":
@@ -29,7 +54,7 @@ export function compileProperty(property) {
         case "array":
             return new ArraySection(() => {
                 if (typeof property.items === "object") return compileProperty(property.items)
-                if (docs.categories.types.includes(property.items)) {
+                if (property.items in docs.types) {
                     return compileTypeString(/** @type {import("./schema.js").NormalPropertyTypes} */ (property.items))
                 }
                 return compileProperty(/** @type {any} */ ({ type: property.items }))
@@ -58,10 +83,19 @@ export function compileProperty(property) {
                 })
             }
             return constText("# not done yet")
+        default:
+            return compileTypeString(property.type)
+    }
+}
+
+/**
+ * @param {specialType} typeName
+ * @returns {YamlElement<DocItemSection>}
+ */
+export function compileSpecialType(typeName) {
+    switch (typeName) {
         case "trigger": 
-            return new DocItemSection("triggers", [
-                entry("conditions", compileTypeString("ConditionList"))
-            ])
+            return new DocItemSection("triggers")
         case "condition":
             return new DocItemSection("conditions", [
                 entry("else", compileTypeString("EffectList"))
@@ -69,7 +103,7 @@ export function compileProperty(property) {
         case "effect": 
             return new DocItemSection("effects")
         default:
-            return compileTypeString(property.type)
+            return incomplete()
     }
 }
 
@@ -77,14 +111,14 @@ export function compileProperty(property) {
  * @param {import("./schema.js").NormalPropertyTypes} typeName
  */
 export function compileTypeString(typeName) {
+    if (isSpecialType(typeName)) {
+        return compileSpecialType(typeName)
+    }
     if (typeName in docs.types) {
         let type = docs.types[typeName]
-        if (type.internal) {
-            return compileProperty({ type: typeName })
-        }
         return compileProperty(type)
     }
     console.log("Not done: " + typeName)
-    return constText("# not done yet")
+    return constText("# not done yet " + typeName)
 }
 

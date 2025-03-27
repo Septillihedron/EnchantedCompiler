@@ -3,6 +3,7 @@ import { entry, input, Section, DocItemSection, section, PropertiesMap } from ".
 
 const createDefaultSkill = () => entry(input("skill0"), new Section([
     entry("trigger", compileTypeString("trigger")),
+    entry("conditions", compileTypeString("ConditionList")),
     entry("effects", compileTypeString("EffectList"))
 ]))
 

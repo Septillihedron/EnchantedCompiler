@@ -9,17 +9,14 @@ type Schema = {
 	triggers: StringRecord<DocItem>
 	conditions: StringRecord<DocItem>
 	effects: StringRecord<DocItem>
-	
+	particleShapes: StringRecord<DocItem>
 	skills: StringRecord<DocItem>
-	
 	damagemodifiers: StringRecord<DocItem>
 	rewards: StringRecord<DocItem>
-	
 	distributions: StringRecord<DocItem>
+	entityData: StringRecord<DocItem>
 	
 	types: Record<NormalPropertyTypes, Type>
-
-    categories: Record<Exclude<keyof Schema, "categories">, string[]>
 }
 
 type Descriptable = {

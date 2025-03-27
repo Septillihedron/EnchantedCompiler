@@ -16,6 +16,7 @@ export class DocItemSection extends Section {
         this.extraEntries = extraEntries
         this.category = category
         this.typeKey = (category === "skills") ? "skill" : "type"
+        // console.log(category, docs[category], this.createDescriptedTypes(docs[category]))
         const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
         this.typeEntry = entry(this.typeKey, typeInput)
         this.addChild(this.typeEntry)
