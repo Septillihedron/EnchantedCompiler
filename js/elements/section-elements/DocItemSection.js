@@ -2,24 +2,26 @@ import { compileProperty } from "../../compiler.js"
 import { docs } from "../../schema.js"
 import { EnumInput } from "../value-elements/EnumInput.js"
 import { entry, Entry } from "./Entry.js"
-import { Section } from "./Section.js"
+import { LazyLoadedSection } from "./LazyLoadedSection.js"
 
 
-export class DocItemSection extends Section {
+export class DocItemSection extends LazyLoadedSection {
 
 	/**
 	 * @param {keyof import("../../schema.js").Schema} category
-	 * @param {Entry[]} [extraEntries=[]]
+	 * @param {() => Entry[]} [extraEntries = ()=>[]]
 	 */
-	constructor(category, extraEntries = []) {
-		super([])
-		this.extraEntries = extraEntries
+	constructor(category, extraEntries = () => []) {
+		super(() => [])
+		this.extraEntriesGenerator = extraEntries
 		this.category = category
 		this.typeKey = (category === "skills") ? "skill" : "type"
-		// console.log(category, docs[category], this.createDescriptedTypes(docs[category]))
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
 		this.typeEntry = entry(this.typeKey, typeInput)
-		this.addChild(this.typeEntry)
+		this.generator = () => {
+			console.log(this.extraEntriesGenerator)
+			return [this.typeEntry, ...this.extraEntriesGenerator()]
+		}
 		this.unfocus()
 
 		typeInput.addChangedListener(this.updateProperties.bind(this))
@@ -75,7 +77,7 @@ export class DocItemSection extends Section {
 					this.addChild(entry(name, compileProperty(property)))
 				})
 		}
-		this.extraEntries.forEach(entry => this.addChild(entry))
+		this.extraEntriesGenerator().forEach(entry => this.addChild(entry))
 		this.focus()
 	}
 

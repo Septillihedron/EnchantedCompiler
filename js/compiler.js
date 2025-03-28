@@ -97,7 +97,7 @@ export function compileSpecialType(typeName) {
 		case "trigger": 
 			return new DocItemSection("triggers")
 		case "condition":
-			return new DocItemSection("conditions", [
+			return new DocItemSection("conditions", () => [
 				entry("else", compileTypeString("EffectList"))
 			])
 		case "effect": 
@@ -105,8 +105,7 @@ export function compileSpecialType(typeName) {
 		case "particleShape":
 			return new DocItemSection("particleShapes")
 		case "EntityData": 
-			const entityDataExtras = createEntityDataExtras()
-			return new DocItemSection("entityData", entityDataExtras)
+			return new DocItemSection("entityData", createEntityDataExtras)
 		case "damagemodifier":
 			return new DocItemSection("damagemodifiers")
 		case "reward":
@@ -128,7 +127,7 @@ function createEntityDataExtras() {
 	
 	const properties = Object.entries(entityData.properties)
 	
-	return [];properties
+	return properties
 		.filter(([name, _]) => name !== "type")
 		.map(([name, property]) => entry(name, compileProperty(property)))
 }
