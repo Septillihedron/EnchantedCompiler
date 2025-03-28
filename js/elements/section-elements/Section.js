@@ -10,7 +10,7 @@ import { Entry } from "./Entry.js"
 
 export class Section extends YamlElement {
 	/**
-	 * @param {Entry[] | (() => Entry[])} values
+	 * @param {Entry[]} values
 	 */
 	constructor(values) {
 		super()
@@ -18,54 +18,13 @@ export class Section extends YamlElement {
 		this.values = []
 		this.container = document.createElement("div")
 		this.container.classList.add("section")
-		if (Array.isArray(values)) {
-			values.forEach(this.addChild.bind(this))
-			return
-		}
-		this.unfocus()
-
-		this.generator = values
-		this.makeGenerateButton()
-	}
-
-	makeGenerateButton() {
-		this.button = document.createElement("button")
-		this.button.innerText = "+"
-
-		const generateEntries = () => {
-			if (!this.generator || !this.button) {
-				console.trace("generator is undefined")
-				return
-			}
-			this.clearChildren()
-			this.generator().forEach(this.addChild.bind(this))
-			this.focus()
-			this.focusNext()
-			this.button.innerText = "x"
-		}
-		const removeEntries = () => {
-			this.clearChildren()
-			if (this.button) this.button.innerText = "+"
-		}
-
-		const buttonFunctions = [
-			generateEntries.bind(this),
-			removeEntries.bind(this),
-		]
-		let currentFunctionIndex = 0
-		this.button.addEventListener("click", () => {
-			buttonFunctions[currentFunctionIndex]()
-			currentFunctionIndex = 1 - currentFunctionIndex
-		})
-
-		this.children.unshift(new FocusableWrapper(this.button))
+		values.forEach(this.addChild.bind(this))
 	}
 
 	/**
 	 * @param {HTMLElement} parent
 	 */
 	toHTML(parent) {
-		if (this.button) parent.appendChild(this.button)
 		parent.appendChild(this.container)
 	}
 
@@ -91,10 +50,6 @@ export class Section extends YamlElement {
 		Object.entries(val)
 			.forEach(([key, val]) => {
 				let entry = this.findEntryByKey(key)
-				if (!entry && this.button) {
-					this.button.click()
-					entry = this.findEntryByKey(key)
-				}
 				entry?.value.setValue(val)
 			})
 		this.unfocus()
@@ -127,9 +82,6 @@ export class Section extends YamlElement {
 	clearChildren() {
 		this.values = []
 		this.children = []
-		if (this.button !== undefined) {
-			this.children.unshift(new FocusableWrapper(this.button))
-		}
 		this.container.replaceChildren()
 	}
 }

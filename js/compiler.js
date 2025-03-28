@@ -1,4 +1,4 @@
-import { ArraySection, BooleanInput, constText, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
+import { ArraySection, BooleanInput, constText, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, LazyLoadedSection, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 const specialTypes = /** @type {const} */ ([
@@ -63,7 +63,7 @@ export function compileProperty(property) {
 			return new PropertiesMap(() => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
 		case "object":
 			if ("properties" in property) {
-				return new Section(() => {
+				return new LazyLoadedSection(() => {
 					const entries = []
 					for (const [name, prop] of Object.entries(property.properties)) {
 						const value = compileProperty(prop)
