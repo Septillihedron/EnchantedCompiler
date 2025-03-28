@@ -13,6 +13,7 @@ export class LazyLoadedSection extends Section {
     constructor(generator) {
         super([])
         this.generator = generator
+        this.generated = false
         this.button = this.makeGenerateButton()
     }
 
@@ -20,31 +21,28 @@ export class LazyLoadedSection extends Section {
         const button = document.createElement("button")
         button.innerText = "+"
 
-        const generateEntries = () => {
-            this.clearChildren()
-            this.generator().forEach(this.addChild.bind(this))
-            this.focus()
-            this.focusNext()
-            button.innerText = "x"
-        }
-        const removeEntries = () => {
-            this.clearChildren()
-            button.innerText = "+"
-        }
-
-        const buttonFunctions = [
-            generateEntries.bind(this),
-            removeEntries.bind(this),
-        ]
-        let currentFunctionIndex = 0
         button.addEventListener("click", () => {
-            buttonFunctions[currentFunctionIndex]()
-            currentFunctionIndex = 1 - currentFunctionIndex
+            if (!this.generated) this.generateEntries()
+            else this.removeEntries()
+            this.generated = !this.generated
         })
 
         this.children.unshift(new FocusableWrapper(button))
 
         return button
+    }
+
+    generateEntries() {
+        this.clearChildren()
+        this.generator().forEach(this.addChild.bind(this))
+        this.focus()
+        this.focusNext()
+        this.button.innerText = "x"
+    }
+
+    removeEntries() {
+        this.clearChildren()
+        this.button.innerText = "+"
     }
 
     /**
