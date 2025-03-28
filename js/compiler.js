@@ -1,4 +1,4 @@
-import { ArraySection, BooleanInput, constText, DocItemSection, entry, EnumInput, incomplete, input, intInput, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
+import { ArraySection, BooleanInput, constText, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 const specialTypes = /** @type {const} */ ([
@@ -102,9 +102,35 @@ export function compileSpecialType(typeName) {
 			])
 		case "effect": 
 			return new DocItemSection("effects")
-		default:
-			return incomplete()
+		case "particleShape":
+			return new DocItemSection("particleShapes")
+		case "EntityData": 
+			const entityDataExtras = createEntityDataExtras()
+			return new DocItemSection("entityData", entityDataExtras)
+		case "damagemodifier":
+			return new DocItemSection("damagemodifiers")
+		case "reward":
+			return new DocItemSection("rewards")
+		case "distribution":
+			return new DocItemSection("distributions")
+		case "skill": 
+			return new DocItemSection("skills")
 	}
+}
+
+/**
+ * @returns {Entry[]}
+ */
+function createEntityDataExtras() {
+	const entityData = 
+		/** @type {{properties: Record<string, import("./schema.js").Property>}} */
+		(docs.types.EntityData)
+	
+	const properties = Object.entries(entityData.properties)
+	
+	return [];properties
+		.filter(([name, _]) => name !== "type")
+		.map(([name, property]) => entry(name, compileProperty(property)))
 }
 
 /**
