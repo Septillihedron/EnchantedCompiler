@@ -1,6 +1,6 @@
 import { compileProperty } from "../../compiler.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
-import { YamlElement } from "../yaml-element.js"
+import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 
 /**
  * @typedef {import("../../schema.js").PropertyTypes} PropertyTypes
@@ -43,7 +43,7 @@ export class MultiType extends YamlElement {
 			const nextIndex = (currIndex + 1) % this.possibleTypes.length
 			this.setType(this.possibleTypes[nextIndex].name)
 		})
-		this.children = [this.changeTypeButton, this.selectedType.type]
+		this.children = [new FocusableWrapper(this.changeTypeButton), this.selectedType.type]
 	}
 
 	setType(typeName) {
