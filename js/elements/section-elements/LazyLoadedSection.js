@@ -45,6 +45,14 @@ export class LazyLoadedSection extends Section {
 		this.button.innerText = "+"
 	}
 
+	load() {
+		if (!this.generated) {
+			this.generateEntries()
+		}
+		this.button.classList.add("hidden")
+		this.children.shift()
+	}
+
 	/**
 	 * @param {HTMLElement} parent
 	 */

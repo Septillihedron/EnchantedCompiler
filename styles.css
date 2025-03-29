@@ -12,6 +12,10 @@ body {
 	color: white;
 }
 
+.hidden {
+	display: none;
+}
+
 .primary-colors span {
 	display: inline-block;
 	background-color: #338;

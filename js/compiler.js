@@ -53,14 +53,28 @@ export function compileProperty(property) {
 			return new RangeInput()
 		case "array":
 			return new ArraySection(() => {
-				if (typeof property.items === "object") return compileProperty(property.items)
-				if (property.items in docs.types) {
-					return compileTypeString(/** @type {import("./schema.js").NormalPropertyTypes} */ (property.items))
+				let value;
+				if (typeof property.items === "object") {
+					value = compileProperty(property.items)
+				} else if (property.items in docs.types) {
+					value = compileTypeString(/** @type {import("./schema.js").NormalPropertyTypes} */ (property.items))
+				} else {
+					value = compileProperty(/** @type {any} */ ({ type: property.items }))
 				}
-				return compileProperty(/** @type {any} */ ({ type: property.items }))
+				if (value instanceof LazyLoadedSection) {
+					value.load()
+				}
+				return value
 			})
 		case "record":
-			return new PropertiesMap(() => entry(input(property.recordItem+"0"), compileTypeString(property.recordItem)))
+			return new PropertiesMap(() => {
+				const key = input(property.recordItem+"0")
+				const value = compileTypeString(property.recordItem)
+				if (value instanceof LazyLoadedSection) {
+					value.load()
+				}
+				return entry(key, value)
+			})
 		case "object":
 			if ("properties" in property) {
 				return new LazyLoadedSection(() => {
@@ -68,6 +82,9 @@ export function compileProperty(property) {
 					for (const [name, prop] of Object.entries(property.properties)) {
 						const value = compileProperty(prop)
 						value.setValue(prop.default)
+						if (prop.required && value instanceof LazyLoadedSection) {
+							value.load()
+						}
 						entries.push(entry(name, value))
 					}
 					return entries
@@ -79,6 +96,9 @@ export function compileProperty(property) {
 					const key = compileProperty(propertiesMap.key)
 					const value = compileProperty(propertiesMap.value)
 					value.setValue(propertiesMap.value.default)
+					if (value instanceof LazyLoadedSection) {
+						value.load()
+					}
 					return entry(key, value)
 				})
 			}
