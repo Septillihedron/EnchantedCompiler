@@ -1,4 +1,6 @@
 
+import JSON5 from "https://cdn.jsdelivr.net/npm/json5@2/+esm"
+
 export const docs = await loadSchema()
 
 /**
@@ -8,7 +10,6 @@ export const docs = await loadSchema()
 async function loadSchema() {
 	return await fetch("./js/properties.json")
 		.then(res => res.text())
-		// @ts-ignore ignores the JSON5 not defined error
 		.then(text => JSON5.parse(text))
 		.then(transform)
 }
