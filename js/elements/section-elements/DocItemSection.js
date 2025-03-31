@@ -19,7 +19,6 @@ export class DocItemSection extends LazyLoadedSection {
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
 		this.typeEntry = entry(this.typeKey, typeInput)
 		this.generator = () => {
-			console.log(this.extraEntriesGenerator)
 			return [this.typeEntry, ...this.extraEntriesGenerator()]
 		}
 		this.unfocus()
