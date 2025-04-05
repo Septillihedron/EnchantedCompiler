@@ -16,7 +16,7 @@ export class Section extends YamlElement {
 		super()
 		/** @type {Entry[]} */
 		this.values = []
-		this.container = document.createElement("div")
+		this.container = document.createElement("ul")
 		this.container.classList.add("section")
 		values.forEach(this.addChild.bind(this))
 	}
@@ -63,12 +63,6 @@ export class Section extends YamlElement {
 	 * @param {Entry} element
 	 */
 	addChild(element) {
-		const lastElement = this.values[this.values.length - 1]
-		if (lastElement != undefined) {
-			if (!(lastElement.value instanceof Section || lastElement.value instanceof ArraySection)) {
-				this.container.appendChild(document.createElement("br"))
-			}
-		}
 		element.parent = this
 		this.values.push(element)
 		this.children.push(element)

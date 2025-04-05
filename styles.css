@@ -63,8 +63,12 @@ body {
 	background-color: goldenrod;
 }
 
+li.entry-container::marker {
+	content: none;
+}
 
 .section {
+	margin: 0;
 	margin-left: 2ch;
 	margin-right: 2ch;
 	width: max-content;

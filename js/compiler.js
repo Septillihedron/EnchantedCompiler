@@ -85,7 +85,7 @@ export function compileProperty(property) {
 						if (prop.required && value instanceof LazyLoadedSection) {
 							value.load()
 						}
-						entries.push(entry(name, value))
+						entries.push(entry(name, value, prop.description))
 					}
 					return entries
 				})
@@ -99,7 +99,7 @@ export function compileProperty(property) {
 					if (value instanceof LazyLoadedSection) {
 						value.load()
 					}
-					return entry(key, value)
+					return entry(key, value, propertiesMap.value.description)
 				})
 			}
 			return constText("# not done yet")
@@ -118,7 +118,7 @@ export function compileSpecialType(typeName) {
 			return new DocItemSection("triggers")
 		case "condition":
 			return new DocItemSection("conditions", () => [
-				entry("else", compileTypeString("EffectList"))
+				entry("else", compileTypeString("EffectList"), "Effects to run if this condition is false")
 			])
 		case "effect": 
 			return new DocItemSection("effects")
@@ -149,7 +149,7 @@ function createEntityDataExtras() {
 	
 	return properties
 		.filter(([name, _]) => name !== "type")
-		.map(([name, property]) => entry(name, compileProperty(property)))
+		.map(([name, property]) => entry(name, compileProperty(property), property.description))
 }
 
 /**

@@ -17,7 +17,7 @@ export class DocItemSection extends LazyLoadedSection {
 		this.category = category
 		this.typeKey = (category === "skills") ? "skill" : "type"
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
-		this.typeEntry = entry(this.typeKey, typeInput)
+		this.typeEntry = entry(this.typeKey, typeInput, "The type")
 		this.generator = () => {
 			return [this.typeEntry, ...this.extraEntriesGenerator()]
 		}
@@ -68,12 +68,12 @@ export class DocItemSection extends LazyLoadedSection {
 		const modes = docItem.supportedModes
 		if (modes != undefined) {
 			const defaultMode = this.getDefaultMode(modes, docItem.requireMode)
-			this.addChild(entry("mode", EnumInput.create(modes, defaultMode)))
+			this.addChild(entry("mode", EnumInput.create(modes, defaultMode), "The mode of operation"))
 		}
 		if (docItem.properties !== undefined) {
 			Object.entries(docItem.properties)
 				.forEach(([name, property]) => {
-					this.addChild(entry(name, compileProperty(property)))
+					this.addChild(entry(name, compileProperty(property), property.description))
 				})
 		}
 		this.extraEntriesGenerator().forEach(entry => this.addChild(entry))
