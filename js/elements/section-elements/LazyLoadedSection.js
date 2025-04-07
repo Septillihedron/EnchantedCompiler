@@ -86,3 +86,23 @@ export class LazyLoadedSection extends Section {
 	}
 
 }
+
+/**
+ * @param {((parent: YamlElement<any>) => Entry<any, any>)[]} generator
+ */
+export function lazyLoadedSection(generator) {
+	return parent => new LazyLoadedSection(parent, generator)
+}
+
+/**
+ * @param {(parent: YamlElement) => YamlElement<unknown>} maybeLazyLoadedSecction
+ */
+export function loadIfLazyLoadedSection(maybeLazyLoadedSecction) {
+	return parent => {
+		const value = maybeLazyLoadedSecction(parent)
+		if (value instanceof LazyLoadedSection) {
+			value.load()
+		}
+		return value
+	}
+}

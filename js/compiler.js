@@ -1,4 +1,4 @@
-import { arraySection, ArraySection, booleanInput, BooleanInput, constText, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, LazyLoadedSection, MultiType, numInput, PropertiesMap, RangeInput, Section, stringKeyEntry, YamlElement } from "./elements.js"
+import { arraySection, ArraySection, booleanInput, BooleanInput, constText, docItemSection, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, LazyLoadedSection, loadIfLazyLoadedSection, MultiType, numInput, propertiesMap, PropertiesMap, rangeInput, RangeInput, Section, stringKeyEntry, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 const specialTypes = /** @type {const} */ ([
@@ -39,74 +39,17 @@ export function compileProperty(property) {
 	}
 	switch(property.type) {
 		case "string":
-			if (property.enum) {
-				return EnumInput.create(property.enum, property.default ?? "")
-			}
+			if (property.enum) return EnumInput.create(property.enum, property.default ?? "")
 			return input(property.default ?? "text")
-		case "number": 
-			return numInput(property.default ?? 0)
-		case "integer":
-			return intInput(property.default ?? 0)
-		case "boolean":
-			return booleanInput(property.default ?? false)
-		case "range":
-			return parent => new RangeInput(parent)
-		case "array":
-			{
-				let value;
-				if (typeof property.items === "object") {
-					value = compileProperty(property.items)
-				} else if (property.items in docs.types) {
-					value = compileTypeString(/** @type {import("./schema.js").NormalPropertyTypes} */ (property.items))
-				} else {
-					value = compileProperty(/** @type {any} */ ({ type: property.items }))
-				}
-				return arraySection(parent => {
-					value = value(parent)
-					if (value instanceof LazyLoadedSection) value.load()
-					return value
-				})
-			}
-		case "record":
-			const value = parent => {
-				const value = compileTypeString(property.recordItem)(parent)
-				if (value instanceof LazyLoadedSection) {
-					value.load()
-				}
-				return value
-			}
-			return parent => new PropertiesMap(parent, key => {
-				return entry(input(property.recordItem+key), value)
-			})
+		case "number": return numInput(property.default ?? 0)
+		case "integer": return intInput(property.default ?? 0)
+		case "boolean": return booleanInput(property.default ?? false)
+		case "range": return rangeInput()
+		case "array": return compileArrayType(property)
+		case "record": return compileRecordType(property)
 		case "object":
-			if ("properties" in property) {
-				const entries = []
-				for (const [name, prop] of Object.entries(property.properties)) {
-					const value = parent => {
-						const value = compileProperty(prop)(parent)
-						value.setValue(prop.default)
-						return value
-					}
-					if (prop.required && value instanceof LazyLoadedSection) {
-						value.load()
-					}
-					entries.push(stringKeyEntry(name, value, prop.description))
-				}
-				return parent => new LazyLoadedSection(parent, entries)
-			}
-			if ("propertiesMap" in property) {
-				const propertiesMap = property.propertiesMap
-				const key = compileProperty(propertiesMap.key)
-				const value = parent => {
-					const value = compileProperty(propertiesMap.value)(parent)
-					value.setValue(propertiesMap.value.default)
-					if (value instanceof LazyLoadedSection) {
-						value.load()
-					}
-					return value
-				}
-				return parent => new PropertiesMap(parent, () => entry(key, value, propertiesMap.value.description))
-			}
+			if ("properties" in property) return compileNormalObject(property)
+			if ("propertiesMap" in property) return compilePropertiesMap(property)
 			return constText("# not done yet")
 		default:
 			return compileTypeString(property.type)
@@ -114,31 +57,83 @@ export function compileProperty(property) {
 }
 
 /**
+ * @param {import("./schema.js").RecordProperty} property 
+ */
+function compileRecordType(property) {
+	const value = loadIfLazyLoadedSection(compileTypeString(property.recordItem))
+	return propertiesMap(key => {
+		return entry(input(property.recordItem + key), value)
+	})
+}
+
+/**
+ * @param {import("./schema.js").NormalObjectProperty} property 
+ */
+function compileNormalObject(property) {
+	const entries = []
+	for (const [name, prop] of Object.entries(property.properties)) {
+		let value = compileProperty(prop)
+		if (prop.required) value = loadIfLazyLoadedSection(value)
+		entries.push(stringKeyEntry(name, value, prop.description))
+	}
+	return parent => new LazyLoadedSection(parent, entries)
+}
+
+/**
+ * @param {import("./schema.js").MapObjectProperty} property 
+ */
+function compilePropertiesMap(property) {
+	const key = compileProperty(property.propertiesMap.key)
+	const value = loadIfLazyLoadedSection(compileProperty(property.propertiesMap.value))
+	return propertiesMap(_ => entry(key, value, property.propertiesMap.value.description))
+}
+
+/**
+ * @param {import("./schema.js").ArrayProperty} property 
+ */
+function compileArrayType(property) {
+	/**
+	 * @type {(parent: YamlElement) => YamlElement}
+	 */
+	let value
+	if (typeof property.items === "object") {
+		value = compileProperty(property.items)
+	} else if (property.items in docs.types) {
+		value = compileTypeString(/** @type {import("./schema.js").NormalPropertyTypes} */(property.items))
+	} else {
+		value = compileProperty(/** @type {any} */({ type: property.items }))
+	}
+	value = loadIfLazyLoadedSection(value)
+	return arraySection(value)
+}
+
+/**
  * @param {specialType} typeName
- * @returns {(parent: YamlElement) =>YamlElement<DocItemSection>}
+ * @returns {(parent: YamlElement) => YamlElement<DocItemSection>}
  */
 export function compileSpecialType(typeName) {
 	switch (typeName) {
 		case "trigger": 
-			return parent => new DocItemSection(parent, "triggers")
+			return docItemSection("triggers")
 		case "condition":
-			return parent => new DocItemSection(parent, "conditions", [
+			return docItemSection("conditions", [
 				stringKeyEntry("else", compileTypeString("EffectList"), "Effects to run if this condition is false")
 			])
 		case "effect": 
-			return parent => new DocItemSection(parent, "effects")
+			return docItemSection("effects")
 		case "particleShape":
-			return parent => new DocItemSection(parent, "particleShapes")
+			return docItemSection("particleShapes")
 		case "EntityData": 
-			return parent => new DocItemSection(parent, "entityData", createEntityDataExtras())
+			// wrapped in function to avoid infiniely calling createEntityDataExtras
+			return parent => docItemSection("entityData", createEntityDataExtras())(parent)
 		case "damagemodifier":
-			return parent => new DocItemSection(parent, "damagemodifiers")
+			return docItemSection("damagemodifiers")
 		case "reward":
-			return parent => new DocItemSection(parent, "rewards")
+			return docItemSection("rewards")
 		case "distribution":
-			return parent => new DocItemSection(parent, "distributions")
+			return docItemSection("distributions")
 		case "skill": 
-			return parent => new DocItemSection(parent, "skills")
+			return docItemSection("skills")
 	}
 }
 

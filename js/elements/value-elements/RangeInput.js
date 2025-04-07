@@ -51,3 +51,7 @@ export class RangeInput extends YamlElement {
 		}
 	}
 }
+
+export function rangeInput() {
+	return parent => new RangeInput(parent)
+}

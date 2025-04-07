@@ -43,43 +43,67 @@ type PropertiesMap = {
 }
 
 type NormalProperty = {
-	type: ValueOrArrayContaining<NormalPropertyTypes>
+	type: NormalPropertyTypes
 	default?: unknown
 }
 
-type ObjectProperty = ValueWithDefaultOrArrayContaining<"object", object> & (
-	{ properties: StringRecord<Property> } |
-	{ propertiesMap: PropertiesMap } |
-	{ internal: true }
-)
-
-type RecordProperty = ValueWithDefaultOrArrayContaining<"record", object> & {
-	recordItem: NormalPropertyTypes
+export type MultiType = {
+	type: PropertyTypes[]
+	default?: unknown
 }
 
-type ArrayProperty = ValueWithDefaultOrArrayContaining<"array", any[]> & {
+type ObjectProperty = {
+	type: "object", 
+	default?: object
+}
+
+export type NormalObjectProperty = ObjectProperty & { properties: StringRecord<Property> }
+export type MapObjectProperty = ObjectProperty & { propertiesMap: PropertiesMap }
+export type InternalObjectProperty = ObjectProperty & { internal: true }
+
+export type RecordProperty = {
+	type: "record", 
+	recordItem: NormalPropertyTypes
+	default?: object
+}
+
+export type ArrayProperty = {
+	type: "array"
 	items: PropertyTypes | Property
 	minItems?: number
 	maxItems?: number
+	default?: any[]
 }
 
-type StringProperty = ValueWithDefaultOrArrayContaining<"string", string> & {
+export type StringProperty = {
+	type: "string"
 	minLength?: number
 	maxLength?: number
 	pattern?: string
 	enum?: string[]
 	requireEnum?: boolean
+	default?: string
 }
 
-type NumberProperty = ValueWithDefaultOrArrayContaining<"number" | "integer", number> & {
+export type NumberProperty = {
+	type: "number" | "integer"
 	min?: number
 	max?: number
+	default?: number
 }
 
-type BooleanProperty = ValueWithDefaultOrArrayContaining<"boolean", boolean>
+export type BooleanProperty = {
+	type: "boolean"
+	default?: boolean
+}
 
 type NakedProperty = (
-	ObjectProperty |
+	MultiType | 
+	(
+		NormalObjectProperty |
+		MapObjectProperty |
+		InternalObjectProperty
+	) |
 	RecordProperty |
 	ArrayProperty |
 	StringProperty |
@@ -91,8 +115,6 @@ type NakedProperty = (
 type Property = NakedProperty & {
 	description: string
 	required: boolean
-
-	if?: unknown
 }
 
 type Type = NakedProperty & {
@@ -101,21 +123,3 @@ type Type = NakedProperty & {
 	requireMode: true
 	internal?: true
 }
-
-type _ArrayContaining<T extends PropertyTypes[]> = T | [...T, PropertyTypes]
-type __ArrayContaining<T extends PropertyTypes[]> = _ArrayContaining<_ArrayContaining<T>>
-type ____ArrayContaining<T extends PropertyTypes[]> = __ArrayContaining<__ArrayContaining<T>>
-type ArrayContaining<T extends PropertyTypes> = [...PropertyTypes[], ...____ArrayContaining<[T]>]
-
-type ValueOrArrayContaining<T extends PropertyTypes> = T | ArrayContaining<T>
-
-type ValueWithDefaultOrArrayContaining<T extends PropertyTypes, D> = (
-	{
-		type: T,
-		default?: D | null
-	} | {
-		type: ArrayContaining<T>
-		default?: unknown
-	}
-)
-
