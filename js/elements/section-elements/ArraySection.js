@@ -69,11 +69,26 @@ export class ArraySection extends YamlElement {
 	 * @param {YamlElement<unknown>} element
 	 */
 	addChild(element) {
-		this.values.push(element)
-		this.children.push(element)
 		const li = createElement(this, "li")
 		this.container.appendChild(li)
+
 		element.toHTML(li)
+		this.values.push(element)
+		this.children.push(element)
+
+		const removeButton = createElement(this, "button")
+		const elementIndex = this.children.length - 1
+		removeButton.innerText = "x"
+		removeButton.addEventListener("click", () => {
+			this.children.splice(elementIndex, 1)
+			this.values.splice(elementIndex-1, 1)
+			this.container.removeChild(li)
+			if (this.focusIndex >= elementIndex) {
+				this.focusIndex--
+			}
+			if (this.focusIndex != -1) this.children[this.focusIndex].focus()
+		})
+		li.append(removeButton)
 
 		this.children[this.focusIndex]?.unfocus()
 		element.focus()
