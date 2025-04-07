@@ -77,6 +77,7 @@ function load() {
 	if (!save) return
 	const json = JSON.parse(save)
 	root = makeRoot(null)
+	globalThis.root = root
 	root.setValue(json)
 	render()
 }
