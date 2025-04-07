@@ -10,17 +10,17 @@ export class DocItemSection extends LazyLoadedSection {
 
 	/**
 	 * @param {keyof import("../../schema.js").Schema} category
-	 * @param {((parent: YamlElement) => Entry)[]} [extraEntries=()=>[]]
+	 * @param {() => ((parent: YamlElement) => Entry)[]} [extraEntries=()=>[]]
 	 * @param {YamlElement} parent
 	 */
-	constructor(parent, category, extraEntries = []) {
-		super(parent, [])
-		this.extraEntriesGenerator = extraEntries.map(child => () => child(this))
+	constructor(parent, category, extraEntries = () => []) {
+		super(parent, () => [])
+		this.extraEntriesGenerator = extraEntries().map(child => () => child(this))
 		this.category = category
 		this.typeKey = (category === "skills") ? "skill" : "type"
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
 		this.typeEntry = stringKeyEntry(this.typeKey, typeInput, "The type")(this)
-		this.generator = [() => this.typeEntry, ...this.extraEntriesGenerator]
+		this.generator = () => [() => this.typeEntry, ...this.extraEntriesGenerator]
 		this.unfocus()
 
 		this.typeEntry.value.addChangedListener(this.updateProperties.bind(this))
@@ -96,8 +96,8 @@ export class DocItemSection extends LazyLoadedSection {
 
 /**
  * @param {keyof import("../../schema.js").Schema} category
- * @param {((parent: YamlElement) => Entry)[]} [extraEntries=[]]
+ * @param {() => ((parent: YamlElement) => Entry)[]} [extraEntries=() => []]
  */
-export function docItemSection(category, extraEntries = []) {
+export function docItemSection(category, extraEntries = () => []) {
 	return parent => new DocItemSection(parent, category, extraEntries)
 }

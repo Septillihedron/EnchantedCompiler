@@ -1,4 +1,4 @@
-import { arraySection, ArraySection, booleanInput, BooleanInput, constText, docItemSection, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, LazyLoadedSection, loadIfLazyLoadedSection, MultiType, numInput, propertiesMap, PropertiesMap, rangeInput, RangeInput, Section, stringKeyEntry, YamlElement } from "./elements.js"
+import { arraySection, ArraySection, booleanInput, BooleanInput, constText, docItemSection, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, lazyLoadedSection, LazyLoadedSection, loadIfLazyLoadedSection, MultiType, numInput, propertiesMap, PropertiesMap, rangeInput, RangeInput, Section, stringKeyEntry, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 const specialTypes = /** @type {const} */ ([
@@ -70,13 +70,15 @@ function compileRecordType(property) {
  * @param {import("./schema.js").NormalObjectProperty} property 
  */
 function compileNormalObject(property) {
-	const entries = []
-	for (const [name, prop] of Object.entries(property.properties)) {
-		let value = compileProperty(prop)
-		if (prop.required) value = loadIfLazyLoadedSection(value)
-		entries.push(stringKeyEntry(name, value, prop.description))
-	}
-	return parent => new LazyLoadedSection(parent, entries)
+	return lazyLoadedSection(() => {
+		const entries = []
+		for (const [name, prop] of Object.entries(property.properties)) {
+			let value = compileProperty(prop)
+			if (prop.required) value = loadIfLazyLoadedSection(value)
+			entries.push(stringKeyEntry(name, value, prop.description))
+		}
+		return entries
+	})
 }
 
 /**
@@ -116,7 +118,7 @@ export function compileSpecialType(typeName) {
 		case "trigger": 
 			return docItemSection("triggers")
 		case "condition":
-			return docItemSection("conditions", [
+			return docItemSection("conditions", () => [
 				stringKeyEntry("else", compileTypeString("EffectList"), "Effects to run if this condition is false")
 			])
 		case "effect": 
@@ -124,8 +126,7 @@ export function compileSpecialType(typeName) {
 		case "particleShape":
 			return docItemSection("particleShapes")
 		case "EntityData": 
-			// wrapped in function to avoid infiniely calling createEntityDataExtras
-			return parent => docItemSection("entityData", createEntityDataExtras())(parent)
+			return docItemSection("entityData", createEntityDataExtras)
 		case "damagemodifier":
 			return docItemSection("damagemodifiers")
 		case "reward":

@@ -9,7 +9,7 @@ export class LazyLoadedSection extends Section {
 
 	/**
 	 * @param {YamlElement} parent
-	 * @param {((parent: YamlElement) => Entry)[]} generator
+	 * @param {() => ((parent: YamlElement) => Entry)[]} generator
 	 */
 	constructor(parent, generator) {
 		super(parent, [])
@@ -35,7 +35,7 @@ export class LazyLoadedSection extends Section {
 
 	generateEntries() {
 		this.clearChildren()
-		this.generator.forEach(this.addChild.bind(this))
+		this.generator().forEach(this.addChild.bind(this))
 		this.focus()
 		this.focusNext()
 		this.button.innerText = "x"
@@ -88,7 +88,7 @@ export class LazyLoadedSection extends Section {
 }
 
 /**
- * @param {((parent: YamlElement<any>) => Entry<any, any>)[]} generator
+ * @param {() => ((parent: YamlElement<any>) => Entry<any, any>)[]} generator
  */
 export function lazyLoadedSection(generator) {
 	return parent => new LazyLoadedSection(parent, generator)
