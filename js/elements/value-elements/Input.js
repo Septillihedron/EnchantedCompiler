@@ -17,10 +17,11 @@ export class Input extends YamlElement {
 	validators
 
 	/**
+	 * @param {YamlElement<?>} parent 
 	 * @param {string | undefined | null} def
 	 */
-	constructor(def) {
-		super()
+	constructor(parent, def) {
+		super(parent)
 		this.input = document.createElement("span")
 		this.input.contentEditable = 'true'
 		if (def != undefined) this.input.innerText = def
@@ -115,38 +116,42 @@ export class Input extends YamlElement {
  */
 
 export function input(def) {
-	return new Input(def)
+	return (parent) => new Input(parent, def)
 }
 /**
  * @param {number} def
  */
 export function intInput(def) {
-	const elem = input(def.toString())
-	elem.addValidator((val, errors) => {
-		if (!intRegex.test(val)) {
-			errors.push({
-				level: errorLevels.error,
-				message: "Invalid integer"
-			})
-		}
-	})
-	elem.validate()
-	return elem
+	return parent => {
+		const elem = input(def.toString())(parent)
+		elem.addValidator((val, errors) => {
+			if (!intRegex.test(val)) {
+				errors.push({
+					level: errorLevels.error,
+					message: "Invalid integer"
+				})
+			}
+		})
+		elem.validate()
+		return elem
+	}
 }
 /**
  * @param {number | string} def
  */
 export function numInput(def) {
-	const elem = input(def.toString())
-	elem.addValidator((val, errors) => {
-		if (!floatRegex.test(val)) {
-			errors.push({
-				level: errorLevels.error,
-				message: "Invalid number"
-			})
-		}
-	})
-	elem.validate()
-	return elem
+	return parent => {
+		const elem = input(def.toString())(parent)
+		elem.addValidator((val, errors) => {
+			if (!floatRegex.test(val)) {
+				errors.push({
+					level: errorLevels.error,
+					message: "Invalid number"
+				})
+			}
+		})
+		elem.validate()
+		return elem
+	}
 }
 

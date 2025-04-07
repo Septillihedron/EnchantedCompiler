@@ -8,8 +8,8 @@ export class ConstText extends YamlElement {
 	/**
 	 * @param {string} text
 	 */
-	constructor(text) {
-		super()
+	constructor(parent, text) {
+		super(parent)
 		this.text = text
 		this.textElement = document.createTextNode(text)
 	}
@@ -41,12 +41,12 @@ export class ConstText extends YamlElement {
  * @param {string} text
  */
 export function constText(text) {
-	return new ConstText(text)
+	return parent => new ConstText(parent, text)
 }
+
 /**
  * @deprecated
  */
-
 export function incomplete() {
 	return constText("# not done yet")
 }

@@ -9,8 +9,8 @@ export class BooleanInput extends YamlElement {
 	/**
 	 * @param {boolean} def
 	 */
-	constructor(def) {
-		super()
+	constructor(parent, def) {
+		super(parent)
 		this.input = document.createElement("input")
 		this.input.type = "checkbox"
 		this.input.defaultChecked = def
@@ -48,4 +48,11 @@ export class BooleanInput extends YamlElement {
 		return true
 	}
 
+}
+
+/**
+ * @param {boolean} def
+ */
+export function booleanInput(def) {
+	return parent => new BooleanInput(parent, def)
 }

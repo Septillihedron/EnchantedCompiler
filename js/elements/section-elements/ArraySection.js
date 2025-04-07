@@ -8,10 +8,11 @@ import { indent } from "./indent.js"
 
 export class ArraySection extends YamlElement {
 	/**
-	 * @param {(() => YamlElement<unknown>)} addfn
+	 * @param {YamlElement<any>} parent
+	 * @param {(parent: YamlElement) => YamlElement<unknown>} addfn
 	 */
-	constructor(addfn) {
-		super()
+	constructor(parent, addfn) {
+		super(parent)
 		/** @type {YamlElement<unknown>[]} */
 		this.values = []
 		this.container = document.createElement("ul")
@@ -20,7 +21,7 @@ export class ArraySection extends YamlElement {
 		this.addButton = document.createElement("button")
 		this.addButton.innerText = "+"
 		this.addButton.onclick = () => {
-			const element = addfn()
+			const element = addfn(this)
 			this.addChild(element)
 		}
 
@@ -67,7 +68,6 @@ export class ArraySection extends YamlElement {
 	 * @param {YamlElement<unknown>} element
 	 */
 	addChild(element) {
-		element.parent = this
 		this.values.push(element)
 		this.children.push(element)
 		const li = document.createElement("li")
@@ -84,4 +84,11 @@ export class ArraySection extends YamlElement {
 		this.children = [new FocusableWrapper(this.addButton)]
 		this.container.replaceChildren()
 	}
+}
+
+/**
+ * @param {(parent: YamlElement) => YamlElement<unknown>} addfn
+ */
+export function arraySection(addfn) {
+	return parent => new ArraySection(parent, addfn)
 }

@@ -1,11 +1,11 @@
 
 export abstract class YamlElement<T> implements Focusable {
 
-	parent?: YamlElement<?>
+	readonly parent: YamlElement<?>
 	children: Focusable<unknown>[]
 	focusIndex: number
 
-	constructor(parent?: YamlElement<?>)
+	constructor(parent: YamlElement<?>)
 
 	abstract toHTML(parent: HTMLElement): void
 	abstract toYaml(): string

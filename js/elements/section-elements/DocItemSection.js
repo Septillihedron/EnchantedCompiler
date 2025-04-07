@@ -1,7 +1,8 @@
 import { compileProperty } from "../../compiler.js"
 import { docs } from "../../schema.js"
 import { EnumInput } from "../value-elements/EnumInput.js"
-import { entry, Entry } from "./Entry.js"
+import { YamlElement } from "../yaml-element.js"
+import { entry, Entry, stringKeyEntry } from "./Entry.js"
 import { LazyLoadedSection } from "./LazyLoadedSection.js"
 
 
@@ -9,21 +10,20 @@ export class DocItemSection extends LazyLoadedSection {
 
 	/**
 	 * @param {keyof import("../../schema.js").Schema} category
-	 * @param {() => Entry[]} [extraEntries = ()=>[]]
+	 * @param {((parent: YamlElement) => Entry)[]} [extraEntries=()=>[]]
+	 * @param {YamlElement} parent
 	 */
-	constructor(category, extraEntries = () => []) {
-		super(() => [])
-		this.extraEntriesGenerator = extraEntries
+	constructor(parent, category, extraEntries = []) {
+		super(parent, [])
+		this.extraEntriesGenerator = extraEntries.map(child => () => child(this))
 		this.category = category
 		this.typeKey = (category === "skills") ? "skill" : "type"
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
-		this.typeEntry = entry(this.typeKey, typeInput, "The type")
-		this.generator = () => {
-			return [this.typeEntry, ...this.extraEntriesGenerator()]
-		}
+		this.typeEntry = stringKeyEntry(this.typeKey, typeInput, "The type")(this)
+		this.generator = [() => this.typeEntry, ...this.extraEntriesGenerator]
 		this.unfocus()
 
-		typeInput.addChangedListener(this.updateProperties.bind(this))
+		this.typeEntry.value.addChangedListener(this.updateProperties.bind(this))
 	}
 
 	/**
@@ -64,19 +64,21 @@ export class DocItemSection extends LazyLoadedSection {
 	*/
 	compileDocItem(docItem) {
 		this.clearChildren()
-		this.addChild(this.typeEntry)
+		this.addChild(() => this.typeEntry)
 		const modes = docItem.supportedModes
 		if (modes != undefined) {
 			const defaultMode = this.getDefaultMode(modes, docItem.requireMode)
-			this.addChild(entry("mode", EnumInput.create(modes, defaultMode), "The mode of operation"))
+			const entry = stringKeyEntry("mode", EnumInput.create(modes, defaultMode), "The mode of operation")
+			this.addChild(entry)
 		}
 		if (docItem.properties !== undefined) {
 			Object.entries(docItem.properties)
 				.forEach(([name, property]) => {
-					this.addChild(entry(name, compileProperty(property), property.description))
+					const entry = stringKeyEntry(name, compileProperty(property), property.description)
+					this.addChild(entry)
 				})
 		}
-		this.extraEntriesGenerator().forEach(entry => this.addChild(entry))
+		this.extraEntriesGenerator.forEach(entry => this.addChild(entry))
 		this.focus()
 	}
 
@@ -90,4 +92,12 @@ export class DocItemSection extends LazyLoadedSection {
 		else return "ALL"
 	}
 
+}
+
+/**
+ * @param {keyof import("../../schema.js").Schema} category
+ * @param {((parent: YamlElement) => Entry)[]} [extraEntries=[]]
+ */
+export function docItemSection(category, extraEntries = []) {
+	return parent => new DocItemSection(parent, category, extraEntries)
 }

@@ -23,15 +23,17 @@ export class MultiType extends YamlElement {
 	 */
 	selectedType
 
-	constructor(multiType) {
-		super()
+	/**
+	 * @param {YamlElement} parent 
+	 */
+	constructor(parent, multiType) {
+		super(parent)
 		const { type: types, ...typeData } = multiType
 		this.possibleTypes = types
 			.map(type => {
 				const compiled = compileProperty({ ...typeData, type })
 				return { name: type, type: compiled }
 			})
-		this.possibleTypes.forEach(child => child.type.parent = this)
 		this.container = document.createElement("div")
 		this.setType(this.possibleTypes[0].name)
 

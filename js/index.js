@@ -1,28 +1,26 @@
+import { docs } from './schema.js'
 import { compileTypeString } from "./compiler.js"
-import { entry, input, Section, DocItemSection, section, PropertiesMap } from "./elements.js"
+import { entry, input, section, PropertiesMap, stringKeyEntry, docItemSection, propertiesMap } from "./elements.js"
 
-const createDefaultSkill = () => entry(input("skill0"), new Section([
-	entry("trigger", compileTypeString("trigger")),
-	entry("conditions", compileTypeString("ConditionList")),
-	entry("effects", compileTypeString("EffectList"))
+const createSkill = key => entry(input("skill" + key), section([
+	stringKeyEntry("trigger", compileTypeString("trigger")),
+	stringKeyEntry("conditions", compileTypeString("ConditionList")),
+	stringKeyEntry("effects", compileTypeString("EffectList"))
 ]))
 
-const createDefaultDamageModifier = () => entry("damagemodifier", new DocItemSection("damagemodifiers"))
-
-const createDefaultReward = () => entry("reward", new DocItemSection("rewards"))
-
-const makeRoot = () => entry(input("exampleboss"), section([
-	entry("colouredName", input("<red>Exampleboss")),
-	entry("description", input("A description fit for an example")),
-	entry("autospawn", compileTypeString("SpawnData")),
-	entry("entity", compileTypeString("EntityData")),
-	entry("bossbar", compileTypeString("BossBarData")),
-	createDefaultDamageModifier(),
-	createDefaultReward(),
-	entry("skills", new PropertiesMap(createDefaultSkill))
+const makeRoot = entry(input("exampleboss"), section([
+	stringKeyEntry("colouredName", input("<red>Exampleboss")),
+	stringKeyEntry("description", input("A description fit for an example")),
+	stringKeyEntry("autospawn", compileTypeString("SpawnData")),
+	stringKeyEntry("entity", compileTypeString("EntityData")),
+	stringKeyEntry("bossbar", compileTypeString("BossBarData")),
+	stringKeyEntry("damagemodifier", docItemSection("damagemodifiers")),
+	stringKeyEntry("reward", docItemSection("rewards")),
+	stringKeyEntry("skills", propertiesMap(createSkill))
 ]))
 
-export let root = makeRoot()
+export let root = makeRoot(null)
+globalThis.root = root
 
 /**
  * @type {Record<string, {average: number, times: number[]}>}
@@ -78,12 +76,12 @@ function load() {
 	const save = localStorage.getItem("autosave")
 	if (!save) return
 	const json = JSON.parse(save)
-	root = makeRoot()
+	root = makeRoot(null)
 	root.setValue(json)
 	render()
 }
 
-load()
+//load()
 render()
 const autosaveId = setInterval(() => time("autosave", save), 1000)
 

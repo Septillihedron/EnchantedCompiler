@@ -10,10 +10,11 @@ import { Entry } from "./Entry.js"
 
 export class Section extends YamlElement {
 	/**
-	 * @param {Entry[]} values
+	 * @param {YamlElement} parent 
+	 * @param {((parent: YamlElement) => Entry)[]} values
 	 */
-	constructor(values) {
-		super()
+	constructor(parent, values) {
+		super(parent)
 		/** @type {Entry[]} */
 		this.values = []
 		this.container = document.createElement("ul")
@@ -60,16 +61,16 @@ export class Section extends YamlElement {
 	}
 
 	/**
-	 * @param {Entry} element
+	 * @param {(parent: YamlElement) => Entry} element
 	 */
 	addChild(element) {
-		element.parent = this
-		this.values.push(element)
-		this.children.push(element)
-		element.toHTML(this.container)
+		const constructedElement = element(this)
+		this.values.push(constructedElement)
+		this.children.push(constructedElement)
+		constructedElement.toHTML(this.container)
 
 		this.children[this.focusIndex]?.unfocus()
-		element.focus()
+		constructedElement.focus()
 		this.focusIndex = this.children.length - 1
 	}
 
@@ -79,11 +80,11 @@ export class Section extends YamlElement {
 		this.container.replaceChildren()
 	}
 }
-/**
- * @param {Entry[]} values
- */
 
+/**
+ * @param {((parent: YamlElement) => Entry)[]} values
+ */
 export function section(values) {
-	return new Section(values)
+	return parent => new Section(parent, values)
 }
 

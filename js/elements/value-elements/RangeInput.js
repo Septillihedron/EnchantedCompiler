@@ -8,14 +8,15 @@ import { constText } from "./ConstText.js"
  */
 export class RangeInput extends YamlElement {
 
-	constructor() {
-		super()
-		this.min = numInput("-.inf")
-		this.dash = constText(" - ")
-		this.max = numInput(".inf")
+	/**
+	 * @param {YamlElement<any>} parent
+	 */
+	constructor(parent) {
+		super(parent)
+		this.min = numInput("-.inf")(this)
+		this.dash = constText(" - ")(this)
+		this.max = numInput(".inf")(this)
 
-		this.min.parent = this
-		this.max.parent = this
 		this.children = [this.min, this.max]
 	}
 

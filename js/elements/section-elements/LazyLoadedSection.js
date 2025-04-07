@@ -1,5 +1,5 @@
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
-import { FocusableWrapper } from "../yaml-element.js"
+import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 import { Entry } from "./Entry.js"
 import { Section } from "./Section.js"
 
@@ -8,10 +8,11 @@ export class LazyLoadedSection extends Section {
 	
 
 	/**
-	 * @param {() => Entry[]} generator
+	 * @param {YamlElement} parent
+	 * @param {((parent: YamlElement) => Entry)[]} generator
 	 */
-	constructor(generator) {
-		super([])
+	constructor(parent, generator) {
+		super(parent, [])
 		this.generator = generator
 		this.generated = false
 		this.button = this.makeGenerateButton()
@@ -34,7 +35,7 @@ export class LazyLoadedSection extends Section {
 
 	generateEntries() {
 		this.clearChildren()
-		this.generator().forEach(this.addChild.bind(this))
+		this.generator.forEach(this.addChild.bind(this))
 		this.focus()
 		this.focusNext()
 		this.button.innerText = "x"
@@ -51,6 +52,8 @@ export class LazyLoadedSection extends Section {
 		}
 		this.button.classList.add("hidden")
 		this.children.shift()
+		// compensates for the shift
+		this.focusIndex--
 	}
 
 	/**

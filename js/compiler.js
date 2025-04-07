@@ -1,4 +1,4 @@
-import { ArraySection, BooleanInput, constText, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, LazyLoadedSection, MultiType, numInput, PropertiesMap, RangeInput, Section, YamlElement } from "./elements.js"
+import { arraySection, ArraySection, booleanInput, BooleanInput, constText, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, LazyLoadedSection, MultiType, numInput, PropertiesMap, RangeInput, Section, stringKeyEntry, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 const specialTypes = /** @type {const} */ ([
@@ -28,11 +28,11 @@ function isSpecialType(type) {
 
 /**
  * @param {import("./schema").NakedProperty} property 
- * @returns {YamlElement<unknown>}
+ * @returns {(parent: YamlElement) => YamlElement<unknown>}
  */
 export function compileProperty(property) {
 	if (typeof property.type != "string") {
-		return new MultiType(property)
+		return (parent) => new MultiType(parent, property)
 	}
 	if (isSpecialType(property.type)) {
 		return compileSpecialType(property.type)
@@ -48,11 +48,11 @@ export function compileProperty(property) {
 		case "integer":
 			return intInput(property.default ?? 0)
 		case "boolean":
-			return new BooleanInput(property.default ?? false)
+			return booleanInput(property.default ?? false)
 		case "range":
-			return new RangeInput()
+			return parent => new RangeInput(parent)
 		case "array":
-			return new ArraySection(() => {
+			{
 				let value;
 				if (typeof property.items === "object") {
 					value = compileProperty(property.items)
@@ -61,46 +61,51 @@ export function compileProperty(property) {
 				} else {
 					value = compileProperty(/** @type {any} */ ({ type: property.items }))
 				}
+				return arraySection(parent => {
+					value = value(parent)
+					if (value instanceof LazyLoadedSection) value.load()
+					return value
+				})
+			}
+		case "record":
+			const value = parent => {
+				const value = compileTypeString(property.recordItem)(parent)
 				if (value instanceof LazyLoadedSection) {
 					value.load()
 				}
 				return value
-			})
-		case "record":
-			return new PropertiesMap(() => {
-				const key = input(property.recordItem+"0")
-				const value = compileTypeString(property.recordItem)
-				if (value instanceof LazyLoadedSection) {
-					value.load()
-				}
-				return entry(key, value)
+			}
+			return parent => new PropertiesMap(parent, key => {
+				return entry(input(property.recordItem+key), value)
 			})
 		case "object":
 			if ("properties" in property) {
-				return new LazyLoadedSection(() => {
-					const entries = []
-					for (const [name, prop] of Object.entries(property.properties)) {
-						const value = compileProperty(prop)
+				const entries = []
+				for (const [name, prop] of Object.entries(property.properties)) {
+					const value = parent => {
+						const value = compileProperty(prop)(parent)
 						value.setValue(prop.default)
-						if (prop.required && value instanceof LazyLoadedSection) {
-							value.load()
-						}
-						entries.push(entry(name, value, prop.description))
+						return value
 					}
-					return entries
-				})
+					if (prop.required && value instanceof LazyLoadedSection) {
+						value.load()
+					}
+					entries.push(stringKeyEntry(name, value, prop.description))
+				}
+				return parent => new LazyLoadedSection(parent, entries)
 			}
 			if ("propertiesMap" in property) {
 				const propertiesMap = property.propertiesMap
-				return new PropertiesMap(() => {
-					const key = compileProperty(propertiesMap.key)
-					const value = compileProperty(propertiesMap.value)
+				const key = compileProperty(propertiesMap.key)
+				const value = parent => {
+					const value = compileProperty(propertiesMap.value)(parent)
 					value.setValue(propertiesMap.value.default)
 					if (value instanceof LazyLoadedSection) {
 						value.load()
 					}
-					return entry(key, value, propertiesMap.value.description)
-				})
+					return value
+				}
+				return parent => new PropertiesMap(parent, () => entry(key, value, propertiesMap.value.description))
 			}
 			return constText("# not done yet")
 		default:
@@ -110,35 +115,35 @@ export function compileProperty(property) {
 
 /**
  * @param {specialType} typeName
- * @returns {YamlElement<DocItemSection>}
+ * @returns {(parent: YamlElement) =>YamlElement<DocItemSection>}
  */
 export function compileSpecialType(typeName) {
 	switch (typeName) {
 		case "trigger": 
-			return new DocItemSection("triggers")
+			return parent => new DocItemSection(parent, "triggers")
 		case "condition":
-			return new DocItemSection("conditions", () => [
-				entry("else", compileTypeString("EffectList"), "Effects to run if this condition is false")
+			return parent => new DocItemSection(parent, "conditions", [
+				stringKeyEntry("else", compileTypeString("EffectList"), "Effects to run if this condition is false")
 			])
 		case "effect": 
-			return new DocItemSection("effects")
+			return parent => new DocItemSection(parent, "effects")
 		case "particleShape":
-			return new DocItemSection("particleShapes")
+			return parent => new DocItemSection(parent, "particleShapes")
 		case "EntityData": 
-			return new DocItemSection("entityData", createEntityDataExtras)
+			return parent => new DocItemSection(parent, "entityData", createEntityDataExtras())
 		case "damagemodifier":
-			return new DocItemSection("damagemodifiers")
+			return parent => new DocItemSection(parent, "damagemodifiers")
 		case "reward":
-			return new DocItemSection("rewards")
+			return parent => new DocItemSection(parent, "rewards")
 		case "distribution":
-			return new DocItemSection("distributions")
+			return parent => new DocItemSection(parent, "distributions")
 		case "skill": 
-			return new DocItemSection("skills")
+			return parent => new DocItemSection(parent, "skills")
 	}
 }
 
 /**
- * @returns {Entry[]}
+ * @returns {((parent: YamlElement) => Entry)[]}
  */
 function createEntityDataExtras() {
 	const entityData = 
@@ -149,7 +154,7 @@ function createEntityDataExtras() {
 	
 	return properties
 		.filter(([name, _]) => name !== "type")
-		.map(([name, property]) => entry(name, compileProperty(property), property.description))
+		.map(([name, property]) => stringKeyEntry(name, compileProperty(property), property.description))
 }
 
 /**

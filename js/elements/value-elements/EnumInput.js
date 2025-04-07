@@ -10,8 +10,8 @@ export class EnumInput extends Input {
 	 * @param {EnumValue[]} enumList
 	 * @param {string | undefined | null} def
 	 */
-	constructor(enumList, def = undefined) {
-		super(def)
+	constructor(parent, enumList, def = undefined) {
+		super(parent, def)
 		this.enumList = enumList
 		this.enumList.sort((a, b) => a.name.localeCompare(b.name))
 
@@ -40,7 +40,7 @@ export class EnumInput extends Input {
 			name,
 			description: undefined
 		}))
-		return new EnumInput(enumList, def)
+		return parent => new EnumInput(parent, enumList, def)
 	}
 
 	/**
@@ -48,7 +48,7 @@ export class EnumInput extends Input {
 	 * @param {string | undefined | null} def
 	 */
 	static createDescripted(enumList, def = undefined) {
-		return new EnumInput(enumList, def)
+		return parent => new EnumInput(parent, enumList, def)
 	}
 
 	createValueListMenu() {

@@ -13,7 +13,12 @@ export class YamlElement {
 	children = []
 	focusIndex = -1
 
-	constructor() {}
+	/**
+	 * @param {YamlElement<?>} parent
+	 */
+	constructor(parent) {
+		this.parent = parent
+	}
 
 	toHTML(parent) {
 		throw new Error("Not implemented")

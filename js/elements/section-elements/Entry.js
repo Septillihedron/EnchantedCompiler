@@ -1,31 +1,42 @@
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
-import { constText } from "../value-elements/ConstText.js"
+import { ConstText, constText } from "../value-elements/ConstText.js"
 import { YamlElement } from "../yaml-element.js"
 
 /**
  * @implements {YamlElement<[unknown, unknown]>}
+ * @template {YamlElement<unknown>} K
+ * @template {YamlElement<unknown>} V
  */
-
 export class Entry extends YamlElement {
+
 	/**
-	 * @param {YamlElement<unknown>} key
-	 * @param {YamlElement<unknown>} value
+	 * @type {K}
+	 */
+	key
+	/**
+	 * @type {V}
+	 */
+	value
+
+	/**
+	 * @param {YamlElement} parent 
+	 * @param {(parent: YamlElement) => K} key
+	 * @param {(parent: YamlElement) => V} value
 	 * @param {string | null} [description=null]
 	 */
-	constructor(key, value, description=null) {
-		super()
-		this.children = [key, value]
-		key.parent = this
-		value.parent = this
+	constructor(parent, key, value, description=null) {
+		super(parent)
 
-		this.key = key
-		this.value = value
+		this.key = key(this)
+		this.value = value(this)
+
+		this.children = [this.key, this.value]
 
 		this.container = document.createElement("li")
 		this.container.classList.add("entry-container")
 		if (description !== null) this.container.title = description
 		this.key.toHTML(this.container)
-		constText(": ").toHTML(this.container)
+		constText(": ")(this).toHTML(this.container)
 		this.value.toHTML(this.container)
 	}
 
@@ -57,13 +68,27 @@ export class Entry extends YamlElement {
 		this.value.setValue(val[1])
 	}
 }
+
 /**
- * @param {YamlElement<unknown> | string} key
- * @param {YamlElement<unknown>} value
+ * @template {YamlElement<unknown>} K
+ * @template {YamlElement<unknown>} V
+ * @param {(parent: YamlElement) => K} key
+ * @param {(parent: YamlElement) => V} value
  * @param {string | null} [description=null] 
+ * @returns {(parent: YamlElement) => Entry<K, V>}
  */
 export function entry(key, value, description=null) {
-	if (typeof key === "string") key = constText(key)
-	return new Entry(key, value, description)
+	return parent => new Entry(parent, key, value, description)
+}
+
+/**
+ * @template {YamlElement<unknown>} V
+ * @param {string} key
+ * @param {(parent: YamlElement) => V} value
+ * @param {string | null} [description=null] 
+ * @returns {(parent: YamlElement) => Entry<ConstText, V>}
+ */
+export function stringKeyEntry(key, value, description=null) {
+	return entry(constText(key), value, description)
 }
 
