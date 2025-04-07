@@ -81,7 +81,7 @@ function load() {
 	render()
 }
 
-//load()
+load()
 render()
 const autosaveId = setInterval(() => time("autosave", save), 1000)
 

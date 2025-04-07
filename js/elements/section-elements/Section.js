@@ -3,6 +3,7 @@ import { YamlElement, FocusableWrapper } from "../yaml-element.js"
 import { indent } from "./indent.js"
 import { ArraySection } from "./ArraySection.js"
 import { Entry } from "./Entry.js"
+import { createElement } from "../createHtmlElement.js"
 
 /**
  * @implements {YamlElement<object>}
@@ -17,7 +18,7 @@ export class Section extends YamlElement {
 		super(parent)
 		/** @type {Entry[]} */
 		this.values = []
-		this.container = document.createElement("ul")
+		this.container = createElement(this, "ul")
 		this.container.classList.add("section")
 		values.forEach(this.addChild.bind(this))
 	}

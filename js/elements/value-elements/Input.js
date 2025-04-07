@@ -1,5 +1,6 @@
 import { YamlElement } from "../yaml-element.js"
 import { errorLevels } from "../value-elements.js"
+import { createElement } from "../createHtmlElement.js"
 
 
 export const intRegex = /^[\+\-]?(([0-9]+)|(0b[01]+)|(0o[0-7]+)|(0x[0-9a-fA-F]+))$/
@@ -22,7 +23,7 @@ export class Input extends YamlElement {
 	 */
 	constructor(parent, def) {
 		super(parent)
-		this.input = document.createElement("span")
+		this.input = createElement(this, "span")
 		this.input.contentEditable = 'true'
 		if (def != undefined) this.input.innerText = def
 		this.input.addEventListener("focus", () => {

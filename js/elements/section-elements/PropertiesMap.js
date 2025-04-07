@@ -1,3 +1,4 @@
+import { createElement } from "../createHtmlElement.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 import { Entry } from "./Entry.js"
 import { Section } from "./Section.js"
@@ -10,7 +11,7 @@ export class PropertiesMap extends Section {
 	constructor(parent, addfn) {
 		super(parent, [])
 		this.addfn = addfn
-		this.addButton = document.createElement("button")
+		this.addButton = createElement(this, "button")
 		this.addButton.innerText = "+"
 		this.addButton.onclick = () => {
 			const element = addfn(this.values.length)

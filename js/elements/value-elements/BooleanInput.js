@@ -1,3 +1,4 @@
+import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement } from "../yaml-element.js"
 
@@ -11,7 +12,7 @@ export class BooleanInput extends YamlElement {
 	 */
 	constructor(parent, def) {
 		super(parent)
-		this.input = document.createElement("input")
+		this.input = createElement(this, "input")
 		this.input.type = "checkbox"
 		this.input.defaultChecked = def
 	}

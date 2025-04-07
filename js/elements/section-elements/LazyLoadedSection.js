@@ -1,3 +1,4 @@
+import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 import { Entry } from "./Entry.js"
@@ -19,7 +20,7 @@ export class LazyLoadedSection extends Section {
 	}
 
 	makeGenerateButton() {
-		const button = document.createElement("button")
+		const button = createElement(this, "button")
 		button.innerText = "+"
 
 		button.addEventListener("click", () => {

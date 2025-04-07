@@ -1,3 +1,4 @@
+import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { ConstText, constText } from "../value-elements/ConstText.js"
 import { YamlElement } from "../yaml-element.js"
@@ -32,7 +33,7 @@ export class Entry extends YamlElement {
 
 		this.children = [this.key, this.value]
 
-		this.container = document.createElement("li")
+		this.container = createElement(this, "li")
 		this.container.classList.add("entry-container")
 		if (description !== null) this.container.title = description
 		this.key.toHTML(this.container)

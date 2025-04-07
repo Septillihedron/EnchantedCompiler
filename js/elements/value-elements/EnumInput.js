@@ -1,3 +1,4 @@
+import { createElement } from "../createHtmlElement.js"
 import { Input } from "./Input.js"
 
 /**
@@ -15,13 +16,13 @@ export class EnumInput extends Input {
 		this.enumList = enumList
 		this.enumList.sort((a, b) => a.name.localeCompare(b.name))
 
-		this.autocompleteMenu = document.createElement("menu")
+		this.autocompleteMenu = createElement(this, "menu")
 		this.autocompleteMenu.classList.add("autocomplete-menu")
 
-		this.descriptionWindow = document.createElement("div")
+		this.descriptionWindow = createElement(this, "div")
 		this.descriptionWindow.classList.add("autocomplete-description")
 
-		this.autocompleteWindow = document.createElement('div')
+		this.autocompleteWindow = createElement(this, 'div')
 		this.autocompleteWindow.classList.add("autocomplete")
 		this.autocompleteWindow.appendChild(this.autocompleteMenu)
 		this.autocompleteWindow.appendChild(this.descriptionWindow)
@@ -65,7 +66,7 @@ export class EnumInput extends Input {
 	 * @returns {HTMLLIElement}
 	 */
 	createMenuChoice(value) {
-		const button = document.createElement("button")
+		const button = createElement(this, "button")
 		button.classList.add("autocomplete-choice")
 		button.innerText = value.name
 		button.addEventListener("click", () => {
@@ -77,15 +78,15 @@ export class EnumInput extends Input {
 		if (value.description) {
 			const description = value.description
 			button.addEventListener("mouseenter", () => {
-				const title = document.createElement('title')
+				const title = createElement(this, 'title')
 				title.innerText = value.name
 				// TODO: add markdown support
-				const descriptionElement = document.createElement('div')
+				const descriptionElement = createElement(this, 'div')
 				descriptionElement.innerText = description
 				this.descriptionWindow.replaceChildren(title, descriptionElement)
 			})
 		}
-		const li = document.createElement("li")
+		const li = createElement(this, "li")
 		li.appendChild(button)
 		return li
 	}
@@ -141,7 +142,7 @@ export class EnumInput extends Input {
 	 * @param {HTMLElement} parent
 	 */
 	toHTML(parent) {
-		const container = document.createElement('div')
+		const container = createElement(this, 'div')
 		container.classList.add("enum-value-container")
 
 		super.toHTML(container)

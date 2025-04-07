@@ -1,3 +1,4 @@
+import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"
 import { indent } from "./indent.js"
@@ -15,10 +16,10 @@ export class ArraySection extends YamlElement {
 		super(parent)
 		/** @type {YamlElement<unknown>[]} */
 		this.values = []
-		this.container = document.createElement("ul")
+		this.container = createElement(this, "ul")
 		this.container.classList.add("array")
 
-		this.addButton = document.createElement("button")
+		this.addButton = createElement(this, "button")
 		this.addButton.innerText = "+"
 		this.addButton.onclick = () => {
 			const element = addfn(this)
@@ -70,7 +71,7 @@ export class ArraySection extends YamlElement {
 	addChild(element) {
 		this.values.push(element)
 		this.children.push(element)
-		const li = document.createElement("li")
+		const li = createElement(this, "li")
 		this.container.appendChild(li)
 		element.toHTML(li)
 

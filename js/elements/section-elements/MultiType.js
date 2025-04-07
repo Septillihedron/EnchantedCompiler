@@ -1,4 +1,5 @@
 import { compileProperty } from "../../compiler.js"
+import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 
@@ -34,10 +35,10 @@ export class MultiType extends YamlElement {
 				const compiled = compileProperty({ ...typeData, type })
 				return { name: type, type: compiled }
 			})
-		this.container = document.createElement("div")
+		this.container = createElement(this, "div")
 		this.setType(this.possibleTypes[0].name)
 
-		this.changeTypeButton = document.createElement("button")
+		this.changeTypeButton = createElement(this, "button")
 		this.changeTypeButton.innerText = "*"
 		this.changeTypeButton.addEventListener("click", (e) => {
 			// temporary
