@@ -29,6 +29,7 @@ export class Entry extends YamlElement {
 		super(parent)
 
 		this.key = key(this)
+		this.colon = constText(": ")(this)
 		this.value = value(this)
 
 		this.children = [this.key, this.value]
@@ -37,8 +38,15 @@ export class Entry extends YamlElement {
 		this.container.classList.add("entry-container")
 		if (description !== null) this.container.title = description
 		this.key.toHTML(this.container)
-		constText(": ")(this).toHTML(this.container)
+		this.colon.toHTML(this.container)
 		this.value.toHTML(this.container)
+	}
+
+	/**
+	 * @param {HTMLElement} button
+	 */
+	addRemoveButton(button) {
+		this.colon.textElement.replaceWith(this.colon.textElement, button)
 	}
 
 	/**

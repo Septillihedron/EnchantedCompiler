@@ -40,6 +40,29 @@ export class PropertiesMap extends Section {
 	}
 
 	/**
+	 * @param {(parent: YamlElement) => Entry} element 
+	 */
+	addChild(element) {
+		super.addChild(parent => {
+			const entry = element(parent)
+			const removeButton = createElement(this, "button")
+			removeButton.innerText = "x"
+			removeButton.addEventListener("click", () => {
+				const elementIndex = this.children.findIndex(child => entry == child)
+				this.children.splice(elementIndex, 1)
+				this.values.splice(elementIndex-1, 1)
+				this.container.removeChild(entry.container)
+				if (this.focusIndex >= elementIndex) {
+					this.focusIndex--
+				}
+				if (this.focusIndex != -1) this.children[this.focusIndex].focus()
+			})
+			entry.addRemoveButton(removeButton)
+			return entry
+		})
+	}
+
+	/**
 	 * @param {HTMLElement} parent
 	 */
 	toHTML(parent) {
