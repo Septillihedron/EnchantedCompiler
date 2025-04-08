@@ -77,9 +77,9 @@ export class ArraySection extends YamlElement {
 		this.children.push(element)
 
 		const removeButton = createElement(this, "button")
-		const elementIndex = this.children.length - 1
 		removeButton.innerText = "x"
 		removeButton.addEventListener("click", () => {
+			const elementIndex = this.children.findIndex(child => child == element)
 			this.children.splice(elementIndex, 1)
 			this.values.splice(elementIndex-1, 1)
 			this.container.removeChild(li)
