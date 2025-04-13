@@ -32,7 +32,7 @@ export abstract class YamlElement<T> implements Focusable {
 	setFocus(element: YamlElement<?>): boolean
 }
 
-export interface Focusable {
+export abstract class Focusable {
 	/**
 	 * @returns {boolean} if the focus is successful
 	 */
