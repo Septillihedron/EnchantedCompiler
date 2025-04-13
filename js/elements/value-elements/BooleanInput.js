@@ -1,3 +1,5 @@
+import { addUndo } from "../../undo/undo-handler.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
 import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement } from "../yaml-element.js"
@@ -15,6 +17,8 @@ export class BooleanInput extends YamlElement {
 		this.input = createElement(this, "input")
 		this.input.type = "checkbox"
 		this.input.defaultChecked = def
+
+		this.input.addEventListener("click", () => addUndo(new BooleanUndoEvent(this)))
 	}
 
 	/**
@@ -47,6 +51,25 @@ export class BooleanInput extends YamlElement {
 	focus() {
 		this.input.focus()
 		return true
+	}
+
+}
+
+class BooleanUndoEvent extends UndoEvent {
+
+	/**
+	 * @param {BooleanInput} emmiter
+	 */
+	constructor(emmiter) {
+		super()
+		this.emmiter = emmiter
+	}
+	
+	undo() {
+		this.emmiter.input.checked = !this.emmiter.input.checked
+	}
+	redo() {
+		this.emmiter.input.checked = !this.emmiter.input.checked
 	}
 
 }
