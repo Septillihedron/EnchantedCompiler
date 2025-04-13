@@ -29,7 +29,7 @@ export const floatRegex = /^([\+\-]?((\d+(\.\d+)?)|(\.inf)))$/
 export class Input extends YamlElement {
 
 	/**
-	 * @type {((val: string) => InputError)[]}
+	 * @type {((val: string) => InputError?)[]}
 	 */
 	validators
 
@@ -52,7 +52,7 @@ export class Input extends YamlElement {
 
 	validate() {
 		const value = this.input.innerText
-		const errors = this.validators.map(validator => validator(value))
+		const errors = this.validators.map(validator => validator(value)).filter(error => error)
 		errors.sort((a, b) => a.level - b.level)
 		const maxLevel = errors[0]?.level ?? errorLevels.none
 		this.setValidity(maxLevel)
@@ -101,13 +101,9 @@ export class Input extends YamlElement {
 
 		if (errorLevel == errorLevels.error) {
 			classList.add("error")
-			return
-		}
-		if (errorLevel == errorLevels.warn) {
+		} else if (errorLevel == errorLevels.warn) {
 			classList.add("warn")
-			return
 		}
-
 	}
 
 	/**
@@ -120,7 +116,7 @@ export class Input extends YamlElement {
 	}
 
 	/**
-	 * @param {(val: string) => InputError} validator
+	 * @param {(val: string) => InputError?} validator
 	 */
 	addValidator(validator) {
 		this.validators.push(validator)
