@@ -1,6 +1,22 @@
 import { YamlElement } from "../yaml-element.js"
-import { errorLevels } from "../value-elements.js"
 import { createElement } from "../createHtmlElement.js"
+
+export const errorLevels = Object.freeze({
+	none: 0,
+	info: 1,
+	warn: 2,
+	error: 3,
+})
+
+/**
+ * @typedef {typeof errorLevels[keyof typeof errorLevels]} ErrorLevel
+ */
+
+/**
+ * @typedef {object} InputError
+ * @property {string} message
+ * @property {ErrorLevel} level
+ */
 
 
 export const intRegex = /^[\+\-]?(([0-9]+)|(0b[01]+)|(0o[0-7]+)|(0x[0-9a-fA-F]+))$/
@@ -13,7 +29,7 @@ export const floatRegex = /^([\+\-]?((\d+(\.\d+)?)|(\.inf)))$/
 export class Input extends YamlElement {
 
 	/**
-	 * @type {((val: string, errors: import("../value-elements.js").SchemaError[]) => void)[]}
+	 * @type {((val: string) => InputError)[]}
 	 */
 	validators
 
@@ -36,8 +52,7 @@ export class Input extends YamlElement {
 
 	validate() {
 		const value = this.input.innerText
-		const errors = []
-		this.validators.forEach(validator => validator(value, errors))
+		const errors = this.validators.map(validator => validator(value))
 		errors.sort((a, b) => a.level - b.level)
 		const maxLevel = errors[0]?.level ?? errorLevels.none
 		this.setValidity(maxLevel)
@@ -77,7 +92,7 @@ export class Input extends YamlElement {
 	}
 
 	/**
-	 * @param {import("../value-elements.js").ErrorLevel} errorLevel
+	 * @param {ErrorLevel} errorLevel
 	 */
 	setValidity(errorLevel) {
 		const classList = this.input.classList
@@ -105,10 +120,11 @@ export class Input extends YamlElement {
 	}
 
 	/**
-	 * @param {(val: string, errors: import("../value-elements.js").SchemaError[]) => void} validator
+	 * @param {(val: string) => InputError} validator
 	 */
 	addValidator(validator) {
 		this.validators.push(validator)
+		this.validate()
 	}
 
 }
@@ -125,15 +141,14 @@ export function input(def) {
 export function intInput(def) {
 	return parent => {
 		const elem = input(def.toString())(parent)
-		elem.addValidator((val, errors) => {
+		elem.addValidator(val => {
 			if (!intRegex.test(val)) {
-				errors.push({
+				return {
 					level: errorLevels.error,
 					message: "Invalid integer"
-				})
+				}
 			}
 		})
-		elem.validate()
 		return elem
 	}
 }
@@ -143,15 +158,14 @@ export function intInput(def) {
 export function numInput(def) {
 	return parent => {
 		const elem = input(def.toString())(parent)
-		elem.addValidator((val, errors) => {
+		elem.addValidator(val => {
 			if (!floatRegex.test(val)) {
-				errors.push({
+				return {
 					level: errorLevels.error,
 					message: "Invalid number"
-				})
+				}
 			}
 		})
-		elem.validate()
 		return elem
 	}
 }
