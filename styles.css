@@ -62,6 +62,12 @@ body {
 .primary-colors main span:focus[contenteditable="true"] {
 	background-color: goldenrod;
 }
+.primary-colors main span.error:focus[contenteditable="true"] {
+	background-color: red;
+}
+.primary-colors main .section:has(.error) {
+	border-color: red;
+}
 
 li.entry-container::marker {
 	content: none;
