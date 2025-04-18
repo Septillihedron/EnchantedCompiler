@@ -101,7 +101,9 @@ export function lazyLoadedSection(generator) {
 }
 
 /**
- * @param {(parent: YamlElement) => YamlElement<unknown>} maybeLazyLoadedSecction
+ * @template {YamlElement} T
+ * @param {(parent: YamlElement) => T} maybeLazyLoadedSecction
+ * @returns {(parent: YamlElement) => T}
  */
 export function loadIfLazyLoadedSection(maybeLazyLoadedSecction) {
 	return parent => {
