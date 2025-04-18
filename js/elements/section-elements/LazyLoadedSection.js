@@ -16,7 +16,7 @@ export class LazyLoadedSection extends Section {
 		super(parent, [])
 		this.generator = generator
 		this.generated = false
-		this.button = this.makeGenerateButton()
+		this.generateButton = this.makeGenerateButton()
 	}
 
 	makeGenerateButton() {
@@ -39,19 +39,19 @@ export class LazyLoadedSection extends Section {
 		this.generator().forEach(this.addChild.bind(this))
 		this.focus()
 		this.focusNext()
-		this.button.innerText = "x"
+		this.generateButton.innerText = "x"
 	}
 
 	removeEntries() {
 		this.clearChildren()
-		this.button.innerText = "+"
+		this.generateButton.innerText = "+"
 	}
 
 	load() {
 		if (!this.generated) {
 			this.generateEntries()
 		}
-		this.button.classList.add("hidden")
+		this.generateButton.classList.add("hidden")
 		this.children.shift()
 		// compensates for the shift
 		this.focusIndex--
@@ -61,7 +61,7 @@ export class LazyLoadedSection extends Section {
 	 * @param {HTMLElement} parent
 	 */
 	toHTML(parent) {
-		if (this.button) parent.appendChild(this.button)
+		if (this.generateButton) parent.appendChild(this.generateButton)
 		super.toHTML(parent)
 	}
 
@@ -78,12 +78,17 @@ export class LazyLoadedSection extends Section {
 			.forEach(([key, val]) => {
 				let entry = this.findEntryByKey(key)
 				if (!entry) {
-					this.button.click()
+					this.generateButton.click()
 					entry = this.findEntryByKey(key)
 				}
 				entry?.value.setValue(val)
 			})
 		this.unfocus()
+	}
+
+	clearChildren() {
+		super.clearChildren()
+		this.children.unshift(new FocusableWrapper(this.generateButton))
 	}
 
 }
