@@ -16,7 +16,7 @@ export class LazyLoadedSection extends Section {
 		super(parent, [])
 		this.generator = generator
 		this.generated = false
-		this.button = this.makeGenerateButton()
+		this.generateButton = this.makeGenerateButton()
 	}
 
 	makeGenerateButton() {
@@ -39,19 +39,19 @@ export class LazyLoadedSection extends Section {
 		this.generator().forEach(this.addChild.bind(this))
 		this.focus()
 		this.focusNext()
-		this.button.innerText = "x"
+		this.generateButton.innerText = "x"
 	}
 
 	removeEntries() {
 		this.clearChildren()
-		this.button.innerText = "+"
+		this.generateButton.innerText = "+"
 	}
 
 	load() {
 		if (!this.generated) {
 			this.generateEntries()
 		}
-		this.button.classList.add("hidden")
+		this.generateButton.classList.add("hidden")
 		this.children.shift()
 		// compensates for the shift
 		this.focusIndex--
@@ -61,29 +61,28 @@ export class LazyLoadedSection extends Section {
 	 * @param {HTMLElement} parent
 	 */
 	toHTML(parent) {
-		if (this.button) parent.appendChild(this.button)
+		if (this.generateButton) parent.appendChild(this.generateButton)
 		super.toHTML(parent)
 	}
 
+	getValue() {
+		if (!this.generated) return null
+		return super.getValue()
+	}
+
 	/**
-	 * @param {unknown} val
+	 * @param {unknown} value
 	 */
-	setValue(val) {
-		if (val == null) return
-		if (typeof val !== "object") {
-			incorrectTypeSetError(val)
-			return
-		}
-		Object.entries(val)
-			.forEach(([key, val]) => {
-				let entry = this.findEntryByKey(key)
-				if (!entry) {
-					this.button.click()
-					entry = this.findEntryByKey(key)
-				}
-				entry?.value.setValue(val)
-			})
-		this.unfocus()
+	setValue(value) {
+		if (value == null) return
+		if (!Array.isArray(value)) return
+		if (!this.generated) this.generateButton.click()
+		super.setValue(value)
+	}
+
+	clearChildren() {
+		super.clearChildren()
+		this.children.unshift(new FocusableWrapper(this.generateButton))
 	}
 
 }
@@ -96,7 +95,9 @@ export function lazyLoadedSection(generator) {
 }
 
 /**
- * @param {(parent: YamlElement) => YamlElement<unknown>} maybeLazyLoadedSecction
+ * @template {YamlElement} T
+ * @param {(parent: YamlElement) => T} maybeLazyLoadedSecction
+ * @returns {(parent: YamlElement) => T}
  */
 export function loadIfLazyLoadedSection(maybeLazyLoadedSecction) {
 	return parent => {

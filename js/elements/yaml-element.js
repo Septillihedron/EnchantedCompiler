@@ -1,10 +1,12 @@
 
+export class Focusable {}
+
 /**
  * @abstract
  * @template {any} T
  * @type {import("./yaml-element").YamlElement<T>}
  */
-export class YamlElement {
+export class YamlElement extends Focusable {
 
 	parent
 	/**
@@ -17,22 +19,8 @@ export class YamlElement {
 	 * @param {YamlElement<?>} parent
 	 */
 	constructor(parent) {
+		super()
 		this.parent = parent
-	}
-
-	toHTML(parent) {
-		throw new Error("Not implemented")
-	}
-	toYaml() {
-		throw new Error("Not implemented")
-		return "Not implemented"
-	}
-
-	getValue() {
-		throw new Error("Not implemented")
-	}
-	setValue(value) {
-		throw new Error("Not implemented")
 	}
 
 	focus(focusLast = false) {
@@ -95,11 +83,12 @@ export class YamlElement {
 /**
  * @type {import("./yaml-element").FocusableWrapper}
  */
-export class FocusableWrapper {
+export class FocusableWrapper extends Focusable {
 	/**
 	 * @param {{focus: () => void}} target
 	 */
 	constructor(target) {
+		super()
 		this.target = target
 	}
 

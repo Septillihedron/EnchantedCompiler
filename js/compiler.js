@@ -111,7 +111,7 @@ function compileArrayType(property) {
 
 /**
  * @param {specialType} typeName
- * @returns {(parent: YamlElement) => YamlElement<DocItemSection>}
+ * @returns {(parent: YamlElement) => DocItemSection}
  */
 export function compileSpecialType(typeName) {
 	switch (typeName) {
