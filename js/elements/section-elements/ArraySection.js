@@ -1,3 +1,5 @@
+import { addUndo } from "../../undo/undo-handler.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
 import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"
@@ -18,12 +20,13 @@ export class ArraySection extends YamlElement {
 		this.values = []
 		this.container = createElement(this, "ul")
 		this.container.classList.add("array")
+		this.addfn = addfn
 
 		this.addButton = createElement(this, "button")
 		this.addButton.innerText = "+"
 		this.addButton.onclick = () => {
-			const element = addfn(this)
-			this.addChild(element)
+			addUndo(new ArrayAddUndoEvent(this))
+			this.addNewValue()
 		}
 
 		this.children.unshift(new FocusableWrapper(this.addButton))
@@ -65,6 +68,11 @@ export class ArraySection extends YamlElement {
 		this.unfocus()
 	}
 
+	addNewValue() {
+		const element = this.addfn(this)
+		this.addChild(element)
+	}
+
 	/**
 	 * @param {YamlElement<unknown>} element
 	 */
@@ -95,6 +103,16 @@ export class ArraySection extends YamlElement {
 		this.focusIndex = this.children.length - 1
 	}
 
+	removeLastChild() {
+		this.children.pop()
+		this.values.pop()
+		this.container.lastChild.remove()
+		if (this.focusIndex > this.children.length) {
+			this.focusIndex--
+		}
+		if (this.focusIndex != -1) this.children[this.focusIndex].focus()
+	}
+
 	clearChildren() {
 		this.values = []
 		this.children = [new FocusableWrapper(this.addButton)]
@@ -107,4 +125,24 @@ export class ArraySection extends YamlElement {
  */
 export function arraySection(addfn) {
 	return parent => new ArraySection(parent, addfn)
+}
+
+class ArrayAddUndoEvent extends UndoEvent {
+	
+	/**
+	 * @param {ArraySection} emitter
+	 */
+	constructor(emitter, ) {
+		super()
+		this.emitter = emitter
+	}
+
+	undo() {
+		this.emitter.removeLastChild()
+	}
+
+	redo() {
+		this.emitter.addNewValue()
+	}
+
 }
