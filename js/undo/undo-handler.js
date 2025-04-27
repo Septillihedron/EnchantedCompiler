@@ -25,14 +25,30 @@ function truncateStack(stack, newLength) {
     stack.length = newLength
 }
 
-export function undo() {
+function undo() {
     if (undoStackPointer == -1) return
     undoStack[undoStackPointer].undo()
     undoStackPointer--
 }
 
-export function redo() {
+function redo() {
     if (undoStackPointer+1 >= undoStack.length) return
     undoStack[undoStackPointer+1].redo()
     undoStackPointer++
 }
+
+
+document.addEventListener("keydown", event => {
+    if (event.ctrlKey && event.key == "z") {
+        event.preventDefault()
+        undo()
+    }
+    if (event.ctrlKey && event.key == "y") {
+        event.preventDefault()
+        redo()
+    }
+    if (event.ctrlKey && event.shiftKey && event.key == "Z") {
+        event.preventDefault()
+        redo()
+    }
+}, { capture: true })
