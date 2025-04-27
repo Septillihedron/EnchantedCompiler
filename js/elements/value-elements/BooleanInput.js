@@ -58,18 +58,18 @@ export class BooleanInput extends YamlElement {
 class BooleanUndoEvent extends UndoEvent {
 
 	/**
-	 * @param {BooleanInput} emmiter
+	 * @param {BooleanInput} emitter
 	 */
-	constructor(emmiter) {
+	constructor(emitter) {
 		super()
-		this.emmiter = emmiter
+		this.emitter = emitter
 	}
 	
 	undo() {
-		this.emmiter.input.checked = !this.emmiter.input.checked
+		this.emitter.input.checked = !this.emitter.input.checked
 	}
 	redo() {
-		this.emmiter.input.checked = !this.emmiter.input.checked
+		this.emitter.input.checked = !this.emitter.input.checked
 	}
 
 }
