@@ -50,9 +50,15 @@ export class DocItemSection extends LazyLoadedSection {
 	 * @param {unknown} val
 	 */
 	setValue(val) {
-		if (val && typeof val === "object") {
-			const type = val[this.typeKey]
-			if (type) this.updateProperties(type)
+		if (val == null) return
+		if (!Array.isArray(val)) return
+		const typeEntry = val.find(([key, _]) => key == this.typeKey)
+		if (typeEntry) {
+			const type = typeEntry[1]
+			if (type) {
+				this.generateButton.click()
+				this.updateProperties(type)
+			}
 		}
 		super.setValue(val)
 	}

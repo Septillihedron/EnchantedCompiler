@@ -65,25 +65,19 @@ export class LazyLoadedSection extends Section {
 		super.toHTML(parent)
 	}
 
+	getValue() {
+		if (!this.generated) return null
+		return super.getValue()
+	}
+
 	/**
-	 * @param {unknown} val
+	 * @param {unknown} value
 	 */
-	setValue(val) {
-		if (val == null) return
-		if (typeof val !== "object") {
-			incorrectTypeSetError(val)
-			return
-		}
-		Object.entries(val)
-			.forEach(([key, val]) => {
-				let entry = this.findEntryByKey(key)
-				if (!entry) {
-					this.generateButton.click()
-					entry = this.findEntryByKey(key)
-				}
-				entry?.value.setValue(val)
-			})
-		this.unfocus()
+	setValue(value) {
+		if (value == null) return
+		if (!Array.isArray(value)) return
+		if (!this.generated) this.generateButton.click()
+		super.setValue(value)
 	}
 
 	clearChildren() {

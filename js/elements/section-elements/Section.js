@@ -1,14 +1,12 @@
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"
 import { indent } from "./indent.js"
-import { ArraySection } from "./ArraySection.js"
 import { Entry } from "./Entry.js"
 import { createElement } from "../createHtmlElement.js"
 
 /**
- * @implements {YamlElement<object>}
+ * @implements {YamlElement<[string, unknown][]>}
  */
-
 export class Section extends YamlElement {
 	/**
 	 * @param {YamlElement} parent 
@@ -37,23 +35,19 @@ export class Section extends YamlElement {
 	}
 
 	getValue() {
-		return Object.fromEntries(this.values.map(entry => entry.getValue()))
+		return /** @type {[string, unknown][]} */ (this.values.map(entry => entry.getValue()))
 	}
 
 	/**
-	 * @param {unknown} val
+	 * @param {unknown} value
 	 */
-	setValue(val) {
-		if (val == null) return
-		if (typeof val !== "object") {
-			incorrectTypeSetError(val)
-			return
-		}
-		Object.entries(val)
-			.forEach(([key, val]) => {
-				let entry = this.findEntryByKey(key)
-				entry?.value.setValue(val)
-			})
+	setValue(value) {
+		if (value == null) return
+		if (!Array.isArray(value)) return
+		value.forEach(([key, val]) => {
+			let entry = this.findEntryByKey(key)
+			entry?.value.setValue(val)
+		})
 		this.unfocus()
 	}
 

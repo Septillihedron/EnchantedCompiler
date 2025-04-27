@@ -9,6 +9,7 @@ const SAME_KEY_ERROR = "Duplicate object keys"
 
 
 export class PropertiesMap extends Section {
+
 	/**
 	 * @param {(name: string | number) => (parent: YamlElement) => Entry<Input, ?>} addfn
 	 */
@@ -25,21 +26,16 @@ export class PropertiesMap extends Section {
 	}
 
 	/**
-	 * @param {unknown} val
+	 * @param {unknown} value
 	 */
-	setValue(val) {
-		if (!val) return
-		if (typeof val !== "object") return
-
-		Object.entries(val)
-			.forEach(([key, val]) => {
-				let entry = this.values.find(entry => entry.key.getValue() === key)
-				if (!entry) {
-					entry = this.addfn(key)(this)
-					this.addChild(() => entry)
-				}
-				entry?.setValue([key, val])
-			})
+	setValue(value) {
+		if (!value) return
+		if (!Array.isArray(value)) return
+		value.forEach(([key, val]) => {
+			const entry = this.addfn(key)(this)
+			this.addChild(() => entry)
+			entry.setValue([key, val])
+		})
 		this.unfocus()
 	}
 
