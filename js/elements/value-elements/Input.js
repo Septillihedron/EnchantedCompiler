@@ -1,5 +1,7 @@
 import { YamlElement } from "../yaml-element.js"
 import { createElement } from "../createHtmlElement.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
+import { addUndo } from "../../undo/undo-handler.js"
 
 export const errorLevels = Object.freeze({
 	none: 0,
@@ -28,6 +30,8 @@ export const floatRegex = /^([\+\-]?((\d+(\.\d+)?)|(\.inf)))$/
 
 export class Input extends YamlElement {
 
+	previousValue
+
 	/**
 	 * @type {((val: string) => InputError?)[]}
 	 */
@@ -41,10 +45,19 @@ export class Input extends YamlElement {
 		super(parent)
 		this.input = createElement(this, "span")
 		this.input.contentEditable = 'true'
-		if (def != undefined) this.input.innerText = def
+		if (def != undefined) {
+			this.input.innerText = def
+			this.previousValue = def
+		}
 		this.input.addEventListener("focus", () => {
-			this.parent?.setFocus(this)
+			this.parent.setFocus(this)
 			this.focus()
+		})
+		this.input.addEventListener("beforeinput", event => {
+			this.previousValue = this.getValue()
+		})
+		this.input.addEventListener("input", event => {
+			addUndo(new InputUndoEvent(this, this.previousValue, this.getValue()))
 		})
 		this.validators = []
 		this.addChangedListener(() => this.validate())
@@ -164,5 +177,29 @@ export function numInput(def) {
 		})
 		return elem
 	}
+}
+
+class InputUndoEvent extends UndoEvent {
+	
+	/**
+	 * @param {Input} emitter
+	 * @param {string} prev
+	 * @param {string} current
+	 */
+	constructor(emitter, prev, current) {
+		super()
+		this.emitter = emitter
+		this.prev = prev
+		this.current = current
+	}
+
+	undo() {
+		this.emitter.input.innerText = this.prev
+	}
+
+	redo() {
+		this.emitter.input.innerText = this.current
+	}
+
 }
 
