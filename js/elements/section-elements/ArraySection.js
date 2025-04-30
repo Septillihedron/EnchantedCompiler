@@ -75,39 +75,63 @@ export class ArraySection extends YamlElement {
 
 	/**
 	 * @param {YamlElement<unknown>} element
+	 * @param {number} [index=null] 
 	 */
-	addChild(element) {
+	addChild(element, index=null) {
 		const li = createElement(this, "li")
-		this.container.appendChild(li)
 
 		element.toHTML(li)
-		this.values.push(element)
-		this.children.push(element)
+		if (index == null) {
+			this.container.appendChild(li)
+			this.values.push(element)
+			this.children.push(element)
+		} else {
+			this.container.children[index].insertAdjacentElement("afterend", li)
+			this.values.splice(index, 0, element)
+			this.children.splice(index, 0, element)
+		}
 
-		const removeButton = createElement(this, "button")
-		removeButton.innerText = "x"
-		removeButton.addEventListener("click", () => {
-			const elementIndex = this.children.findIndex(child => child == element)
-			this.children.splice(elementIndex, 1)
-			this.values.splice(elementIndex-1, 1)
-			this.container.removeChild(li)
-			if (this.focusIndex >= elementIndex) {
-				this.focusIndex--
-			}
-			if (this.focusIndex != -1) this.children[this.focusIndex].focus()
-		})
+		const removeButton = this.makeRemoveButton(element)
 		li.append(removeButton)
 
 		this.children[this.focusIndex]?.unfocus()
 		element.focus()
-		this.focusIndex = this.children.length - 1
+	}
+
+	/**
+	 * @param {YamlElement<unknown>} element
+	 */
+	makeRemoveButton(element) {
+		const removeButton = createElement(this, "button")
+		removeButton.innerText = "x"
+		removeButton.addEventListener("click", () => {
+			this.removeChild(element)
+		})
+		return removeButton
+	}
+
+	/**
+	 * @param {YamlElement<unknown>} element
+	 * @param {boolean} [fromUndo=false] 
+	 */
+	removeChild(element, fromUndo = false) {
+		const elementIndex = this.values.findIndex(child => child == element)
+		if (elementIndex == -1) return
+		this.children.splice(elementIndex + 1, 1)
+		const removed = this.values.splice(elementIndex, 1)[0]
+		this.container.children[elementIndex].remove()
+		if (this.focusIndex-1 >= elementIndex) {
+			this.focusIndex--
+			if (this.focusIndex != -1) this.children[this.focusIndex].focus()
+		}
+		if (!fromUndo) addUndo(new ArrayRemoveUndoEvent(this, removed, elementIndex))
 	}
 
 	removeLastChild() {
 		this.children.pop()
 		this.values.pop()
 		this.container.lastChild.remove()
-		if (this.focusIndex > this.children.length) {
+		if (this.focusIndex >= this.children.length) {
 			this.focusIndex--
 		}
 		if (this.focusIndex != -1) this.children[this.focusIndex].focus()
@@ -132,7 +156,7 @@ class ArrayAddUndoEvent extends UndoEvent {
 	/**
 	 * @param {ArraySection} emitter
 	 */
-	constructor(emitter, ) {
+	constructor(emitter) {
 		super()
 		this.emitter = emitter
 	}
@@ -145,4 +169,26 @@ class ArrayAddUndoEvent extends UndoEvent {
 		this.emitter.addNewValue()
 	}
 
+}
+
+class ArrayRemoveUndoEvent extends UndoEvent {
+	/**
+	 * @param {ArraySection} emitter
+	 * @param {YamlElement} removed
+	 * @param {number} index
+	 */
+	constructor(emitter, removed, index) {
+		super()
+		this.emitter = emitter
+		this.removed = removed
+		this.index = index
+	}
+
+	undo() {
+		this.emitter.addChild(this.removed, this.index)
+	}
+
+	redo() {
+		this.emitter.removeChild(this.removed)
+	}
 }
