@@ -56,7 +56,7 @@ export class DocItemSection extends LazyLoadedSection {
 		if (typeEntry) {
 			const type = typeEntry[1]
 			if (type) {
-				this.generateButton.click()
+				this.generateEntries()
 				this.updateProperties(type)
 			}
 		}
