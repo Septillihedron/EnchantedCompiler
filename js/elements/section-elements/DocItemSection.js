@@ -21,7 +21,6 @@ export class DocItemSection extends LazyLoadedSection {
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
 		this.typeEntry = stringKeyEntry(this.typeKey, typeInput, "The type")(this)
 		this.generator = () => [() => this.typeEntry, ...this.extraEntriesGenerator]
-		this.unfocus()
 
 		this.typeEntry.value.addChangedListener(this.updateProperties.bind(this))
 	}
@@ -44,6 +43,7 @@ export class DocItemSection extends LazyLoadedSection {
 		if (newDocItem === undefined) return
 
 		this.compileDocItem(newDocItem)
+		if (this.focusIndex != -1) this.focusNext()
 	}
 
 	/**
@@ -85,7 +85,6 @@ export class DocItemSection extends LazyLoadedSection {
 				})
 		}
 		this.extraEntriesGenerator.forEach(entry => this.addChild(entry))
-		this.focusNext()
 	}
 
 	/**
