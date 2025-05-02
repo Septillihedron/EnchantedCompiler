@@ -48,7 +48,6 @@ export class Section extends YamlElement {
 			let entry = this.findEntryByKey(key)
 			entry?.value.setValue(val)
 		})
-		this.unfocus()
 	}
 
 	findEntryByKey(key) {
@@ -63,10 +62,6 @@ export class Section extends YamlElement {
 		this.values.push(constructedElement)
 		this.children.push(constructedElement)
 		constructedElement.toHTML(this.container)
-
-		this.children[this.focusIndex]?.unfocus()
-		constructedElement.focus()
-		this.focusIndex = this.children.length - 1
 	}
 
 	clearChildren() {

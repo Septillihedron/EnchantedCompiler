@@ -85,7 +85,7 @@ export class DocItemSection extends LazyLoadedSection {
 				})
 		}
 		this.extraEntriesGenerator.forEach(entry => this.addChild(entry))
-		this.focus()
+		this.focusNext()
 	}
 
 	/**

@@ -153,14 +153,14 @@ export class EnumInput extends Input {
 	}
 
 	focus() {
-		super.focus()
 		this.autocompleteWindow.classList.add("active")
 		this.createValueListMenu()
-		return true
+		return super.focus()
 	}
 	unfocus() {
 		this.autocompleteWindow.classList.remove("active")
 		this.autocompleteMenu.replaceChildren()
+		super.unfocus()
 	}
 
 }

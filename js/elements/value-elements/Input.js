@@ -88,7 +88,12 @@ export class Input extends YamlElement {
 
 	focus() {
 		this.input.focus()
+		this.focusIndex = 1
 		return true
+	}
+
+	unfocus() {
+		this.focusIndex = -1
 	}
 
 	/**

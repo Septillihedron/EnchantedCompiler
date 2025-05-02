@@ -37,8 +37,7 @@ export class LazyLoadedSection extends Section {
 	generateEntries() {
 		this.clearChildren()
 		this.generator().forEach(this.addChild.bind(this))
-		this.focus()
-		this.focusNext()
+		this.setFocus(this.values[0])
 		this.generateButton.innerText = "x"
 	}
 
@@ -47,7 +46,7 @@ export class LazyLoadedSection extends Section {
 		this.generateButton.innerText = "+"
 	}
 
-	load() {
+	load() { 
 		if (!this.generated) {
 			this.generateEntries()
 		}
