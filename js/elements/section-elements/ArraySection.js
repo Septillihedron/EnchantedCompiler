@@ -27,6 +27,9 @@ export class ArraySection extends YamlElement {
 		this.addButton.onclick = () => {
 			addUndo(new ArrayAddUndoEvent(this))
 			this.addNewValue()
+			if (this.focusIndex != -1) {
+				this.focus(true)
+			}
 		}
 
 		this.children.unshift(new FocusableWrapper(this.addButton))
@@ -93,9 +96,6 @@ export class ArraySection extends YamlElement {
 
 		const removeButton = this.makeRemoveButton(element)
 		li.append(removeButton)
-
-		this.children[this.focusIndex]?.unfocus()
-		element.focus()
 	}
 
 	/**
