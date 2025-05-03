@@ -38,6 +38,11 @@ export class Input extends YamlElement {
 	validators
 
 	/**
+	 * @type {((value: string) => void)[]}
+	 */
+	valueChangedListeners = []
+
+	/**
 	 * @param {YamlElement<?>} parent 
 	 * @param {string | undefined | null} def
 	 */
@@ -128,9 +133,15 @@ export class Input extends YamlElement {
 	 * @param {(value: string) => void} listener
 	 */
 	addChangedListener(listener) {
+		this.valueChangedListeners.push(listener)
 		this.input.addEventListener("input", (e) => {
 			listener(this.input.innerText)
 		})
+	}
+
+	changeValue(newValue) {
+		this.input.innerText = newValue
+		this.valueChangedListeners.forEach(listener => listener(newValue))
 	}
 
 	/**
@@ -199,11 +210,11 @@ class InputUndoEvent extends UndoEvent {
 	}
 
 	undo() {
-		this.emitter.input.innerText = this.prev
+		this.emitter.changeValue(this.prev)
 	}
 
 	redo() {
-		this.emitter.input.innerText = this.current
+		this.emitter.changeValue(this.current)
 	}
 
 }
