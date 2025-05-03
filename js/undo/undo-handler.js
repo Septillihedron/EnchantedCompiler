@@ -52,3 +52,5 @@ document.addEventListener("keydown", event => {
         redo()
     }
 }, { capture: true })
+
+globalThis.undoStack = undoStack

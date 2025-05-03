@@ -81,18 +81,17 @@ export class ArraySection extends YamlElement {
 	 * @param {number} [index=null] 
 	 */
 	addChild(element, index=null) {
+		if (index == null) index = this.values.length
 		const li = createElement(this, "li")
 
 		element.toHTML(li)
-		if (index == null) {
+		if (index == this.values.length) {
 			this.container.appendChild(li)
-			this.values.push(element)
-			this.children.push(element)
 		} else {
-			this.container.children[index].insertAdjacentElement("afterend", li)
-			this.values.splice(index, 0, element)
-			this.children.splice(index, 0, element)
+			this.container.children[index].insertAdjacentElement("beforebegin", li)
 		}
+		this.values.splice(index, 0, element)
+		this.children.splice(index+1, 0, element)
 
 		const removeButton = this.makeRemoveButton(element)
 		li.append(removeButton)
