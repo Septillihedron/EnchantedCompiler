@@ -24,9 +24,11 @@ export class LazyLoadedSection extends Section {
 		button.innerText = "+"
 
 		button.addEventListener("click", () => {
-			if (!this.generated) this.generateEntries()
+			if (!this.generated) {
+				this.generateEntries()
+				this.setFocus(this.values[0])
+			}
 			else this.removeEntries()
-			this.generated = !this.generated
 		})
 
 		this.children.unshift(new FocusableWrapper(button))
@@ -37,24 +39,22 @@ export class LazyLoadedSection extends Section {
 	generateEntries() {
 		this.clearChildren()
 		this.generator().forEach(this.addChild.bind(this))
-		this.focus()
-		this.focusNext()
 		this.generateButton.innerText = "x"
+		this.generated = true
 	}
 
 	removeEntries() {
 		this.clearChildren()
 		this.generateButton.innerText = "+"
+		this.generated = false
 	}
 
-	load() {
+	load() { 
 		if (!this.generated) {
 			this.generateEntries()
 		}
 		this.generateButton.classList.add("hidden")
 		this.children.shift()
-		// compensates for the shift
-		this.focusIndex--
 	}
 
 	/**
@@ -76,7 +76,7 @@ export class LazyLoadedSection extends Section {
 	setValue(value) {
 		if (value == null) return
 		if (!Array.isArray(value)) return
-		if (!this.generated) this.generateButton.click()
+		if (!this.generated) this.generateEntries()
 		super.setValue(value)
 	}
 
