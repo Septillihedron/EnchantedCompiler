@@ -65,6 +65,7 @@ export class PropertiesMap extends Section {
 			}
 			if (this.focusIndex != -1) this.children[this.focusIndex].focus()
 		})
+		entry.addRemoveButton(removeButton)
 	}
 
 	/**
