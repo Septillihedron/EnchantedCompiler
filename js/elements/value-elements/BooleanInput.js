@@ -44,6 +44,8 @@ export class BooleanInput extends YamlElement {
 		this.input.checked = val
 	}
 
+	isInline() { return true }
+
 	focus() {
 		this.input.focus()
 		return true

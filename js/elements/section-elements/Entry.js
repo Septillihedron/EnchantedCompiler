@@ -46,7 +46,12 @@ export class Entry extends YamlElement {
 	 * @param {HTMLElement} button
 	 */
 	addRemoveButton(button) {
-		this.colon.textElement.replaceWith(this.colon.textElement, button)
+		button.classList.add("entry-remove-button")
+		if (this.value.isInline()) {
+			this.container.appendChild(button)
+		} else {
+			this.colon.textElement.replaceWith(this.colon.textElement, button)
+		}
 	}
 
 	/**
@@ -76,6 +81,9 @@ export class Entry extends YamlElement {
 		this.key.setValue(val[0])
 		this.value.setValue(val[1])
 	}
+
+	isInline() { return this.key.isInline() && this.value.isInline() }
+
 }
 
 /**

@@ -86,6 +86,8 @@ export class Input extends YamlElement {
 		this.validate()
 	}
 
+	isInline() { return true }
+
 	focus() {
 		this.input.focus()
 		this.focusIndex = 1

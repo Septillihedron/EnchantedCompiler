@@ -65,6 +65,8 @@ export class ArraySection extends YamlElement {
 		this.unfocus()
 	}
 
+	isInline() { return false }
+
 	/**
 	 * @param {YamlElement<unknown>} element
 	 */
