@@ -1,3 +1,5 @@
+import { addUndo } from "../../undo/undo-handler.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
 import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
@@ -26,9 +28,12 @@ export class LazyLoadedSection extends Section {
 		button.addEventListener("click", () => {
 			if (!this.generated) {
 				this.generateEntries()
+				addUndo(new LazyLoadedSection_GenerateUndoEvent(this))
 				this.setFocus(this.values[0])
+			} else {
+				addUndo(new LazyLoadedSection_RemoveUndoEvent(this, this.values))
+				this.removeEntries()
 			}
-			else this.removeEntries()
 		})
 
 		this.children.unshift(new FocusableWrapper(button))
@@ -37,7 +42,6 @@ export class LazyLoadedSection extends Section {
 	}
 
 	generateEntries() {
-		this.clearChildren()
 		this.generator().forEach(this.addChild.bind(this))
 		this.generateButton.innerText = "x"
 		this.generated = true
@@ -107,4 +111,47 @@ export function loadIfLazyLoadedSection(maybeLazyLoadedSecction) {
 		}
 		return value
 	}
+}
+
+class LazyLoadedSection_GenerateUndoEvent extends UndoEvent {
+
+	/**
+	 * @param {LazyLoadedSection} emitter
+	 */
+	constructor(emitter) {
+		super()
+		this.emitter = emitter
+	}
+
+	redo() {
+		this.emitter.generateEntries()
+	}
+	undo() {
+		this.emitter.removeEntries()
+	}
+	
+}
+
+class LazyLoadedSection_RemoveUndoEvent extends UndoEvent {
+
+	/**
+	 * @param {LazyLoadedSection} emitter
+	 * @param {Entry[]} removed 
+	 */
+	constructor(emitter, removed) {
+		super()
+		this.emitter = emitter
+		this.removed = removed
+	}
+
+	redo() {
+		this.emitter.removeEntries()
+	}
+	undo() {
+		this.emitter.clearChildren()
+		this.removed.forEach(entry => this.emitter.addChild(() => entry))
+		this.emitter.generateButton.innerText = "x"
+		this.emitter.generated = true
+	}
+
 }
