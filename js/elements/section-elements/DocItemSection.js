@@ -1,8 +1,9 @@
 import { compileProperty } from "../../compiler.js"
 import { docs } from "../../schema.js"
-import { addUndo } from "../../undo/undo-handler.js"
+import { addUndo, replaceUndoIf } from "../../undo/undo-handler.js"
 import { UndoEvent } from "../../undo/UndoEvent.js"
 import { construct } from "../constructor-operators.js"
+import { InputUndoEvent } from "../value-elements.js"
 import { EnumInput } from "../value-elements/EnumInput.js"
 import { YamlElement } from "../yaml-element.js"
 import { entry, Entry, stringKeyEntry } from "./Entry.js"
@@ -28,8 +29,21 @@ export class DocItemSection extends LazyLoadedSection {
 		}
 
 		this.typeEntry.value.addChangedListener((newValue, prevValue) => {
-			addUndo(new DocItemSection_ChangeUndoEvent(this, prevValue, this.values, newValue))
+			this.createUndo(prevValue, newValue)
 			this.updateProperties(newValue)
+		})
+	}
+
+	/**
+	 * @param {string} prevValue
+	 * @param {string} newValue
+	 */
+	createUndo(prevValue, newValue) {
+		const undoEvent = new DocItemSection_ChangeUndoEvent(this, prevValue, this.values, newValue)
+		replaceUndoIf(undoEvent, (lastUndo) => {
+			if (!(lastUndo instanceof InputUndoEvent)) return false
+			if (lastUndo.emitter == this.typeEntry.value) return true
+			return false
 		})
 	}
 
