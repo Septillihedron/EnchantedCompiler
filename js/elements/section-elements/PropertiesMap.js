@@ -1,3 +1,5 @@
+import { addUndo } from "../../undo/undo-handler.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
 import { applyFunctionToConstructor as applyFunctionsToConstructor } from "../constructor-operators.js"
 import { createElement } from "../createHtmlElement.js"
 import { errorLevels, Input } from "../value-elements.js"
@@ -19,10 +21,14 @@ export class PropertiesMap extends Section {
 		this.addButton = createElement(this, "button")
 		this.addButton.innerText = "+"
 		this.addButton.onclick = () => {
-			const element = addfn(this.values.length)
-			this.addChild(element)
+			this.addNewEntry()
 		}
 		this.children.unshift(new FocusableWrapper(this.addButton))
+	}
+
+	addNewEntry() {
+		const element = this.addfn(this.values.length)
+		this.addChild(element)
 	}
 
 	/**
@@ -41,12 +47,13 @@ export class PropertiesMap extends Section {
 
 	/**
 	 * @param {(parent: YamlElement) => Entry<Input, ?>} element 
+	 * @param {number} [index=null] 
 	 */
-	addChild(element) {
+	addChild(element, index=null) {
 		super.addChild(applyFunctionsToConstructor(element, 
 			this.addRemoveButtonToEntry.bind(this), 
 			this.addNoSameKeyValidator.bind(this)
-		))
+		), index)
 	}
 
 	/**
@@ -55,17 +62,22 @@ export class PropertiesMap extends Section {
 	addRemoveButtonToEntry(entry) {
 		const removeButton = createElement(this, "button")
 		removeButton.innerText = "x"
+		const elementIndex = this.values.length
 		removeButton.addEventListener("click", () => {
-			const elementIndex = this.children.findIndex(child => entry == child)
-			this.children.splice(elementIndex, 1)
-			this.values.splice(elementIndex-1, 1)
-			this.container.removeChild(entry.container)
-			if (this.focusIndex >= elementIndex) {
-				this.focusIndex--
-			}
-			if (this.focusIndex != -1) this.children[this.focusIndex].focus()
+			this.removeChild(entry)
+			addUndo(new PropertiesMap_RemoveUndoEvent(this, entry, elementIndex))
 		})
 		entry.addRemoveButton(removeButton)
+	}
+
+	removeLastChild() {
+		this.children.pop()
+		this.values.pop()
+		this.container.lastChild.remove()
+		if (this.focusIndex >= this.children.length) {
+			this.focusIndex--
+		}
+		if (this.focusIndex != -1) this.children[this.focusIndex].focus()
 	}
 
 	/**
@@ -109,4 +121,46 @@ export class PropertiesMap extends Section {
  */
 export function propertiesMap(addfn) {
 	return parent => new PropertiesMap(parent, addfn)
+}
+
+class PropertiesMap_AddUndoEvent extends UndoEvent {
+	
+	/**
+	 * @param {PropertiesMap} emitter
+	 */
+	constructor(emitter) {
+		super()
+		this.emitter = emitter
+	}
+
+	undo() {
+		this.emitter.removeLastChild()
+	}
+
+	redo() {
+		this.emitter.addNewEntry()
+	}
+
+}
+
+class PropertiesMap_RemoveUndoEvent extends UndoEvent {
+	/**
+	 * @param {PropertiesMap} emitter
+	 * @param {Entry} removed
+	 * @param {number} index
+	 */
+	constructor(emitter, removed, index) {
+		super()
+		this.emitter = emitter
+		this.removed = removed
+		this.index = index
+	}
+
+	undo() {
+		this.emitter.addChild(() => this.removed, this.index)
+	}
+
+	redo() {
+		this.emitter.removeChild(this.removed)
+	}
 }

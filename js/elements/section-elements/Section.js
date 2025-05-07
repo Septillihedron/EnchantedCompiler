@@ -59,13 +59,39 @@ export class Section extends YamlElement {
 	}
 
 	/**
-	 * @param {(parent: YamlElement) => Entry} element
+	 * @param {Entry} child
 	 */
-	addChild(element) {
+	removeChild(child) {
+		const elementIndex = this.children.findIndex(entry => child == entry)
+		this.children.splice(elementIndex, 1)
+		this.values.splice(elementIndex-1, 1)
+		this.container.removeChild(child.container)
+		if (this.focusIndex >= elementIndex) {
+			this.focusIndex--
+		}
+		if (this.focusIndex != -1) this.children[this.focusIndex].focus()
+	}
+
+	/**
+	 * @param {(parent: YamlElement) => Entry} element
+	 * @param {number} [index=null] 
+	 */
+	addChild(element, index=null) {
+		if (index == null) index = this.values.length
+		
 		const constructedElement = element(this)
-		this.values.push(constructedElement)
-		this.children.push(constructedElement)
-		constructedElement.toHTML(this.container)
+
+		const elementContainer = document.createElement("div")
+		elementContainer.style.display = "inline"
+		constructedElement.toHTML(elementContainer)
+
+		if (index == this.values.length) {
+			this.container.appendChild(elementContainer)
+		} else {
+			this.container.children[index].insertAdjacentElement("beforebegin", elementContainer)
+		}
+		this.values.splice(index, 0, constructedElement)
+		this.children.splice(index+1, 0, constructedElement)
 	}
 
 	clearChildren() {
