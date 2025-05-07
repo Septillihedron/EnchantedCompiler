@@ -114,7 +114,7 @@ export function docItemSection(category, extraEntries = () => []) {
 	return parent => new DocItemSection(parent, category, extraEntries)
 }
 
-class DocItemSection_ChangeUndoEvent extends UndoEvent {
+export class DocItemSection_ChangeUndoEvent extends UndoEvent {
 
 	/**
 	 * @param {DocItemSection} emitter

@@ -114,7 +114,7 @@ export function propertiesMap(addfn) {
 	return parent => new PropertiesMap(parent, addfn)
 }
 
-class PropertiesMap_AddUndoEvent extends UndoEvent {
+export class PropertiesMap_AddUndoEvent extends UndoEvent {
 	
 	/**
 	 * @param {PropertiesMap} emitter
@@ -134,7 +134,7 @@ class PropertiesMap_AddUndoEvent extends UndoEvent {
 
 }
 
-class PropertiesMap_RemoveUndoEvent extends UndoEvent {
+export class PropertiesMap_RemoveUndoEvent extends UndoEvent {
 	/**
 	 * @param {PropertiesMap} emitter
 	 * @param {Entry} removed

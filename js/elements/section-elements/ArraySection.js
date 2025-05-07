@@ -151,7 +151,7 @@ export function arraySection(addfn) {
 	return parent => new ArraySection(parent, addfn)
 }
 
-class ArrayAddUndoEvent extends UndoEvent {
+export class ArrayAddUndoEvent extends UndoEvent {
 	
 	/**
 	 * @param {ArraySection} emitter
@@ -171,7 +171,7 @@ class ArrayAddUndoEvent extends UndoEvent {
 
 }
 
-class ArrayRemoveUndoEvent extends UndoEvent {
+export class ArrayRemoveUndoEvent extends UndoEvent {
 	/**
 	 * @param {ArraySection} emitter
 	 * @param {YamlElement} removed

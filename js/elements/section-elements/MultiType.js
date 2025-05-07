@@ -101,7 +101,7 @@ export class MultiType extends YamlElement {
 	}
 }
 
-class MultiType_ChangeTypeUndoEvent extends UndoEvent {
+export class MultiType_ChangeTypeUndoEvent extends UndoEvent {
 
 	/**
 	 * @param {MultiType} emitter

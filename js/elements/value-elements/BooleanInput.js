@@ -54,7 +54,7 @@ export class BooleanInput extends YamlElement {
 
 }
 
-class BooleanUndoEvent extends UndoEvent {
+export class BooleanUndoEvent extends UndoEvent {
 
 	/**
 	 * @param {BooleanInput} emitter

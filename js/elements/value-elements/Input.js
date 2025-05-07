@@ -198,7 +198,7 @@ export function numInput(def) {
 	}
 }
 
-class InputUndoEvent extends UndoEvent {
+export class InputUndoEvent extends UndoEvent {
 	
 	/**
 	 * @param {Input} emitter

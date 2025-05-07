@@ -116,7 +116,7 @@ export function loadIfLazyLoadedSection(maybeLazyLoadedSecction) {
 	}
 }
 
-class LazyLoadedSection_GenerateUndoEvent extends UndoEvent {
+export class LazyLoadedSection_GenerateUndoEvent extends UndoEvent {
 
 	/**
 	 * @param {LazyLoadedSection} emitter
@@ -135,7 +135,7 @@ class LazyLoadedSection_GenerateUndoEvent extends UndoEvent {
 	
 }
 
-class LazyLoadedSection_RemoveUndoEvent extends UndoEvent {
+export class LazyLoadedSection_RemoveUndoEvent extends UndoEvent {
 
 	/**
 	 * @param {LazyLoadedSection} emitter
