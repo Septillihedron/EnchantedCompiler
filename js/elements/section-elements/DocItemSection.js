@@ -1,5 +1,6 @@
 import { compileProperty } from "../../compiler.js"
 import { docs } from "../../schema.js"
+import { construct } from "../constructor-operators.js"
 import { EnumInput } from "../value-elements/EnumInput.js"
 import { YamlElement } from "../yaml-element.js"
 import { entry, Entry, stringKeyEntry } from "./Entry.js"
@@ -15,12 +16,14 @@ export class DocItemSection extends LazyLoadedSection {
 	 */
 	constructor(parent, category, extraEntries = () => []) {
 		super(parent, () => [])
-		this.extraEntriesGenerator = extraEntries().map(child => () => child(this))
 		this.category = category
 		this.typeKey = (category === "skills") ? "skill" : "type"
 		const typeInput = EnumInput.createDescripted(this.createDescriptedTypes(docs[category]))
 		this.typeEntry = stringKeyEntry(this.typeKey, typeInput, "The type")(this)
-		this.generator = () => [() => this.typeEntry, ...this.extraEntriesGenerator]
+		this.generator = () => {
+			this.extraEntries = extraEntries().map(construct.bind(this))
+			return [() => this.typeEntry, ...this.extraEntries]
+		}
 
 		this.typeEntry.value.addChangedListener(this.updateProperties.bind(this))
 	}
@@ -43,7 +46,6 @@ export class DocItemSection extends LazyLoadedSection {
 		if (newDocItem === undefined) return
 
 		this.compileDocItem(newDocItem)
-		if (this.focusIndex != -1) this.focusNext()
 	}
 
 	/**
@@ -84,7 +86,7 @@ export class DocItemSection extends LazyLoadedSection {
 					this.addChild(entry)
 				})
 		}
-		this.extraEntriesGenerator.forEach(entry => this.addChild(entry))
+		this.extraEntries.forEach(entry => this.addChild(entry))
 	}
 
 	/**
