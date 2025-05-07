@@ -109,7 +109,7 @@ li.entry-container::marker {
 }
 
 .autocomplete {
-	display: flex;
+	display: inline-flex;
 	height: 0;
 	position: absolute;
 	background-color: transparent;
