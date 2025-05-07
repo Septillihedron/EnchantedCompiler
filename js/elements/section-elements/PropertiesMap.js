@@ -22,13 +22,17 @@ export class PropertiesMap extends Section {
 		this.addButton.innerText = "+"
 		this.addButton.onclick = () => {
 			this.addNewEntry()
+			addUndo(new PropertiesMap_AddUndoEvent(this))
 		}
 		this.children.unshift(new FocusableWrapper(this.addButton))
 	}
 
 	addNewEntry() {
 		const element = this.addfn(this.values.length)
-		this.addChild(element)
+		return this.addChild(applyFunctionsToConstructor(element, 
+			this.addRemoveButtonToEntry.bind(this), 
+			this.addNoSameKeyValidator.bind(this)
+		))
 	}
 
 	/**
@@ -38,22 +42,10 @@ export class PropertiesMap extends Section {
 		if (!value) return
 		if (!Array.isArray(value)) return
 		value.forEach(([key, val]) => {
-			const entry = this.addfn(key)(this)
-			this.addChild(() => entry)
+			const entry = this.addNewEntry()
 			entry.setValue([key, val])
 		})
 		this.unfocus()
-	}
-
-	/**
-	 * @param {(parent: YamlElement) => Entry<Input, ?>} element 
-	 * @param {number} [index=null] 
-	 */
-	addChild(element, index=null) {
-		super.addChild(applyFunctionsToConstructor(element, 
-			this.addRemoveButtonToEntry.bind(this), 
-			this.addNoSameKeyValidator.bind(this)
-		), index)
 	}
 
 	/**
@@ -62,10 +54,10 @@ export class PropertiesMap extends Section {
 	addRemoveButtonToEntry(entry) {
 		const removeButton = createElement(this, "button")
 		removeButton.innerText = "x"
-		const elementIndex = this.values.length
 		removeButton.addEventListener("click", () => {
-			this.removeChild(entry)
+			const elementIndex = this.values.findIndex(child => entry == child)
 			addUndo(new PropertiesMap_RemoveUndoEvent(this, entry, elementIndex))
+			this.removeChild(entry)
 		})
 		entry.addRemoveButton(removeButton)
 	}

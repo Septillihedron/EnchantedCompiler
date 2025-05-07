@@ -88,6 +88,8 @@ export class Section extends YamlElement {
 		}
 		this.values.splice(index, 0, constructedElement)
 		this.children.splice(index+1, 0, constructedElement)
+
+		return constructedElement
 	}
 
 	clearChildren() {

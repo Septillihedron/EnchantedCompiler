@@ -73,7 +73,7 @@ export class YamlElement extends Focusable {
 		if (this.focusIndex === -1) {
 			this.parent?.setFocus(this)
 		} else {
-			this.children[this.focusIndex].unfocus()
+			this.children[this.focusIndex]?.unfocus()
 		}
 		this.focusIndex = this.children.indexOf(element)
 		return true
