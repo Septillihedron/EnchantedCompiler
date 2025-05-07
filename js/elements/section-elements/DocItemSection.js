@@ -1,5 +1,7 @@
 import { compileProperty } from "../../compiler.js"
 import { docs } from "../../schema.js"
+import { addUndo } from "../../undo/undo-handler.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
 import { construct } from "../constructor-operators.js"
 import { EnumInput } from "../value-elements/EnumInput.js"
 import { YamlElement } from "../yaml-element.js"
@@ -25,7 +27,10 @@ export class DocItemSection extends LazyLoadedSection {
 			return [() => this.typeEntry, ...this.extraEntries]
 		}
 
-		this.typeEntry.value.addChangedListener(this.updateProperties.bind(this))
+		this.typeEntry.value.addChangedListener((newValue, prevValue) => {
+			addUndo(new DocItemSection_ChangeUndoEvent(this, prevValue, this.values, newValue))
+			this.updateProperties(newValue)
+		})
 	}
 
 	/**
@@ -107,4 +112,32 @@ export class DocItemSection extends LazyLoadedSection {
  */
 export function docItemSection(category, extraEntries = () => []) {
 	return parent => new DocItemSection(parent, category, extraEntries)
+}
+
+class DocItemSection_ChangeUndoEvent extends UndoEvent {
+
+	/**
+	 * @param {DocItemSection} emitter
+	 * @param {string} prevType
+	 * @param {Entry[]} removed
+	 * @param {string} nextType
+	 */
+	constructor(emitter, prevType, removed, nextType) {
+		super()
+		this.emitter = emitter
+		this.prevType = prevType
+		this.removed = removed
+		this.nextType = nextType
+	}
+
+	redo() {
+		this.emitter.typeEntry.value.changeValue(this.nextType, false)
+		this.emitter.updateProperties(this.nextType)
+	}
+	undo() {
+		this.emitter.typeEntry.value.changeValue(this.prevType, false)
+		this.emitter.clearChildren()
+		this.removed.forEach(child => this.emitter.addChild(() => child))
+	}
+
 }

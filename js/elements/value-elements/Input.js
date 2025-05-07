@@ -38,7 +38,7 @@ export class Input extends YamlElement {
 	validators
 
 	/**
-	 * @type {((value: string) => void)[]}
+	 * @type {((value: string, previousValue: string) => void)[]}
 	 */
 	valueChangedListeners = []
 
@@ -129,18 +129,22 @@ export class Input extends YamlElement {
 	}
 
 	/**
-	 * @param {(value: string) => void} listener
+	 * @param {(value: string, prevValue: string) => void} listener
 	 */
 	addChangedListener(listener) {
 		this.valueChangedListeners.push(listener)
 		this.input.addEventListener("input", (e) => {
-			listener(this.input.innerText)
+			listener(this.input.innerText, this.previousValue)
 		})
 	}
 
-	changeValue(newValue) {
+	/**
+	 * @param {string} newValue
+	 */
+	changeValue(newValue, makeEvents=true) {
+		this.previousValue = this.getValue()
 		this.input.innerText = newValue
-		this.valueChangedListeners.forEach(listener => listener(newValue))
+		if (makeEvents) this.valueChangedListeners.forEach(listener => listener(newValue, this.previousValue))
 	}
 
 	/**
