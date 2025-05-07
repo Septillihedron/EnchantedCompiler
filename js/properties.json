@@ -3476,6 +3476,30 @@
 			}
 		},
 		// SuperheroesPlusUltra exclusives
+		"CUSTOM": {
+			"description": "A custom skill",
+			"exclusiveTo": "SuperheroesPlusUltra",
+			"properties": {
+				"trigger": {
+					"description": "The trigger",
+					"type": "trigger",
+					"required": false,
+					"default": {}
+				},
+				"conditions": {
+					"description": "The list of conditions",
+					"type": "ConditionList",
+					"required": false,
+					"default": {}
+				},
+				"effects": {
+					"description": "The list of effects",
+					"type": "EffectList",
+					"required": false,
+					"default": {}
+				}
+			}
+		},
 		"BEASTCONTROL": {
 			"description": "Exclusive to SuperheroesPlusUltra. \nControls mobs, tells the mob to walk to a place you're looking by sneaking or to attack the mob you're looking",
 			"exclusiveTo": "SuperheroesPlusUltra",

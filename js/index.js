@@ -1,23 +1,4 @@
-import { docs } from './schema.js'
-import { compileTypeString } from "./compiler.js"
-import { entry, input, section, PropertiesMap, stringKeyEntry, docItemSection, propertiesMap } from "./elements.js"
-
-const createSkill = key => entry(input("skill" + key), section([
-	stringKeyEntry("trigger", compileTypeString("trigger")),
-	stringKeyEntry("conditions", compileTypeString("ConditionList")),
-	stringKeyEntry("effects", compileTypeString("EffectList"))
-]))
-
-const makeRoot = entry(input("exampleboss"), section([
-	stringKeyEntry("colouredName", input("<red>Exampleboss")),
-	stringKeyEntry("description", input("A description fit for an example")),
-	stringKeyEntry("autospawn", compileTypeString("SpawnData")),
-	stringKeyEntry("entity", compileTypeString("EntityData")),
-	stringKeyEntry("bossbar", compileTypeString("BossBarData")),
-	stringKeyEntry("damagemodifier", docItemSection("damagemodifiers")),
-	stringKeyEntry("reward", docItemSection("rewards")),
-	stringKeyEntry("skills", propertiesMap(createSkill))
-]))
+import { makeSPRoot as makeRoot } from './roots/superheroes.js'
 
 export let root = makeRoot(null)
 globalThis.root = root
