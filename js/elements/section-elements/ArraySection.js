@@ -76,6 +76,8 @@ export class ArraySection extends YamlElement {
 		this.addChild(element)
 	}
 
+	isInline() { return false }
+
 	/**
 	 * @param {YamlElement<unknown>} element
 	 * @param {number} [index=null] 

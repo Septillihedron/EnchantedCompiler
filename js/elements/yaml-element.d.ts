@@ -13,6 +13,8 @@ export abstract class YamlElement<T> implements Focusable {
 	abstract getValue(): T
 	abstract setValue(value: unknown): void
 
+	abstract isInline(): boolean
+
 	/**
 	 * @returns {boolean} if the focus is successful
 	 */

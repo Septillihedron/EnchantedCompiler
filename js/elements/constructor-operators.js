@@ -14,3 +14,14 @@ export function applyFunctionToConstructor(unconstructedElement, ...functions) {
         return element
     }
 }
+
+/**
+ * @template T
+ * @this {YamlElement}
+ * @param {(parent: YamlElement) => T} unconstructed
+ * @returns {() => T}
+ */
+export function construct(unconstructed) {
+    const constructed = unconstructed(this)
+    return () => constructed
+}

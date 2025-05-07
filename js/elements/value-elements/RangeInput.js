@@ -50,6 +50,8 @@ export class RangeInput extends YamlElement {
 			return
 		}
 	}
+
+	isInline() { return true }
 }
 
 export function rangeInput() {

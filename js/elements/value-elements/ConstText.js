@@ -32,6 +32,8 @@ export class ConstText extends YamlElement {
 		incorrectTypeSetError(val)
 	}
 
+	isInline() { return true }
+
 	toYaml() {
 		return this.text
 	}

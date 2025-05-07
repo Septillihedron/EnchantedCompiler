@@ -7,7 +7,7 @@ import { createElement } from "../createHtmlElement.js"
 /**
  * @implements {YamlElement<[string, unknown][]>}
  */
-export class Section extends YamlElement {
+export class Section extends YamlElement {	
 	/**
 	 * @param {YamlElement} parent 
 	 * @param {((parent: YamlElement) => Entry)[]} values
@@ -48,6 +48,10 @@ export class Section extends YamlElement {
 			let entry = this.findEntryByKey(key)
 			entry?.value.setValue(val)
 		})
+	}
+
+	isInline() {
+		return false
 	}
 
 	findEntryByKey(key) {
