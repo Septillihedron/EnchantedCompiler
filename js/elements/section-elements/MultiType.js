@@ -1,4 +1,6 @@
 import { compileProperty } from "../../compiler.js"
+import { addUndo } from "../../undo/undo-handler.js"
+import { UndoEvent } from "../../undo/UndoEvent.js"
 import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
@@ -32,7 +34,7 @@ export class MultiType extends YamlElement {
 		const { type: types, ...typeData } = multiType
 		this.possibleTypes = types
 			.map(type => {
-				const compiled = compileProperty({ ...typeData, type })
+				const compiled = compileProperty({ ...typeData, type })(this)
 				return { name: type, type: compiled }
 			})
 		this.container = createElement(this, "div")
@@ -44,11 +46,16 @@ export class MultiType extends YamlElement {
 			// temporary
 			const currIndex = this.possibleTypes.findIndex(x => x === this.selectedType)
 			const nextIndex = (currIndex + 1) % this.possibleTypes.length
-			this.setType(this.possibleTypes[nextIndex].name)
+			const nextType = this.possibleTypes[nextIndex].name
+			addUndo(new MultiType_ChangeTypeUndoEvent(this, this.selectedType.name, nextType))
+			this.setType(nextType)
 		})
 		this.children = [new FocusableWrapper(this.changeTypeButton), this.selectedType.type]
 	}
 
+	/**
+	 * @param {string} typeName
+	 */
 	setType(typeName) {
 		const type = this.possibleTypes.find(type => type.name === typeName)
 		if (!type) {
@@ -61,7 +68,8 @@ export class MultiType extends YamlElement {
 	}
 
 	toHTML() {
-		const container = createContainerElement(this)
+		const container = createElement(this, "div")
+		container.classList.add("multitype-container")
 		container.appendChild(this.changeTypeButton)
 		container.appendChild(this.container)
 		return container
@@ -91,4 +99,27 @@ export class MultiType extends YamlElement {
 	isInline() {
 		return this.possibleTypes.every(type => type.type.isInline())
 	}
+}
+
+class MultiType_ChangeTypeUndoEvent extends UndoEvent {
+
+	/**
+	 * @param {MultiType} emitter
+	 * @param {string} from
+	 * @param {string} to
+	 */
+	constructor(emitter, from, to) {
+		super()
+		this.emitter = emitter
+		this.from = from
+		this.to = to
+	}
+
+	redo() {
+		this.emitter.setType(this.to)
+	}
+	undo() {
+		this.emitter.setType(this.from)
+	}
+
 }
