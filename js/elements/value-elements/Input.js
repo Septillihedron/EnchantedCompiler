@@ -58,11 +58,8 @@ export class Input extends YamlElement {
 		this.setValidity(maxLevel)
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.input)
+	toHTML() {
+		return this.input
 	}
 
 	toYaml() {

@@ -14,11 +14,8 @@ export class ConstText extends YamlElement {
 		this.textElement = document.createTextNode(text)
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.textElement)
+	toHTML() {
+		return this.textElement
 	}
 
 	getValue() {

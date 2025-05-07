@@ -37,9 +37,9 @@ export class Entry extends YamlElement {
 		this.container = createElement(this, "li")
 		this.container.classList.add("entry-container")
 		if (description !== null) this.container.title = description
-		this.key.toHTML(this.container)
-		this.colon.toHTML(this.container)
-		this.value.toHTML(this.container)
+		this.container.appendChild(this.key.toHTML())
+		this.container.appendChild(this.colon.toHTML())
+		this.container.appendChild(this.value.toHTML())
 	}
 
 	/**
@@ -54,11 +54,8 @@ export class Entry extends YamlElement {
 		}
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.container)
+	toHTML() {
+		return this.container
 	}
 
 	toYaml() {

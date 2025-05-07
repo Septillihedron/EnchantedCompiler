@@ -21,11 +21,9 @@ export class Section extends YamlElement {
 		values.forEach(this.addChild.bind(this))
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.container)
+	/** @returns {Node} */
+	toHTML() {
+		return this.container
 	}
 
 	toYaml() {
@@ -65,7 +63,7 @@ export class Section extends YamlElement {
 		const constructedElement = element(this)
 		this.values.push(constructedElement)
 		this.children.push(constructedElement)
-		constructedElement.toHTML(this.container)
+		this.container.appendChild(constructedElement.toHTML())
 	}
 
 	clearChildren() {

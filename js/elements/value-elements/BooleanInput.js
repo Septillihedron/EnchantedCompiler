@@ -17,11 +17,8 @@ export class BooleanInput extends YamlElement {
 		this.input.defaultChecked = def
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.input)
+	toHTML() {
+		return this.input
 	}
 
 	toYaml() {

@@ -59,8 +59,7 @@ function render() {
 	if (main === null) {
 		throw Error("Main element does not exist!")
 	}
-	main.replaceChildren()
-	root.toHTML(main)
+	main.replaceChildren(root.toHTML())
 }
 
 export function compile() {
