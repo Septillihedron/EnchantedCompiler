@@ -7,7 +7,7 @@ export abstract class YamlElement<T> implements Focusable {
 
 	constructor(parent: YamlElement<?>)
 
-	abstract toHTML(parent: HTMLElement): void
+	abstract toHTML(): Node
 	abstract toYaml(): string
 
 	abstract getValue(): T

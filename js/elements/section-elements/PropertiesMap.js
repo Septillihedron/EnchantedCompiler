@@ -1,7 +1,7 @@
 import { addUndo } from "../../undo/undo-handler.js"
 import { UndoEvent } from "../../undo/UndoEvent.js"
 import { applyFunctionToConstructor as applyFunctionsToConstructor } from "../constructor-operators.js"
-import { createElement } from "../createHtmlElement.js"
+import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { errorLevels, Input } from "../value-elements.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 import { Entry } from "./Entry.js"
@@ -102,12 +102,11 @@ export class PropertiesMap extends Section {
 		})
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.addButton)
-		super.toHTML(parent)
+	toHTML() {
+		const container = createContainerElement(this)
+		container.appendChild(this.addButton)
+		container.appendChild(super.toHTML())
+		return container
 	}
 
 	clearChildren() {

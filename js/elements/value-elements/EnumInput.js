@@ -139,18 +139,14 @@ export class EnumInput extends Input {
 		this.createValueListMenu()
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
+	toHTML() {
 		const container = createElement(this, 'div')
 		container.classList.add("enum-value-container")
 
-		super.toHTML(container)
-
+		container.appendChild(super.toHTML())
 		container.appendChild(this.autocompleteWindow)
 
-		parent.appendChild(container)
+		return container
 	}
 
 	focus() {

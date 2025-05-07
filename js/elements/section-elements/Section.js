@@ -2,7 +2,7 @@ import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"
 import { indent } from "./indent.js"
 import { Entry } from "./Entry.js"
-import { createElement } from "../createHtmlElement.js"
+import { createContainerElement, createElement } from "../createHtmlElement.js"
 
 /**
  * @implements {YamlElement<[string, unknown][]>}
@@ -21,11 +21,9 @@ export class Section extends YamlElement {
 		values.forEach(this.addChild.bind(this))
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.container)
+	/** @returns {Node} */
+	toHTML() {
+		return this.container
 	}
 
 	toYaml() {
@@ -81,14 +79,12 @@ export class Section extends YamlElement {
 		
 		const constructedElement = element(this)
 
-		const elementContainer = document.createElement("div")
-		elementContainer.style.display = "inline"
-		constructedElement.toHTML(elementContainer)
+		const elementHTML = constructedElement.toHTML()
 
 		if (index == this.values.length) {
-			this.container.appendChild(elementContainer)
+			this.container.appendChild(elementHTML)
 		} else {
-			this.container.children[index].insertAdjacentElement("beforebegin", elementContainer)
+			this.container.children[index].insertAdjacentElement("beforebegin", elementHTML)
 		}
 		this.values.splice(index, 0, constructedElement)
 		this.children.splice(index+1, 0, constructedElement)

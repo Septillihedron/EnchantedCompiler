@@ -1,5 +1,5 @@
 import { compileProperty } from "../../compiler.js"
-import { createElement } from "../createHtmlElement.js"
+import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 
@@ -56,17 +56,15 @@ export class MultiType extends YamlElement {
 			return
 		}
 		this.selectedType = type
-		this.container.replaceChildren()
-		this.selectedType.type.toHTML(this.container)
+		this.container.replaceChildren(this.selectedType.type.toHTML())
 		this.children[1] = this.selectedType.type
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.changeTypeButton)
-		parent.appendChild(this.container)
+	toHTML() {
+		const container = createContainerElement(this)
+		container.appendChild(this.changeTypeButton)
+		container.appendChild(this.container)
+		return container
 	}
 
 	toYaml() {
@@ -88,5 +86,9 @@ export class MultiType extends YamlElement {
 		}
 		this.setType(val[0])
 		this.selectedType.type.setValue(val[1])
+	}
+
+	isInline() {
+		return this.possibleTypes.every(type => type.type.isInline())
 	}
 }

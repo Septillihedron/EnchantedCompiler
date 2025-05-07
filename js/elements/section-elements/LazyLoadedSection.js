@@ -1,6 +1,6 @@
 import { addUndo } from "../../undo/undo-handler.js"
 import { UndoEvent } from "../../undo/UndoEvent.js"
-import { createElement } from "../createHtmlElement.js"
+import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 import { Entry } from "./Entry.js"
@@ -61,12 +61,15 @@ export class LazyLoadedSection extends Section {
 		this.children.shift()
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		if (this.generateButton) parent.appendChild(this.generateButton)
-		super.toHTML(parent)
+	toHTML() {
+		if (this.generateButton) {
+			const container = createContainerElement(this)
+			container.appendChild(this.generateButton)
+			container.appendChild(super.toHTML())
+			return container
+		} else {
+			return super.toHTML()
+		}
 	}
 
 	getValue() {

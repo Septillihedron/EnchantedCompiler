@@ -1,6 +1,6 @@
 import { addUndo } from "../../undo/undo-handler.js"
 import { UndoEvent } from "../../undo/UndoEvent.js"
-import { createElement } from "../createHtmlElement.js"
+import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"
 import { indent } from "./indent.js"
@@ -35,12 +35,11 @@ export class ArraySection extends YamlElement {
 		this.children.unshift(new FocusableWrapper(this.addButton))
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.addButton)
-		parent.appendChild(this.container)
+	toHTML() {
+		const container = createContainerElement(this)
+		container.appendChild(this.addButton)
+		container.appendChild(this.container)
+		return container
 	}
 
 	toYaml() {
@@ -86,7 +85,7 @@ export class ArraySection extends YamlElement {
 		if (index == null) index = this.values.length
 		const li = createElement(this, "li")
 
-		element.toHTML(li)
+		li.appendChild(element.toHTML())
 		if (index == this.values.length) {
 			this.container.appendChild(li)
 		} else {

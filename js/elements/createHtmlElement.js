@@ -16,3 +16,17 @@ export function createElement(source, tagName) {
     }
     return element
 }
+
+/**
+ * @param {any} source
+ * @returns {HTMLDivElement}
+ */
+export function createContainerElement(source) {
+    const element = document.createElement("div")
+    element.style.display = "inline"
+    if (DEBUG) {
+        // @ts-ignore
+        element.source = source
+    }
+    return element
+}

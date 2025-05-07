@@ -2,6 +2,7 @@ import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement } from "../yaml-element.js"
 import { numInput } from "./Input.js"
 import { constText } from "./ConstText.js"
+import { createContainerElement, createElement } from "../createHtmlElement.js"
 
 /**
  * @implements {YamlElement<{ min: number, max: number }>}
@@ -20,13 +21,12 @@ export class RangeInput extends YamlElement {
 		this.children = [this.min, this.max]
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		this.min.toHTML(parent)
-		this.dash.toHTML(parent)
-		this.max.toHTML(parent)
+	toHTML() {
+		const container = createContainerElement(this)
+		container.appendChild(this.min.toHTML())
+		container.appendChild(this.dash.toHTML())
+		container.appendChild(this.max.toHTML())
+		return container
 	}
 
 	toYaml() {

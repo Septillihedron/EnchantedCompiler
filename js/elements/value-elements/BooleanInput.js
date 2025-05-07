@@ -21,11 +21,8 @@ export class BooleanInput extends YamlElement {
 		this.input.addEventListener("click", () => addUndo(new BooleanUndoEvent(this)))
 	}
 
-	/**
-	 * @param {HTMLElement} parent
-	 */
-	toHTML(parent) {
-		parent.appendChild(this.input)
+	toHTML() {
+		return this.input
 	}
 
 	toYaml() {
