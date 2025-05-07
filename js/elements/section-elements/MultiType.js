@@ -89,4 +89,8 @@ export class MultiType extends YamlElement {
 		this.setType(val[0])
 		this.selectedType.type.setValue(val[1])
 	}
+
+	isInline() {
+		return this.possibleTypes.every(type => type.type.isInline())
+	}
 }
