@@ -1,20 +1,22 @@
 import { UndoEvent } from "./UndoEvent.js"
 
 /**
- * @type {UndoEvent[]}
+ * @type {{stack: UndoEvent[], stackPointer: number}}
  */
-const undoStack = []
-let undoStackPointer = -1
+const undoState = {
+    stack: [],
+    stackPointer: -1
+}
 
 /**
  * @param {UndoEvent} undoEvent
  */
 export function addUndo(undoEvent) {
-    if (undoStackPointer != undoStack.length-1) {
-        truncateStack(undoStack, undoStackPointer+1)
+    if (undoState.stackPointer != undoState.stack.length-1) {
+        truncateStack(undoState.stack, undoState.stackPointer+1)
     }
-    undoStack.push(undoEvent)
-    undoStackPointer++
+    undoState.stack.push(undoEvent)
+    undoState.stackPointer++
 }
 
 /**
@@ -26,15 +28,15 @@ function truncateStack(stack, newLength) {
 }
 
 function undo() {
-    if (undoStackPointer == -1) return
-    undoStack[undoStackPointer].undo()
-    undoStackPointer--
+    if (undoState.stackPointer == -1) return
+    undoState.stack[undoState.stackPointer].undo()
+    undoState.stackPointer--
 }
 
 function redo() {
-    if (undoStackPointer+1 >= undoStack.length) return
-    undoStack[undoStackPointer+1].redo()
-    undoStackPointer++
+    if (undoState.stackPointer+1 >= undoState.stack.length) return
+    undoState.stack[undoState.stackPointer+1].redo()
+    undoState.stackPointer++
 }
 
 
@@ -53,4 +55,6 @@ document.addEventListener("keydown", event => {
     }
 }, { capture: true })
 
-globalThis.undoStack = undoStack
+globalThis.undoState = undoState
+globalThis.undo = undo
+globalThis.redo = redo
