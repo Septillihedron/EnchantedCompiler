@@ -1,42 +1,48 @@
 import { UndoEvent } from "./UndoEvent.js"
+import { UndoState } from "./UndoState.js"
 
-/**
- * @type {{stack: UndoEvent[], stackPointer: number}}
- */
-const undoState = {
-    stack: [],
-    stackPointer: -1
-}
+const undoState = new UndoState()
 
 /**
  * @param {UndoEvent} undoEvent
  */
 export function addUndo(undoEvent) {
-    if (undoState.stackPointer != undoState.stack.length-1) {
-        truncateStack(undoState.stack, undoState.stackPointer+1)
+    if (undoState.undoOrRedoInProcess) {
+        throw new Error("Cannot add an undo while undoing")
     }
-    undoState.stack.push(undoEvent)
-    undoState.stackPointer++
+    undoState.truncate()
+    undoState.add(undoEvent)
 }
 
 /**
- * @param {any[]} stack
- * @param {number} [newLength]
+ * Replaces the last undo if predicate returns true, otherwise, adds it to the back
+ * @param {UndoEvent} undoEvent
+ * @param {(prevEvent: UndoEvent) => boolean} predicate
  */
-function truncateStack(stack, newLength) {
-    stack.length = newLength
+export function replaceUndoIf(undoEvent, predicate) {
+    if (undoState.undoOrRedoInProcess) {
+        throw new Error("Cannot add an undo while undoing")
+    }
+    undoState.truncate()
+    if (predicate(undoState.getLast())) {
+        undoState.pop()
+    }
+    undoState.add(undoEvent)
 }
 
 function undo() {
     if (undoState.stackPointer == -1) return
-    undoState.stack[undoState.stackPointer].undo()
-    undoState.stackPointer--
+    undoState.undoOrRedoInProcess = true
+    undoState.pop().undo()
+    undoState.undoOrRedoInProcess = false
 }
 
 function redo() {
     if (undoState.stackPointer+1 >= undoState.stack.length) return
+    undoState.undoOrRedoInProcess = true
     undoState.stack[undoState.stackPointer+1].redo()
     undoState.stackPointer++
+    undoState.undoOrRedoInProcess = false
 }
 
 
