@@ -1,6 +1,8 @@
 
+// @ts-ignore
 import JSON5 from "https://cdn.jsdelivr.net/npm/json5@2/+esm"
 
+// @ts-ignore
 export const docs = await loadSchema()
 
 /**

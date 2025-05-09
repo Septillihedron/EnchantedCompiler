@@ -1,6 +1,5 @@
 import { YamlElement } from "./yaml-element.js"
 
-
 /**
  * @template {YamlElement} T
  * @param {(parent: YamlElement) => T} unconstructedElement

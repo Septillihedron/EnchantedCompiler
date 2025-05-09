@@ -7,6 +7,7 @@ globalThis.root = root
  * @type {Record<string, {average: number, times: number[]}>}
  */
 const times = {}
+globalThis.times = times
 /**
  * @template {any} T
  * @param {string} name

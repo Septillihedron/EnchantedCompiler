@@ -1,5 +1,4 @@
-import { addUndo } from "../../undo/undo-handler.js"
-import { UndoEvent } from "../../undo/UndoEvent.js"
+import { addUndo, UndoEvent } from "../../undo.js"
 import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"

@@ -1,7 +1,6 @@
 import { compileProperty } from "../../compiler.js"
-import { addUndo } from "../../undo/undo-handler.js"
-import { UndoEvent } from "../../undo/UndoEvent.js"
-import { createContainerElement, createElement } from "../createHtmlElement.js"
+import { addUndo, UndoEvent } from "../../undo.js"
+import { createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { FocusableWrapper, YamlElement } from "../yaml-element.js"
 

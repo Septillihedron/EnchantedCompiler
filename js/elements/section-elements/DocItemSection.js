@@ -1,12 +1,11 @@
 import { compileProperty } from "../../compiler.js"
 import { docs } from "../../schema.js"
-import { addUndo, replaceUndoIf } from "../../undo/undo-handler.js"
-import { UndoEvent } from "../../undo/UndoEvent.js"
+import { replaceUndoIf, UndoEvent } from "../../undo.js"
 import { construct } from "../constructor-operators.js"
 import { InputUndoEvent } from "../value-elements.js"
 import { EnumInput } from "../value-elements/EnumInput.js"
 import { YamlElement } from "../yaml-element.js"
-import { entry, Entry, stringKeyEntry } from "./Entry.js"
+import { Entry, stringKeyEntry } from "./Entry.js"
 import { LazyLoadedSection } from "./LazyLoadedSection.js"
 
 

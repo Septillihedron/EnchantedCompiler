@@ -1,5 +1,4 @@
 
-
 const DEBUG = true
 
 /**
@@ -22,11 +21,7 @@ export function createElement(source, tagName) {
  * @returns {HTMLDivElement}
  */
 export function createContainerElement(source) {
-    const element = document.createElement("div")
+    const element = createElement(source, "div")
     element.style.display = "inline"
-    if (DEBUG) {
-        // @ts-ignore
-        element.source = source
-    }
     return element
 }

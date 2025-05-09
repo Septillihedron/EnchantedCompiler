@@ -2,7 +2,7 @@ import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement } from "../yaml-element.js"
 import { numInput } from "./Input.js"
 import { constText } from "./ConstText.js"
-import { createContainerElement, createElement } from "../createHtmlElement.js"
+import { createContainerElement } from "../createHtmlElement.js"
 
 /**
  * @implements {YamlElement<{ min: number, max: number }>}

@@ -1,7 +1,6 @@
 import { YamlElement } from "../yaml-element.js"
 import { createElement } from "../createHtmlElement.js"
-import { UndoEvent } from "../../undo/UndoEvent.js"
-import { addUndo } from "../../undo/undo-handler.js"
+import { addUndo, UndoEvent } from "../../undo.js"
 
 export const errorLevels = Object.freeze({
 	none: 0,

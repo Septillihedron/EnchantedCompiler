@@ -1,8 +1,7 @@
-import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
-import { YamlElement, FocusableWrapper } from "../yaml-element.js"
+import { YamlElement } from "../yaml-element.js"
 import { indent } from "./indent.js"
 import { Entry } from "./Entry.js"
-import { createContainerElement, createElement } from "../createHtmlElement.js"
+import { createElement } from "../createHtmlElement.js"
 
 /**
  * @implements {YamlElement<[string, unknown][]>}

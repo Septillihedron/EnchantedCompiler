@@ -15,6 +15,3 @@ document.getElementById("load-file")?.addEventListener("click", (event) => {
 document.getElementById("save-file")?.addEventListener("click", (event) => {
 	console.error("save-file button not yet implemented")
 })
-
-	
-

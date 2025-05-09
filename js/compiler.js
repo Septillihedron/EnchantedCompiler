@@ -1,4 +1,4 @@
-import { arraySection, ArraySection, booleanInput, BooleanInput, constText, docItemSection, DocItemSection, Entry, entry, EnumInput, incomplete, input, intInput, lazyLoadedSection, LazyLoadedSection, loadIfLazyLoadedSection, MultiType, numInput, propertiesMap, PropertiesMap, rangeInput, RangeInput, Section, stringKeyEntry, YamlElement } from "./elements.js"
+import { arraySection, booleanInput, constText, docItemSection, DocItemSection, Entry, entry, EnumInput, input, intInput, lazyLoadedSection, loadIfLazyLoadedSection, MultiType, numInput, propertiesMap, rangeInput, stringKeyEntry, YamlElement } from "./elements.js"
 import { docs } from "./schema.js"
 
 const specialTypes = /** @type {const} */ ([

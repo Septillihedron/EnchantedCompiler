@@ -1,5 +1,4 @@
-import { addUndo } from "../../undo/undo-handler.js"
-import { UndoEvent } from "../../undo/UndoEvent.js"
+import { addUndo, UndoEvent } from "../../undo.js"
 import { applyFunctionToConstructor as applyFunctionsToConstructor } from "../constructor-operators.js"
 import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { errorLevels, Input } from "../value-elements.js"
@@ -8,7 +7,6 @@ import { Entry } from "./Entry.js"
 import { Section } from "./Section.js"
 
 const SAME_KEY_ERROR = "Duplicate object keys"
-
 
 export class PropertiesMap extends Section {
 
