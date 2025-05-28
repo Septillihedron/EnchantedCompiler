@@ -1,5 +1,5 @@
 import { YamlElement } from "../yaml-element.js"
-import { indent } from "./indent.js"
+import { identity, indent } from "./utils.js"
 import { Entry } from "./Entry.js"
 import { createElement } from "../createHtmlElement.js"
 
@@ -26,8 +26,11 @@ export class Section extends YamlElement {
 	}
 
 	toYaml() {
+		const shouldDoIndent = this.parent != null;
 		return this.values
-			.map(entry => "\r\n" + indent(entry.toYaml()))
+			.map(entry => entry.toYaml())
+			.map(shouldDoIndent? indent : identity)
+			.map(yaml => "\r\n" + yaml)
 			.join("")
 	}
 

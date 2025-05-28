@@ -9,3 +9,8 @@ export function indent(s) {
 		.map(l => "  " + l)
 		.join("\r\n")
 }
+
+/**
+ * @param {any} x
+ */
+export function identity(x) { return x }
