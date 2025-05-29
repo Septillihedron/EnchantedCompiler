@@ -5,6 +5,7 @@ body {
 
 #main {
 	margin-bottom: 20rem;
+	margin-left: 0;
 }
 
 .primary-colors {
@@ -80,6 +81,10 @@ li.entry-container::marker {
 	width: max-content;
 	padding: .1rem;
 	padding-right: 1rem;
+}
+
+#main > .section {
+	margin-left: 0;
 }
 
 .primary-colors .section:not(.hidden):has(*) {

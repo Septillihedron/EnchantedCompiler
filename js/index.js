@@ -45,7 +45,7 @@ function render() {
 }
 
 export function compile() {
-	return root.toYaml()
+	return root.toYaml().trimStart() + "\r\n"
 }
 
 function save() {

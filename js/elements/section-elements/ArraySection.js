@@ -2,7 +2,7 @@ import { addUndo, UndoEvent } from "../../undo.js"
 import { createContainerElement, createElement } from "../createHtmlElement.js"
 import { incorrectTypeSetError } from "../incorrect-type-set-error.js"
 import { YamlElement, FocusableWrapper } from "../yaml-element.js"
-import { indent } from "./indent.js"
+import { indent } from "./utils.js"
 
 /**
  * @implements {YamlElement<unknown[]>}
