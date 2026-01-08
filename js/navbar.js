@@ -1,17 +1,13 @@
-import { compile } from "./index.js"
+import { copyYaml } from "./navbar/copyYaml.js"
+import { openFile } from "./navbar/openFile.js"
+import { pasteYaml } from "./navbar/pasteYaml.js"
 
 document.getElementById("settings")?.addEventListener("click", (event) => {
 	console.error("settings button not yet implemented")
 })
 
-document.getElementById("copy-yaml")?.addEventListener("click", (event) => {
-	navigator.clipboard.writeText(compile())
-})
+document.getElementById("copy-yaml")?.addEventListener("click", copyYaml)
 
-document.getElementById("load-file")?.addEventListener("click", (event) => {
-	console.error("load-file button not yet implemented")
-})
+document.getElementById("paste-yaml")?.addEventListener("click", pasteYaml)
 
-document.getElementById("save-file")?.addEventListener("click", (event) => {
-	console.error("save-file button not yet implemented")
-})
+document.getElementById("open-file")?.addEventListener("click", openFile)

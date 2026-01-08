@@ -91,11 +91,7 @@ export class Input extends YamlElement {
 	 * @param {unknown} val
 	 */
 	setValue(val) {
-		if (val == null) return
-		// if (typeof val !== "string") {
-		// incorrectTypeSetError(val)
-		// return
-		// }
+		val ??= ""
 		this.input.innerText = val.toString()
 		this.validate()
 	}
